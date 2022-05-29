@@ -1,0 +1,11 @@
+14. Accessing values in a dictionary
+
+
+Accessing the values in a dictionary works exactly like it does with an array, except instead of using a number, you use the key. So if you wanted to log the rating of the @"AngryFowl" app, you could do this:
+
+NSLog(@"%@", appRatings[@"AngryFowl"]);
+
+Go ahead and log the rating of the @"Lettertouch" app
+
+
+Answer: NSLog(@"Lettertouch has a rating of %@.", appRatings[@"Lettertouch"]);

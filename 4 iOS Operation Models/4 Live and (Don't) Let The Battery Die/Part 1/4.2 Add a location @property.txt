@@ -1,0 +1,131 @@
+4.2 Add a location @property
+
+
+Refactor User.h to include a (strong, nonatomic) NSString @property named location that will store Higgie's current location in a city.
+
+Then, update User.m to set the default value of that property to "no location yet".
+
+
+User.m
+#import "User.h"
+#import "AFJSONRequestOperation.h"
+#import "Photo.h"
+
+@implementation User
+
+- (id)init
+{
+    self = [self initWithJSON];
+    return self;
+}
+
+- (id)initWithJSON
+{
+    self = [super init];
+    if(self) {        
+        NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/userProfile.json"];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            self.firstName = JSON[@"firstName"];
+            self.lastName = JSON[@"lastName"];
+            self.city = JSON[@"city"];
+            self.profilePhoto = [[Photo alloc] initWithTitle:@"Profile Photo" detail:@"defail" filename:JSON[@"profilePhoto"] thumbnail:JSON[@"profilePhotoThumbnail"]];
+            self.biography = JSON[@"biography"];
+            self.memberSince = JSON[@"memberSince"];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"initWithJSONFinishedLoading" object:nil];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            NSLog(@"NSError: %@",[error localizedDescription]);
+        }];
+        
+        [operation start];
+
+        /*//Set the default value of the location @property here//*/
+    }
+    return self;
+}
+@end
+
+
+User.h
+#import <Foundation/Foundation.h>
+
+@class Photo;
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) Photo *profilePhoto;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+/*//Declare location @property here//*/
+
+-(id)initWithJSON;
+
+@end
+
+
+Answer:
+User.h
+#import <Foundation/Foundation.h>
+
+@class Photo;
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) Photo *profilePhoto;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+@property (strong, nonatomic) NSString *location;
+
+-(id)initWithJSON;
+
+@end
+
+
+User.m
+#import "User.h"
+#import "AFJSONRequestOperation.h"
+#import "Photo.h"
+
+@implementation User
+
+- (id)init
+{
+    self = [self initWithJSON];
+    return self;
+}
+
+- (id)initWithJSON
+{
+    self = [super init];
+    if(self) {        
+        NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/userProfile.json"];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            self.firstName = JSON[@"firstName"];
+            self.lastName = JSON[@"lastName"];
+            self.city = JSON[@"city"];
+            self.profilePhoto = [[Photo alloc] initWithTitle:@"Profile Photo" detail:@"defail" filename:JSON[@"profilePhoto"] thumbnail:JSON[@"profilePhotoThumbnail"]];
+            self.biography = JSON[@"biography"];
+            self.memberSince = JSON[@"memberSince"];
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"initWithJSONFinishedLoading" object:nil];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+            NSLog(@"NSError: %@",[error localizedDescription]);
+        }];
+        
+        [operation start];
+
+        self.location = @"no location yet";
+    }
+    return self;
+}
+@end

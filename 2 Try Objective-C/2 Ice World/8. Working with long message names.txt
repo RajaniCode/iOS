@@ -1,0 +1,43 @@
+8. Working with long message names
+
+
+So as we’ve seen so far, it’s possible that a message can be sent with either 0 or 1 argument, but what about passing more than 1 argument? Sure! Certain messages in Objective-C can take more than 1 argument. For example, NSString has a method called stringByReplacingOccurrencesOfString:withString: that takes 2 string arguments. Each word in the message name that is followed by a colon : corresponds to an argument. You’d send this message like so:
+
+[fullName stringByReplacingOccurrencesOfString:@"Eric" withString:@"Derrick"];
+
+The objects you pass into the message directly follow the colon, just make sure there is a space between an argument and the next section of the message name.
+
+Check out what the stringByReplacingOccurrencesOfString:withString message does by logging the string it returns.
+
+Note: Notice how we formatted the code. Because of the long message names in Objective-C, you have to wrap lines to make them more readable.
+
+
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = [[firstName stringByAppendingString:@" "]
+                        stringByAppendingString:lastName];
+
+NSString *replaced = [fullName stringByReplacingOccurrencesOfString:firstName
+                                                         withString:lastName];
+
+NSLog(@"%@", /*//result of stringByReplacingOccurrencesOfString:withString://*/);
+
+
+Answer:
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = [[firstName stringByAppendingString:@" "]
+                        stringByAppendingString:lastName];
+
+NSString *replaced = [fullName stringByReplacingOccurrencesOfString:firstName
+                                                         withString:lastName];
+
+NSLog(@"%@", replaced);
+
+
+Output:
+challenge[10]: Inc Inc

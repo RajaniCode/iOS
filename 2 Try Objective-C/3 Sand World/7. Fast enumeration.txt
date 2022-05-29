@@ -1,0 +1,83 @@
+7. Fast enumeration
+
+
+Objective-C is good at making decisions, but it’s great at being lazy.
+
+For example, let’s say you had an array of NSString objects and you wanted to log out each item. You could do the hard work and type it all out:
+
+NSArray *funnyWords = @[@"Schadenfreude", @"Portmanteau", @"Penultimate"];
+
+NSLog(@"%@ is a funny word", funnyWords[0]);
+NSLog(@"%@ is a funny word", funnyWords[1]);
+NSLog(@"%@ is a funny word", funnyWords[2]);
+
+But that is not sufficiently lazy and results in too much repeated code. Let’s take a trip to lazy town and use a technique called Fast Enumeration:
+
+NSArray *funnyWords = @[@"Schadenfreude", @"Portmanteau", @"Penultimate"];
+
+for (NSString *word in funnyWords) {
+  NSLog(@"%@ is a funny word", word);
+}
+
+This means: execute the code inside the curly-braces {} once for each NSString in the funnyWords collection. In this case, the code inside the curly-braces would get executed 3 times and the value of the word variable would cycle through the values in the funnyWords collection. You might imagine the unspooled code to look something like this:
+
+NSArray *funnyWords = @[@"Schadenfreude", @"Portmanteau", @"Penultimate"];
+
+NSString *word;
+word = funnyWords[0];
+NSLog(@"%@ is a funny word", word);
+word = funnyWords[1];
+NSLog(@"%@ is a funny word", word);
+word = funnyWords[2];
+NSLog(@"%@ is a funny word", word);
+
+Could you imagine having to do that for an array that has thousands of items?
+
+Being lazy has never felt this good.
+
+Continue down this lazy path and complete this challenge by filling out the code inside the for (). Make sure the NSString variable name is hat.
+
+
+File
+NSArray *newHats = @[@"Cowboy", @"Conductor", @"Baseball"];
+
+for (/*//loop through newHats//*/) {
+
+  NSLog(@"Trying on new %@ hat", hat);
+
+  if([mrHiggie tryOnHat:hat]) {
+    NSLog(@"Mr. Higgie loves it");
+  } else {
+    NSLog(@"Mr. Higgie hates it");
+  }
+}
+
+
+Answer:
+File
+NSArray *newHats = @[@"Cowboy", @"Conductor", @"Baseball"];
+
+for (NSString *hat in newHats) {
+
+  NSLog(@"Trying on new %@ hat", hat);
+
+  if([mrHiggie tryOnHat:hat]) {
+    NSLog(@"Mr. Higgie loves it");
+  } else {
+    NSLog(@"Mr. Higgie hates it");
+  }
+}
+
+
+Output:
+challenge[5]: Trying on new Cowboy hat
+
+challenge[8]: Mr. Higgie loves it
+
+challenge[5]: Trying on new Conductor hat
+
+challenge[10]: Mr. Higgie hates it
+
+challenge[5]: Trying on new Baseball hat
+
+challenge[8]: Mr. Higgie loves it

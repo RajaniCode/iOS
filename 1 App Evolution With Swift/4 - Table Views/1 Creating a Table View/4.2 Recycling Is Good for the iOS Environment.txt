@@ -1,0 +1,12 @@
+4.2 Recycling Is Good for the iOS Environment
+
+What is the purpose of a cell's reuseIdentifier?
+
+[Single Answer]
+
+Creating a unique variable name for a cell.
+Providing a way to reference a recyclable cell object.
+Creating copies of cells that appear in the table view more than once.
+
+
+Answer: Providing a way to reference a recyclable cell object.

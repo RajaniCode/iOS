@@ -1,0 +1,122 @@
+3. Adopt NSCopying
+
+
+copyWithZone: is a special method: It isn’t declared in any class, and yet the copy method expects objects to respond to it. The copy method has an implicit contract with the receiving object - implement copyWithZone: or there is going to be trouble.
+
+It's unwise to mess with copy. Don't believe me? Ask Samsung, they know what I'm talking about.
+
+Objective-C has a feature for enforcing this kind of contract: protocols. Protocols declare a set of messages that it expects an object to respond to. copyWithZone: is a part of the NSCopying protocol. If you check out the NSCopying Reference, you’ll see that copyWithZone: is the only requirement of the protocol.
+
+You can “tag” an object with the expectation that it responds to all the required messages in a protocol. For example, when creating a new Person object:
+
+Person <NSCopying> *person = [[Person alloc] init];
+Person *copy = [person copy];
+
+If the Person class does not adopt the NSCopying protocol, the compiler will complain about this code and not allow you to continue. Now the only way to fix the compiler error would be to have the Person class adopt the NSCopying protocol, like so:
+
+Person.h
+
+@interface Person : NSObject <NSCopying>
+@end
+
+By adopting the NSCopying protocol, the Person class must implement the copyWithZone: method or the compiler will complain.
+
+Go ahead and have the Apple class adopt the NSCopying protocol so we can see the resulting compiler error. (The error will appear in Apple.m)
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+Apple *copy = [talkingiPhone copy];
+[copy reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.h
+@interface Apple : NSObject <NSCopying> {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+                ^method 'copyWithZone:' in protocol not implemented [-Werror,-Wprotocol]
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end

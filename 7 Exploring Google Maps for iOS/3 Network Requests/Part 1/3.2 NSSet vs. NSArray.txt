@@ -1,0 +1,13 @@
+3.2 NSSet vs. NSArray
+
+Why is it a good practice to use an NSSet rather than an NSArray for storing markers?
+
+[Single Answer]
+
+NSArray is mutable and won't allow us to add more objects to it.
+Objects can be added to NSSet at any time, unlike NSArray.
+By using an NSSet with objects that have an isEqual method, you can verify marker uniqueness.
+Using an NSSet will automatically verify uniqueness of objects, preventing duplicates from being added.
+
+
+Answer: By using an NSSet with objects that have an isEqual method, you can verify marker uniqueness.

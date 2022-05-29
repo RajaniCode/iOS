@@ -1,0 +1,51 @@
+10. Running your custom method
+
+
+Now our Apple objects can speak!
+
+Try it out by sending the speak message to the talkingiPhone object.
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) speak;
+
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(void)speak;
+{
+    NSLog(@"Hello from inside of speak!");
+}
+@end
+
+
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+/*//Send the speak message to talkingiPhone//*/
+
+
+Answer:
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone speak];
+
+
+Output:
+Apple.m[6]: Hello from inside of speak!

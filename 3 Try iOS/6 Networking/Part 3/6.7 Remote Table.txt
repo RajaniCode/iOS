@@ -1,0 +1,234 @@
+6.7 Remote Table
+
+As you can see below, we are fetching the feed of photos using AFNetworking and storing them in the self.images array.
+
+Fill out this controller by updating tableView methods to use this self.images array. Note: You can see the JSON below under the feedImages.json tab.
+
+
+feedImages.json
+[
+  {
+  "title": "Image 1",
+  "detail": "Nice starfield.",
+  "filename": "http://tryios.codeschool.com/image1.png",
+  "thumbnail": "http://tryios.codeschool.com/1thumb.png"
+  },
+  {
+  "title": "Image 2",
+  "detail": "Some bright stars here.",
+  "filename": "http://tryios.codeschool.com/image2.png",
+  "thumbnail": "http://tryios.codeschool.com/2thumb.png"
+  },
+  {
+  "title": "Image 3",
+  "detail": "This is pretty dark.",
+  "filename": "http://tryios.codeschool.com/image3.png",
+  "thumbnail": "http://tryios.codeschool.com/3thumb.png"
+  },
+  {
+  "title": "Image 4",
+  "detail": "I can almost see a cloud.",
+  "filename": "http://tryios.codeschool.com/image4.png",
+  "thumbnail": "http://tryios.codeschool.com/4thumb.png"
+  },
+  {
+  "title": "Image 5",
+  "detail": "There's that cloudy galaxy!",
+  "filename": "http://tryios.codeschool.com/image5.png",
+  "thumbnail": "http://tryios.codeschool.com/5thumb.png"
+  },
+]
+    
+
+PhotoViewController.h
+#import <UIKit/UIKit.h>
+
+@interface PhotoViewController : UIViewController
+
+@property (strong) NSString *imageFileName;
+@property (strong) NSString *imageTitle;
+
+@end
+
+
+PhotoViewController.m
+#import "PhotoViewController.h"
+#import "UIImageView+AFNetworking.h"
+
+@implementation PhotoViewController
+
+-(void)viewDidLoad {
+    UIImageView *imageView = [[UIImageView alloc] init];
+
+    [imageView setImageWithURL:[NSURL URLWithString:self.imageFileName]];
+    imageView.frame = CGRectMake(10,10,300,300);
+
+    [self.view addSubview:imageView];
+
+    UILabel *imageTitleLabel = [[UILabel alloc] init];
+    imageTitleLabel.text = self.imageTitle;
+    imageTitleLabel.frame = CGRectMake(11,320,300,40);
+
+    [self.view addSubview:imageTitleLabel];
+}
+@end
+
+
+FeedTableViewController.h
+#import <UIKit/UIKit.h>
+
+@interface FeedTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *images;
+
+@end
+
+
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+#import "PhotoViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "UIImageView+AFNetworking.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+      self.title = @"Feed";
+      self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  NSURL *url = [[NSURL alloc] initWithString:@"http://tryios.codeschool.com/feedImages.json"];
+  NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+  
+  AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+      self.images = JSON;
+      [self.tableView reloadData]; // this is necessary, because by the time this runs, tableView:numberOfRowsInSection has already executed
+  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+      NSLog(@"NSError: %@",[error localizedDescription]);
+  }];
+  
+  [operation start];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  // return the number of items in the images array
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+ cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+      cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+  }
+  
+  // Finish the statements below to set the values in the cell
+  
+  cell.textLabel.text =  
+  cell.detailTextLabel.text = 
+  [cell.imageView setImageWithURL:[NSURL URLWithString:] placeholderImage:[UIImage imageNamed:@"placeholder.jpg"]];
+  
+  return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
+  PhotoViewController *photoVC = [[PhotoViewController alloc] init];
+  
+  // Also finish these, setting the proper fileName and title
+  
+  photoVC.imageFileName = 
+  photoVC.imageTitle = 
+  
+  [self.navigationController pushViewController:photoVC animated:YES];
+}
+
+@end
+
+
+Answer:
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+#import "PhotoViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "UIImageView+AFNetworking.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+      self.title = @"Feed";
+      self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  NSURL *url = [[NSURL alloc] initWithString:@"http://tryios.codeschool.com/feedImages.json"];
+  NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+  
+  AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+      self.images = JSON;
+      [self.tableView reloadData]; // this is necessary, because by the time this runs, tableView:numberOfRowsInSection has already executed
+  } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+      NSLog(@"NSError: %@",[error localizedDescription]);
+  }];
+  
+  [operation start];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  // return the number of items in the images array
+  return self.images.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+         cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+      cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+  }
+  
+  // Finish the statements below to set the values in the cell
+  
+  cell.textLabel.text = self.images[indexPath.row][@"title"];
+  cell.detailTextLabel.text = self.images[indexPath.row][@"detail"];
+  [cell.imageView setImageWithURL:[NSURL URLWithString:self.images[indexPath.row][@"thumbnail"]] placeholderImage:[UIImage imageNamed:@"placeholder.jpg"]];
+  
+  return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+  
+  PhotoViewController *photoVC = [[PhotoViewController alloc] init];
+  
+  // Also finish these, setting the proper fileName and title
+  
+  photoVC.imageFileName = self.images[indexPath.row][@"filename"];
+  photoVC.imageTitle = self.images[indexPath.row][@"title"];
+  
+  [self.navigationController pushViewController:photoVC animated:YES];
+}
+
+@end

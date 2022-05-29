@@ -1,0 +1,40 @@
+4.6 To See or Not to See
+
+We've updated our table view controller's textLabel and imageView, but we forgot that some of the variables are optionals. Update the lines where we're setting our textLabel.text and imageView.image to unwrap the optionals with optional chaining.
+
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView,
+           numberOfRowsInSection section: Int)
+           -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView,
+           cellForRowAtIndexPath indexPath: NSIndexPath)
+           -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier(
+      "CourseCell",
+      forIndexPath: indexPath
+    )
+
+    cell.textLabel[ ].text
+      = "App Evolution With Swift"
+
+    cell.imageView[ ].image
+      = UIImage(named: "course-badge")
+
+    return cell
+  }
+}
+
+
+Answer:
+?
+?

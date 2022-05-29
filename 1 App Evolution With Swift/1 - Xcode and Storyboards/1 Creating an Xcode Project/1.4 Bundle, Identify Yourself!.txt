@@ -1,0 +1,12 @@
+1.4 Bundle, Identify Yourself!
+
+Which of the following is a common example of a bundle identifier for an app named "LearningSwift" by the company "Code School"?
+
+[Single Answer]
+
+com.codeschool.LearningSwift
+www.codeschool.com/LearningSwift
+LearningSwift.codeschool.com
+
+
+Answer: com.codeschool.LearningSwift

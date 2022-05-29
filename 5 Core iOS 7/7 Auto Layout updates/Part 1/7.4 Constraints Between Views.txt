@@ -1,0 +1,13 @@
+7.4 Constraints Between Views
+
+Which of the following is not an example of when you should add constraints between views?
+
+[Single Answer]
+
+If the views are siblings (have the same superview).
+If the views appear visually next to each other.
+If the views belong to different controllers.
+If the views are logically grouped together on screen.
+
+
+Answer: If the views belong to different controllers.

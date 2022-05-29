@@ -1,0 +1,62 @@
+11. Blocks with arguments
+
+
+Blocks are a little like messages in that you can pass arguments to them. That means that each time we invoke a block, we can pass in different objects for that block to have access to. For example, if we wanted to create a block that accepted two NSUInteger arguments and logged their sum, we could do this:
+
+^(NSUInteger num1, NSUInteger num2){
+  NSLog(@"The sum of the numbers is %lu", num1 + num2);
+};
+
+To assign this block to a variable named sumNumbers, we would do the same thing as before but this time include the types of the arguments after the variable name:
+
+void (^sumNumbers)(NSUInteger, NSUInteger) = ^(NSUInteger num1, NSUInteger num2){
+  NSLog(@"The sum of the numbers is %lu", num1 + num2);
+};
+
+Notice how on the left side of the assignment operator (=) the arguments are defined only with their types (NSUInteger, NSUInteger), while on the right they are defined with their types and names (NSUInteger num1, NSUInteger num2)
+
+Now when we invoke the sumNumbers block, we can pass in 2 NSUInteger values, like so:
+
+sumNumbers(45, 89);
+sumNumbers(18, 56);
+
+Any object can be used as an argument to a block. For example, we could make a block that logs the count of objects in an NSArray, like this:
+
+void (^logCount)(NSArray *) = ^(NSArray *array){
+  NSLog(@"There are %lu objects in this array", [array count]);
+};
+
+logCount(@[@"Mr.", @"Higgie"]);
+logCount(@[@"Mr.", @"Jony", @"Ive", @"Higgie"]);
+
+This would log:
+
+challenge[2]: There are 2 objects in this array
+challenge[2]: There are 4 objects in this array
+
+Update the myFirstBlock block to accept an NSString * object as an argument and include that string in the NSLog call.
+
+
+File
+void (^myFirstBlock)(void) = ^{
+  NSLog(@"Hello from inside the block");
+};
+
+myFirstBlock(@"Hello");
+myFirstBlock(@"World");
+
+
+Answer:
+File
+void (^myFirstBlock)(NSString *) = ^(NSString *args){
+  NSLog(@"Hello from inside the block, %@", args);
+};
+
+myFirstBlock(@"Hello");
+myFirstBlock(@"World");
+
+
+Output:
+challenge[2]: Hello from inside the block, Hello
+
+challenge[2]: Hello from inside the block, World

@@ -1,0 +1,65 @@
+3. if - else if - else
+
+
+Someone really smart once said “The world is everything that is the case”, and unfortunately sometimes the case isn’t always black-and-white, true or false, YES or NO. Maybe it won’t always be so clear whether or not Mr. Higgie is mean.
+
+For example, let’s say the mrHiggie object is updated and no longer has the areYouMean method that returns a BOOL but instead there is a meannessScale method that returns an NSNumber between 0 and 10, with 0 representing completely nice and 10 representing completely mean. In the pursuit of fairness, we should also log out messages more suited to the ambiguousness of our current situation:
+
++----------------+-----------------------------------------+
+| Meanness Range |               Log String                |
++----------------+-----------------------------------------+
+| 0-3            | Mr. Higgie is on the nice side          |
+| 4-7            | Mr. Higgie is sorta nice but not really |
+| 8-10           | Mr. Higgie is definitely mean           |
++----------------+-----------------------------------------+
+
+So it seems we can’t really use if with else because that only handles two cases when we need to handle three. Luckily there is a third option that combines the best of if and else - else if. So we could handle all three logs like this:
+
+if(0-3) {
+  NSLog(@"Mr. Higgie is on the nice side");
+} else if(4-7) {
+  NSLog(@"Mr. Higgie is sorta nice but not really");
+} else {
+  NSLog(@"Mr. Higgie is definitely mean");
+}
+
+But remember how we just said that code inside the if parentheses needs to be either YES or NO? We can get the intValue from our NSNumber object and then use the less than comparison operator to produce a BOOL value, like this:
+
+if([meannessScale intValue] < 4) {
+  NSLog(@"Mr. Higgie is on the nice side");
+} else if(4-7) {
+  NSLog(@"Mr. Higgie is sorta nice but not really");
+} else {
+  NSLog(@"Mr. Higgie is definitely mean");
+}
+
+To complete this challenge, fill out the code inside the else if parentheses so that the second NSLog is executed if meannessScale is less than 8.
+
+
+File
+NSNumber *meannessScale = [mrHiggie meannessScale];
+
+if([meannessScale intValue] < 4) {
+  NSLog(@"Mr. Higgie is on the nice side");
+} else if(/*//meannessScale is less than 8//*/) {
+  NSLog(@"Mr. Higgie is sorta nice but not really");
+} else {
+  NSLog(@"Mr. Higgie is definitely mean");
+}
+
+
+Answer:
+File
+NSNumber *meannessScale = [mrHiggie meannessScale];
+
+if([meannessScale intValue] < 4) {
+  NSLog(@"Mr. Higgie is on the nice side");
+} else if([meannessScale intValue] < 8) {
+  NSLog(@"Mr. Higgie is sorta nice but not really");
+} else {
+  NSLog(@"Mr. Higgie is definitely mean");
+}
+
+
+Output:
+challenge[8]: Mr. Higgie is definitely mean

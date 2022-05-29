@@ -1,0 +1,109 @@
+18. Properties vs. arguments
+
+
+We’ve just committed a big Object-Oriented design mistake: we’re passing in information about the state of an object to one of it’s methods. It would be like if we had a fullName method on the Person class that took as arguments their firstName and lastName:
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+- (NSString *)fullNameWithFirstName:(NSString *)firstName lastName:(NSString *)lastName;
+{
+  return [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+}
+@end
+
+It’s much better to have properties for firstName and lastName so methods can access those properties using self:
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+- (NSString *)fullName;
+{
+  return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
+}
+@end
+
+We’ve started to fix this design mistake and added the batteryLife property to Apple.
+
+Complete the fix by updating the reportBatteryLife method to use the property instead of taking an argument.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+talkingiPhone.batteryLife = @100;
+
+[talkingiPhone reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (void) reportBatteryLife:(NSNumber *)battery;
+{
+    NSLog(@"Battery life is %@", battery);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+@property NSNumber *batteryLife;
+
+- (void) reportBatteryLife:(NSNumber *)battery;
+- (NSString *) speak:(NSString *)greeting;
+
+@end
+
+
+Answer:
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+@property NSNumber *batteryLife;
+
+- (void) reportBatteryLife;
+- (NSString *) speak:(NSString *)greeting;
+
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", self.batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[7]: Battery life is 100

@@ -1,0 +1,101 @@
+19. Decrease the battery life by 1
+
+
+Now that our Apple class has a property for batteryLife, we can have methods that not only can read the batteryLife value, but also change it.
+
+Add a new method to Apple called decreaseBatteryLife. It doesn't need to take any arguments or return anything. All it should do is decrease the batteryLife property by 1.
+
+You'll see that we've provided the method definition block in the implementation file.
+
+Note: If you are curious, this piece of code: @([self.batteryLife intValue] - 1); results in a NSNumber * object that is 1 less than self.batteryLife. It does this using an Objective-C boxed expression literal.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+talkingiPhone.batteryLife = @100;
+
+[talkingiPhone decreaseBatteryLife];
+[talkingiPhone reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+/*//Copy the decreaseBatteryLife declaration from the header//*/
+{
+  self.batteryLife = @([self.batteryLife intValue] - 1);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", self.batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+@property NSNumber *batteryLife;
+
+/*//Declare the decreaseBatteryLife method here//*/
+
+- (void) reportBatteryLife;
+- (NSString *) speak:(NSString *)greeting;
+
+@end
+
+
+Answer:
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+@property NSNumber *batteryLife;
+
+-(void) decreaseBatteryLife;
+- (void) reportBatteryLife;
+- (NSString *) speak:(NSString *)greeting;
+
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+-(void) decreaseBatteryLife;
+{
+  self.batteryLife = @([self.batteryLife intValue] - 1);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", self.batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[12]: Battery life is 99

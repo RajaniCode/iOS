@@ -1,0 +1,12 @@
+2.2 Creating Markers
+
+Which of the following best describes how you add a Marker to your Google Maps?
+
+[Single Answer]
+
+Create a CLLocationCoordinate2DMake and add it as a subview to your map view instance.
+Initialize any number of GMSMarker objects and on each one set the map property to your map instance.
+Create a UIImage for your marker and set it as an icon on your map view.
+
+
+Answer: Initialize any number of GMSMarker objects and on each one set the map property to your map instance.

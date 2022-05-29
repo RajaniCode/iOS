@@ -1,0 +1,80 @@
+1.4 Create a placemark
+
+
+Create an MKPlacemark named placemark from the coordinate struct using the initWithCoordinate:addressDictionary: method.
+
+Then, create an MKMapItem named mapItem by passing that placemark into MKMapItem's initWithPlacemark: initializer.
+
+Finally, set the name property of the MKMapItem object to the value of the @"name" key in mapLocation, and set the phoneNumber property to @"407-555-1212".
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    NSDictionary *mapLocation = @{@"name": @"Walt Disney World", 
+                                  @"lat": @28.41871,
+                                  @"lng": @-81.58121
+                                };
+    
+    double latitude = [mapLocation[@"lat"] doubleValue];
+    double longitude = [mapLocation[@"lng"] doubleValue];
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    
+    NSLog(@"lat: %f, lng: %f", coordinate.latitude, coordinate.longitude);
+    
+    /*//Create the MKPlacemark here//*/
+
+    /*//Create the MKMapItem here//*/
+
+    /*//Set the MKMapItem properties here//*/
+
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+  }
+
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    NSDictionary *mapLocation = @{@"name": @"Walt Disney World", 
+                                  @"lat": @28.41871,
+                                  @"lng": @-81.58121
+                                };
+    
+    double latitude = [mapLocation[@"lat"] doubleValue];
+    double longitude = [mapLocation[@"lng"] doubleValue];
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    
+    NSLog(@"lat: %f, lng: %f", coordinate.latitude, coordinate.longitude);
+    
+  	MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    
+  	MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+
+    [mapItem setName:@"name"];
+  	[mapItem setPhoneNumber:@"407-555-1212"];
+
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+  }
+
+@end

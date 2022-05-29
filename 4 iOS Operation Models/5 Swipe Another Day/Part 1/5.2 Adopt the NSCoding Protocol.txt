@@ -1,0 +1,43 @@
+5.2 Adopt the NSCoding Protocol
+
+
+Adopt the NSCoding Protocol in User.h to add support for archiving and unarchiving methods.
+
+
+User.h
+#import <Foundation/Foundation.h>
+#import "Photo.h"
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) Photo *profilePhoto;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+@property (strong, nonatomic) NSString *location;
+
+-(id)initWithJSON;
+
+@end
+
+
+Answer:
+User.h
+#import <Foundation/Foundation.h>
+#import "Photo.h"
+
+@interface User : NSObject <NSCoding>
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) Photo *profilePhoto;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+@property (strong, nonatomic) NSString *location;
+
+-(id)initWithJSON;
+
+@end

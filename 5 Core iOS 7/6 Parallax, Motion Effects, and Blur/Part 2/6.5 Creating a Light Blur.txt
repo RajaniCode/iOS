@@ -1,0 +1,10 @@
+6.5 Creating a Light Blur
+
+Complete the code below to blur an image with an extra light effect.
+
+UIImage *image = [UIImage imageNamed:@"ios-path"];
+UIImageView *blurView = [[UIImageView alloc] init];
+blurView.image = [image [ ] ];
+
+
+Answer: applyExtraLightEffect

@@ -1,0 +1,13 @@
+1.2 iOS 7 View Changes
+
+Which of the following options do not represent big changes between iOS 7 and iOS 6?
+
+[Single Answer]
+
+Views created by view controllers now take up the entire height of the window.
+The height of the status bar doesn't affect the height of the view.
+The default font color in iOS 7 is now white instead of black.
+The status bar is now always transparent.
+
+
+Answer: Views created by view controllers now take up the entire height of the window.

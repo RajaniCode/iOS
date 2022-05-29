@@ -1,0 +1,13 @@
+3.4 Removing Markers
+
+When removing markers from your map, what is it important to do?
+
+[Single Answer]
+
+Make sure to nil out the map on the marker and the marker – in that order.
+Make sure to nil out the marker and the map property – in that order.
+Remove the marker from your NSSet.
+Create a new NSSet with your markers.
+
+
+Answer: Make sure to nil out the map on the marker and the marker – in that order.

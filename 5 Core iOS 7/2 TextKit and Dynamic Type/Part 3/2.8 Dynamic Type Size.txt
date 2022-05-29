@@ -1,0 +1,13 @@
+2.8 Dynamic Type Size
+
+What value should you assign to a font size that will be used in a label or text view that contains dynamic type?
+
+[Single Answer]
+
+0
+1
+UIFontSizeDynamic
+NSTextSizeDynamic
+
+
+Answer: 0

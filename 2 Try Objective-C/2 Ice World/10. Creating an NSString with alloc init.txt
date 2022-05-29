@@ -1,0 +1,52 @@
+10. Creating an NSString with alloc/init
+
+
+Most classes in Objective-C respond to similar factory messages. For example, creating an empty NSArray like this:
+
+NSArray *emptyArray = [NSArray array];
+
+The same goes for NSDictionary:
+
+NSDictionary *emptyDict = [NSDictionary dictionary];
+
+There is a common pattern for creating an empty object, no matter what class you are using:
+
+NSString *emptyString = [[NSString alloc] init];
+NSArray *emptyArray = [[NSArray alloc] init];
+NSDictionary *emptyDictionary = [[NSDictionary alloc] init];
+
+All classes respond to the alloc message, which allocates a place in memory to store the object. alloc returns an object that is unusable until init is sent to it. If you try to use the result of alloc before calling init, like the code below, you’ll see this error:
+
+NSString *string = [NSString alloc];
+NSLog(string);
+
+Error: Did you forget to nest alloc and init?
+
+But since creating an empty object isn’t that useful, most classes implement more specific init methods that you can send to the result of alloc to create objects with data, like the initWithString: message for creating a copy of a string:
+
+NSString *copy = [[NSString alloc] initWithString:otherString];
+
+Refactor the challenge to use alloc and initWithString: instead of stringWithString: to make a copy of firstName.
+
+Note: Pairing alloc with an init* message is a very common pattern in Objective-C
+
+
+File
+NSString *firstName = @"Apple";
+
+NSString *copy = [NSString stringWithString:firstName];
+
+NSLog(@"%@ is a copy of %@", copy, firstName);
+
+
+Answer:
+File
+NSString *firstName = @"Apple";
+
+NSString *copy = [[NSString alloc] initWithString:firstName];
+
+NSLog(@"%@ is a copy of %@", copy, firstName);
+
+
+Output:
+challenge[5]: Apple is a copy of Apple

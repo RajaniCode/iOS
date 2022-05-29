@@ -1,0 +1,104 @@
+5.6 Tapping Rows
+
+
+Way to go! Now that you have some table cell data, it's time to make something happen when the user taps a cell. In tableView:didSelectRowAtIndexPath:, NSLog out to the console the cell row position each time a cell is tapped.
+
+
+FeedTableViewController.h
+#import <UIKit/UIKit.h>
+
+@interface FeedTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *imageTitleArray;
+
+@end
+
+
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    self.imageTitleArray = @[@"Image 1",@"Image 2",@"Image 3",@"Image 4", @"Image 5"];
+  }
+  return self;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  // Log out the indexPath.row here 
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return self.imageTitleArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = self.imageTitleArray[indexPath.row];
+  
+  return cell;
+}
+
+@end
+
+
+Answer:
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    self.imageTitleArray = @[@"Image 1",@"Image 2",@"Image 3",@"Image 4", @"Image 5"];
+  }
+  return self;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  // Log out the indexPath.row here 
+  NSLog(@"%i", indexPath.row);
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return self.imageTitleArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = self.imageTitleArray[indexPath.row];
+  
+  return cell;
+}
+
+@end

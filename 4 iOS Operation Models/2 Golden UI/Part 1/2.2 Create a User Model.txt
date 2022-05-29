@@ -1,0 +1,55 @@
+2.2 Create a User Model
+
+
+InstaPhoto has a User Model Class that is similar to the functionality that the City Model Class provides in Planet HIG.
+
+Create a User Model Class @interface that contains (strong, nonatomic) NSString @property variables for each of the keys in the userProfile.json tab.
+
+
+userProfile.json
+{
+    "firstName": "Mr.",
+    "lastName": "Higgie",
+    "city": "Cupertino",
+    "profilePhoto": "http://operation-models.codeschool.com/higgie_profile_image.png",
+    "profilePhotoThumbnail": "http://operation-models.codeschool.com/higgie_profile_image_thumbnail.png",
+    "biography": "Mr. Higgie was designed in California but loves to travel to exotic places. Earning a PhD in Material Science when he was only 3 years old, Mr. Higgie hasn't yet gone on to do great things. He lives at home with his parents.",
+    "memberSince": "November 2012"
+}
+
+
+User.m
+#import "User.h"
+
+@implementation User
+
+-(id)init
+{
+    self = [super init];
+    return self;
+}
+
+@end
+
+
+User.h
+#import <Foundation/Foundation.h>
+
+(Define the User Model @interface and @property variables)
+
+
+Answer:
+User.h
+#import <Foundation/Foundation.h>
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *profilePhoto;
+@property (strong, nonatomic) NSString *profilePhotoThumbnail;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+
+@end

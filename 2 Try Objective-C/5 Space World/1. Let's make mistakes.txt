@@ -1,0 +1,86 @@
+1. Let's make mistakes
+
+
+To err is human. To err is also to code. Creating an error-free program is impossible because try as hard as we might, there will always be bugs.
+
+My parents always told me I was perfect and bug-free
+
+Fortunately, there are strategies and techniques for writing Objective-C apps with as few bugs as humanly possible. In this level we’ll be digging a little deeper into Objective-C so we can explore common errors and learn how to stop them from happening.
+
+We will be doing a lot of break-things-first-and-then-fix-it style challenges in this level. It may be counter-intuitive to try and build a bug-free program by first breaking it, but you must first see how things can go wrong before you can learn how to make things right.
+
+I love breaking things. Especially previously stagnated markets.
+
+Let's break something now. There is a message on NSObject called copy that should make and return a copy of an already existing object. Go ahead and send copy to our already existing Apple object and keep an eye on the output to see what happens.
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+Apple *copy = /*//Create a copy of talkingiPhone//*/
+[copy reportBatteryLife];
+
+
+Answer:
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+Apple *copy = [talkingiPhone copy];
+[copy reportBatteryLife];
+
+
+Output:
+ -[Apple copyWithZone:]: unrecognized selector sent to instance 0x7fec9bc02100
+
+ *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[Apple copyWithZone:]: unrecognized selector sent to instance 0x7fec9bc02100'

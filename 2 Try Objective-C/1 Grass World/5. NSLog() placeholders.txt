@@ -1,0 +1,11 @@
+5. NSLog() placeholders
+
+
+The string you’re logging is called a formatted string. See how %@ is replaced with the value from firstName so that the full message appears in the output window?
+
+In NSLog(), %@ is just a placeholder that means “I’m going to be replaced by a variable that is also passed into NSLog”. You can include as many placeholders as you need and they will be replaced in the order they are defined.
+
+There is no reason to limit yourself to one placeholder. Try logging firstName twice with a space in between.
+
+
+Answer: NSLog(@"%@ %@", firstName, firstName);

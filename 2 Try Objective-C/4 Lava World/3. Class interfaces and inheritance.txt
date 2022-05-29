@@ -1,0 +1,30 @@
+3. Class interfaces and inheritance
+
+
+Apple is a fantastic name! Very classy ;)
+
+Now that we know the name of the class is we want to create, we have to define its interface:
+
+@interface Apple
+@end
+
+A class interface is like a menu in a restaurant: a public list of what is available, but instead of meals it is a list of methods and properties. “Customers” of this class can look at the interface and know what messages they can send to an object created with that class.
+
+At this point there aren’t any messages we can send to Apple objects. With this interface definition we wouldn’t even be able to create a Apple object because Apple doesn’t implement alloc or init. There are other methods all Objective-C objects are expected to have as well: description, class, copy, and more. Do we need to define alloc and init and all these other common methods in our Apple class interface to get it to work? No, that would be an awful lot of work. Object-Oriented languages like Objective-C have a technique to solve this problem in an elegant way: Inheritance.
+Inheritance
+
+An overworked, underpaid, ambitious chef dutifully prepares the coming dinner services’ predefined ingredients when she has a brilliant idea: she’s going to start a new innovative chain of high-end restaurants. Her new, innovative idea comes down to this: she’s going to build a restaurant to develop a generic menu of 5-10 brilliant but common dishes. No one will ever visit this restaurant, it is merely an abstract place for her to develop the common dishes all her restaurants will serve.
+
+She will then find chefs to create specific restaurants that build upon the generic menu: Bistros, Fast Food, Gastro Pubs, etc. These restaurants will be made of concrete, and the ambitious chef will allow her concrete chain of restaurants to innovate on what they serve and only asks that they serve her common dishes.
+
+I think you know where I’m going with this. The concrete restaurants inherit their menu from this root base restaurant. Concrete classes inherit their common methods from a root base class. In Objective-C, the root base class is NSObject, and classes like NSDictionary, NSString, NSArray, and Apple all should inherit from NSObject to respond to a common set of messages.
+
+We can make our Apple class inherit from NSObject and enter the Object-Oriented world of Objective-C as simply as this:
+
+@interface Apple : NSObject
+@end
+
+Now “Customers” of Apple will see that it inherits from NSObject and can assume that Apple will respond to all the messages an NSObject can respond to, like class, init, copy, description, etc. Learn all the messages NSObject provides by checking out the NSObject class reference.
+
+
+Continue NEXT

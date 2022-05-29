@@ -1,0 +1,271 @@
+2.4 Use initWithJSON
+
+
+Here's InstaPhoto's ProfileViewController.m Class. In ProfileViewController.h, declare a (strong, nonatomic) User @property named user.
+
+Then, in ProfileViewController.m's viewDidLoad method, instantiate a User Model object using the initWithJSON convenience initializer and assign that object to the self.user @property.
+
+
+userProfile.json
+{
+    "firstName": "Mr.",
+    "lastName": "Higgie",
+    "city": "Cupertino",
+    "profilePhoto": "http://operation-models.codeschool.com/higgie_profile_image.png",
+    "profilePhotoThumbnail": "http://operation-models.codeschool.com/higgie_profile_image_thumbnail.png",
+    "biography": "Mr. Higgie was designed in California but loves to travel to exotic places. Earning a PhD in Material Science when he was only 3 years old, Mr. Higgie hasn't yet gone on to do great things. He lives at home with his parents.",
+    "memberSince": "November 2012"
+}
+
+
+User.m
+#import "User.h"
+#import "AFJSONRequestOperation.h"
+
+@implementation User
+
+-(id)init
+{
+    self = [super init];
+    return self;
+}
+
+-(id)initWithJSON
+{
+  self = [super init];
+  if(self) {
+      NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/userProfile.json"];
+      NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+      
+      AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+          self.firstName = JSON[@"firstName"];
+          self.lastName = JSON[@"lastName"];
+          self.city = JSON[@"city"];
+          self.profilePhoto = JSON[@"profilePhoto"];
+          self.profilePhotoThumbnail = JSON[@"profilePhotoThumbnail"];
+          self.biography = JSON[@"biography"];
+          self.memberSince = JSON[@"memberSince"];
+      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+          NSLog(@"NSError: %@",[error localizedDescription]);
+      }];
+      
+      [operation start];
+  }
+  return self;
+}
+@end
+
+
+User.h
+#import <Foundation/Foundation.h>
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *profilePhoto;
+@property (strong, nonatomic) NSString *profilePhotoThumbnail;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+
+-(id)initWithJSON;
+
+@end
+
+
+ProfileViewController.m
+#import "ProfileViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "UIImageView+AFNetworking.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Profile";
+        self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.scrollView.contentSize = CGSizeMake(320,480);              
+    
+    [self.view addSubview:self.scrollView];
+
+    /*//initialize the User Model object here and set it to the `self.user` @property//*/
+
+    [self fillProfileViews];
+}
+
+- (void)fillProfileViews
+{
+    UIImageView *profileImageView = [[UIImageView alloc] init];
+    profileImageView.frame = CGRectMake(20, 20, 100, 114);
+    
+    UIImage *placeholder = [UIImage imageNamed:@"placeholder.jpg"];
+    
+    NSURL *imageURL = [NSURL URLWithString:self.user.profilePhoto];
+    
+    [profileImageView setImageWithURL:imageURL placeholderImage:placeholder];
+    profileImageView.image = placeholder;
+    
+    [self.scrollView addSubview:profileImageView];
+    
+    UILabel *nameLabel = [[UILabel alloc] init];
+    nameLabel.frame = CGRectMake(20,140,280,40);
+    
+    nameLabel.text = [NSString stringWithFormat:@"Name: %@ %@", self.user.firstName, self.user.lastName];
+    
+    [self.scrollView addSubview:nameLabel];
+    
+    UILabel *cityLabel = [[UILabel alloc] init];
+    cityLabel.frame = CGRectMake(20,200,280,40);
+    cityLabel.text = self.user.city;
+    
+    [self.scrollView addSubview:cityLabel];
+    
+    UITextView *biography = [[UITextView alloc] init];
+    biography.frame = CGRectMake(12,260,300,180);
+    biography.font = [UIFont fontWithName:@"Helvetica" size:17];
+    biography.editable = NO;
+    
+    biography.text = self.user.biography;
+    
+    [self.scrollView addSubview:biography];
+    
+    UILabel *memberSinceLabel = [[UILabel alloc] init];
+    memberSinceLabel.frame = CGRectMake(20,440,280,40);
+    
+    memberSinceLabel.text = self.user.memberSince;
+    
+    [self.scrollView addSubview:memberSinceLabel];    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+}
+@end
+
+
+ProfileViewController.h
+#import <UIKit/UIKit.h>
+#import "User.h"
+
+@interface ProfileViewController : UIViewController
+
+/*//Add a User Model object @property here named user//*/
+@property (strong, nonatomic) UIScrollView *scrollView;
+
+- (void)fillProfileViews;
+
+@end
+
+
+Answer:
+ProfileViewController.h
+#import <UIKit/UIKit.h>
+#import "User.h"
+
+@interface ProfileViewController : UIViewController
+
+/*//Add a User Model object @property here named user//*/
+@property (strong, nonatomic) User *user;
+@property (strong, nonatomic) UIScrollView *scrollView;
+
+- (void)fillProfileViews;
+
+@end
+
+
+ProfileViewController.m
+#import "ProfileViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "UIImageView+AFNetworking.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Profile";
+        self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    self.scrollView.contentSize = CGSizeMake(320,480);              
+    
+    [self.view addSubview:self.scrollView];
+
+    self.user = [[User alloc] initWithJSON];
+    
+    
+    [self fillProfileViews];
+}
+
+- (void)fillProfileViews
+{
+    UIImageView *profileImageView = [[UIImageView alloc] init];
+    profileImageView.frame = CGRectMake(20, 20, 100, 114);
+    
+    UIImage *placeholder = [UIImage imageNamed:@"placeholder.jpg"];
+    
+    NSURL *imageURL = [NSURL URLWithString:self.user.profilePhoto];
+    
+    [profileImageView setImageWithURL:imageURL placeholderImage:placeholder];
+    profileImageView.image = placeholder;
+    
+    [self.scrollView addSubview:profileImageView];
+    
+    UILabel *nameLabel = [[UILabel alloc] init];
+    nameLabel.frame = CGRectMake(20,140,280,40);
+    
+    nameLabel.text = [NSString stringWithFormat:@"Name: %@ %@", self.user.firstName, self.user.lastName];
+    
+    [self.scrollView addSubview:nameLabel];
+    
+    UILabel *cityLabel = [[UILabel alloc] init];
+    cityLabel.frame = CGRectMake(20,200,280,40);
+    cityLabel.text = self.user.city;
+    
+    [self.scrollView addSubview:cityLabel];
+    
+    UITextView *biography = [[UITextView alloc] init];
+    biography.frame = CGRectMake(12,260,300,180);
+    biography.font = [UIFont fontWithName:@"Helvetica" size:17];
+    biography.editable = NO;
+    
+    biography.text = self.user.biography;
+    
+    [self.scrollView addSubview:biography];
+    
+    UILabel *memberSinceLabel = [[UILabel alloc] init];
+    memberSinceLabel.frame = CGRectMake(20,440,280,40);
+    
+    memberSinceLabel.text = self.user.memberSince;
+    
+    [self.scrollView addSubview:memberSinceLabel];    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+}
+@end

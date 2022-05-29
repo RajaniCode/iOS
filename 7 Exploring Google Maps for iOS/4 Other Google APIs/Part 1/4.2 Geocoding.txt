@@ -1,0 +1,13 @@
+4.2 Geocoding
+
+Geocoding allows us to do which of the following?
+
+[Single Answer]
+
+Translate a latitude, longitude point into an address.
+Translate an address into a latitude, longitude.
+Find the zip code for a tapped point.
+All of the above.
+
+
+Answer: All of the above.

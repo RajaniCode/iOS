@@ -1,0 +1,7 @@
+7. Logging two variables
+
+
+Now, instead of logging your first name twice, update the NSLog call on line 7 to log both the firstName and lastName variables
+
+
+Answer: NSLog(@"%@ %@", firstName, lastName);

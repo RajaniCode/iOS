@@ -1,0 +1,133 @@
+1.7 Use a Convenience Initializer
+
+
+In PhotoViewController, create a Photo Model object stored in self.photo using the initWithTitle:detail:filename:thumbnail: convenience initializer with the data listed in code comments.
+
+
+Photo.m
+#import "Photo.h"
+
+@implementation Photo
+
+-(id)init
+{
+    self = [super init];
+    return self;
+}
+
+-(id)initWithTitle:(NSString *)aTitle
+	detail:(NSString *)aDetail
+	filename:(NSString *)aFilename
+	thumbnail:(NSString *)aThumbnail
+{
+    self = [super init];
+    if (self) {
+        self.title = aTitle;
+        self.detail = aDetail;
+        self.filename = aFilename;
+        self.thumbnail = aThumbnail;
+    }
+    return self;
+}
+
+@end
+
+
+Photo.h
+#import <Foundation/Foundation.h>
+
+@interface Photo : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSString *filename;
+@property (strong, nonatomic) NSString *thumbnail;
+
+-(id)initWithTitle:(NSString *)aTitle
+	detail:(NSString *)aDetail
+	filename:(NSString *)aFilename
+	thumbnail:(NSString *)aThumbnail;
+@end
+
+
+PhotoViewController.m
+#import "PhotoViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+
+@implementation PhotoViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        //title: @"Mr. Higgie"
+        //detail: @"This is Higgie's profile picture"
+        //filename: @"higgie_profile_image.png"
+        //thumbnail: @"higgie_profile_image_thumbnail.png"
+
+        /*//replace this default initializer and property assignments with a convenience initializer//*/
+        self.photo = [[Photo alloc] init];
+        self.photo.filename = @"higgie_profile_image.png";
+        self.photo.title = @"Higgie";
+
+    }
+    return self;
+}
+
+-(void)viewDidLoad
+{
+    UIImageView *imageView = [[UIImageView alloc] init];
+
+    [imageView setImage:[UIImage imageNamed:self.photo.filename]];
+    imageView.frame = CGRectMake(10,10,300,300);
+    
+    [self.view addSubview:imageView];
+    
+    UILabel *imageTitleLabel = [[UILabel alloc] init];
+    imageTitleLabel.text = self.photo.title;
+    imageTitleLabel.frame = CGRectMake(11,320,300,40);
+    
+    [self.view addSubview:imageTitleLabel];
+}
+
+@end
+
+
+Answer:
+PhotoViewController.m
+#import "PhotoViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+
+@implementation PhotoViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.photo = [[Photo alloc] initWithTitle:@"Mr. Higgie"
+					detail:@"This is Higgie's profile picture"
+					filename:@"higgie_profile_image.png" 
+					thumbnail:@"thumbnail.png"];
+    }
+    return self;
+}
+
+-(void)viewDidLoad
+{
+    UIImageView *imageView = [[UIImageView alloc] init];
+
+    [imageView setImage:[UIImage imageNamed:self.photo.filename]];
+    imageView.frame = CGRectMake(10,10,300,300);
+    
+    [self.view addSubview:imageView];
+    
+    UILabel *imageTitleLabel = [[UILabel alloc] init];
+    imageTitleLabel.text = self.photo.title;
+    imageTitleLabel.frame = CGRectMake(11,320,300,40);
+    
+    [self.view addSubview:imageTitleLabel];
+}
+
+@end

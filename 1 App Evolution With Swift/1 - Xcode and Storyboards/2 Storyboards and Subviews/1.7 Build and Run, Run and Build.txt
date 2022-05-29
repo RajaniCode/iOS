@@ -1,0 +1,13 @@
+1.7 Build and Run, Run and Build
+
+Given the following objects in the storyboard scene editor, what problem will you see if you build and run the apps?
+
+[Single Answer]
+
+The app won’t build and run.
+The app will run, but nothing will appear on screen.
+The app will run, but the "Chapter 1" label won’t be visible.
+The app will run, but the "Learning Swift" label won’t be visible.
+
+
+Answer: The app will run, but the "Chapter 1" label won’t be visible.

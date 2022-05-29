@@ -1,0 +1,13 @@
+6.4 Creating Snapshot Images
+
+Which of the following methods of functions are not necessary when creating a snapshot image?
+
+[Single Answer]
+
+UIGraphicsBeginImageContextWithOptions()
+UIGraphicsTakeSnapshotAsImage()
+drawViewHierarchyInRect:afterScreenUpdates:
+UIGraphicsEndImageContext()
+
+
+Answer: UIGraphicsTakeSnapshotAsImage()

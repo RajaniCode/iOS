@@ -1,0 +1,82 @@
+17. Define method with argument
+
+
+We added a new method to Apple called reportBatteryLife. Right now reportBatteryLife isn’t too useful as it will always report the battery life as 100.
+
+Change the reportBatteryLife method to accept an argument that is of type NSNumber *. Then, update the method implementation to replace the static 100 with the NSNumber argument.
+
+Note: Take a look at the "Example Use" tab to find out how we expect to be able to call reportBatteryLife:.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone reportBatteryLife:@99];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (void)reportBatteryLife;
+{
+    NSLog(@"Battery life is at 100");
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void)reportBatteryLife;
+- (NSString *) speak:(NSString *)greeting;
+
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (NSNumber *)reportBatteryLife:(NSNumber *)number;
+{
+    NSLog(@"Battery life is at %@", number);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (NSNumber *)reportBatteryLife:(NSNumber *)number;
+- (NSString *) speak:(NSString *)greeting;
+
+@end
+
+
+Output:
+Apple.m[7]: Battery life is at 99

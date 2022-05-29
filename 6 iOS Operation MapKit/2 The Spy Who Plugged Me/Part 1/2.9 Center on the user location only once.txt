@@ -1,0 +1,145 @@
+2.9 Center on the user location only once
+
+
+We might as well call the centerOnUser: method as soon as the user location is updated, but we only want to do that once so the map doesn't constantly re-center as our location changes.
+
+Add a conditional to RestaurantMapViewController.m that only calls the [self centerOnUser:nil] method whenever the userLocationUpdated property is NO.
+
+
+RestaurantMapViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface RestaurantMapViewController : UIViewController <MKMapViewDelegate>
+
+@property (strong, nonatomic) MKMapView *theMap;
+@property (strong, nonatomic) UILabel *userLocationLabel;
+@property (strong, nonatomic) UIButton *userCenterButton;
+
+@property BOOL userLocationUpdated;
+
+- (void) centerOnUser:(id)sender;
+
+@end
+
+
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    double regionWidth = 2200;
+    double regionHeight = 2500;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    self.userLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,360,280,40)];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+    
+}
+
+- (void)centerOnUser:(id)sender
+{
+   [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate animated:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    /*//add the conditional that calls centerOnUser: here//*/
+
+    self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];
+}
+@end
+
+
+Answer:
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    double regionWidth = 2200;
+    double regionHeight = 2500;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    self.userLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,360,280,40)];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+    
+}
+
+- (void)centerOnUser:(id)sender
+{
+   [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate animated:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(!self.userLocationUpdated) {
+    	[self centerOnUser:nil];
+      	self.userLocationUpdated = YES;
+    }
+    
+  	self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];         
+}
+@end    

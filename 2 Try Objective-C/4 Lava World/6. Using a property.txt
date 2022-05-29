@@ -1,0 +1,67 @@
+6. Using a property
+
+
+Properties are like variables that attach to an object. Do you remember back in Level 1 when we created a variable named firstName to store a string so we could use it later? Properties are like that, but allow the object or anyone using the object to have access to that variable.
+
+So, if you created a Person object, you could set its firstName property like this:
+
+Person *person = [[Person alloc] init];
+person.firstName = @"Eric";
+
+Notice how we don’t have to include the NSString type to the left of the name of the property. That’s because we’ve already defined firstName to be of type NSString in the property definition:
+
+Person.h
+
+@interface Person : NSObject
+@property NSString *firstName;
+@property NSString *lastName;
+@end
+
+To retrieve the value of the property, just write person.firstName:
+
+NSLog(@"Person's first name is %@", person.firstName);
+
+Properties in an object are accessed using the dot notation, like this: <object>.<property>.
+
+Note: Properties, although accessed and set using dot notation, use message sending under the hood. When you write person.firstName, it actually calls [person firstName] and when you write person.firstName = @"Eric" it actually calls [person setFirstName:@"Eric"]
+
+To complete this challenge, set the phoneName property on talkingiPhone to any name.
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+@end
+
+
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+
+(Set the phoneName property)
+NSLog(@"%@", talkingiPhone.phoneName);
+
+
+Answer:
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+//[talkingiPhone setPhoneName:@"iPhone"];
+talkingiPhone.phoneName = @"iPhone";
+NSLog(@"%@", talkingiPhone.phoneName);
+
+
+Output:
+challenge[6]: iPhone

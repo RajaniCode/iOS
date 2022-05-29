@@ -1,0 +1,33 @@
+3.2 Setup the map annotation class header
+
+
+Adopt the MKAnnotation protocol in the MapAnnotation class and declare a CLLocationCoordinate2D property named coordinate.
+
+
+MapAnnotation.m
+#import "MapAnnotation.h"
+
+@implementation MapAnnotation
+
+@end
+
+
+MapAnnotation.h
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+
+@interface MapAnnotation : NSObject
+
+@end    
+
+
+Answer:
+MapAnnotation.h
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+
+@interface MapAnnotation : NSObject <MKAnnotation>
+
+@property CLLocationCoordinate2D coordinate;
+
+@end

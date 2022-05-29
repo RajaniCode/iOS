@@ -1,0 +1,13 @@
+5.3 Dynamic Behaviors 2
+
+Which of the following dynamic behavior classes can be used to animate a view to a specific place in a window?
+
+[Single Answer]
+
+UIGravityBehavior
+UICollisionBehavior
+UIPushBehavior
+UISnapBehavior
+
+
+Answer: UISnapBehavior

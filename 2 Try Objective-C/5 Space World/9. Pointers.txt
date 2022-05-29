@@ -1,0 +1,108 @@
+9. Pointers
+
+
+Remember in Level 1 when we introduced variables and compared them to a labeled box that holds an object? Well, that’s not exactly how it works.
+
+I always knew there was something fishy with that box metaphor (I don't trust boxes)
+
+When you create a variable for an Objective-C object, all you are storing in the “box” is the address of the actual object. It’d be like if you opened a box and instead of seeing a present, it was just a piece of paper with a P.O. Box address on it. You could use the address to go and fetch the present, or you could give the address to another person and have them fetch the present.
+
+How do you know if your variable is just a pointer and not an actual object? You can tell by the presence of the asterisk *, which means “pointer to”. So the type NSString * can be read as “pointer to an NSString object”.
+
+When dealing with variables for Objective-C objects, you are always dealing with pointers to those objects. In the case of the id type, it’s already defined as a pointer to an object, so you don’t need to specify the * again.
+
+Variables that are used for basic c types like int and char don’t need the * because they hold the values directly, instead of a pointer to those objects:
+
+int i = 25;
+char c = "f";
+
+If you want to log the address that a variable holds instead of object the address points to, you can use the %p placeholder in NSLog, like so:
+
+Person *person = [[Person alloc] init];
+NSLog(@"The person object is located at %p", person);
+
+Go ahead and hit submit to log both of the address of the talkingiPhone object and copy object. Notice how they point to different places in memory, which are represented by the numbers starting with `0x`.
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+{
+    _batteryLife = batteryLife;
+    return [super init];
+}
+
+- (id) copyWithZone:(NSZone *)zone;
+{
+   id copy = [[[self class] allocWithZone:zone] initWithBatteryLife:_batteryLife];
+   [copy setPhoneName:[NSString stringWithFormat:@"Copy of %@", self.phoneName]];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName){
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);  
+  }else{
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+    
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject <NSCopying> {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+Apple *copy = [talkingiPhone copy];
+
+NSLog(@"The memory address for the original object is %p", talkingiPhone);
+NSLog(@"The memory address for the copied object is %p", copy);
+
+
+Answer:
+Submit
+
+
+Output:
+challenge[8]: The memory address for the original object is 0x7fb8a240acb0
+
+challenge[9]: The memory address for the copied object is 0x7fb8a2402fd0

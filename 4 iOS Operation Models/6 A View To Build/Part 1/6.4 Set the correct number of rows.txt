@@ -1,0 +1,115 @@
+6.4 Set the correct number of rows
+
+
+In the tableView:numberOfRowsInSection: method in FavoritesTableViewController, return the number of items in the favoritePhotos property of the User Model object.
+
+
+FavoritesTableViewController.h
+#import <UIKit/UIKit.h>
+
+@class User;
+
+@interface FavoritesTableViewController : UITableViewController
+
+@property (strong, nonatomic) User *user;
+
+@end
+
+
+FavoritesTableViewController.m
+#import "FavoritesTableViewController.h"
+#import "User.h"
+
+@implementation FavoritesTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Favorite Photos";
+        self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.user = [User getUser];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    /*//return the number of items currently in self.user.favoritePhotos//*/
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = @"We'll set this text soon.";
+    
+  return cell;
+}
+
+@end
+
+
+Answer:
+FavoritesTableViewController.m
+#import "FavoritesTableViewController.h"
+#import "User.h"
+
+@implementation FavoritesTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Favorite Photos";
+        self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.user = [User getUser];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+  return self.user.favoritePhotos.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = @"We'll set this text soon.";
+    
+  return cell;
+}
+
+@end

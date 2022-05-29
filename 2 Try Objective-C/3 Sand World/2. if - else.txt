@@ -1,0 +1,52 @@
+2. if - else
+
+
+Maybe we aren’t being fair to Mr. Higgie. Let’s give him a chance to change his ways.
+
+There is always Software Update
+
+So how would we execute code if mrHiggieIsMean got changed to NO? We could do something like this:
+
+if(mrHiggieIsMean){
+  NSLog(@"Confirmed: he is super mean");
+}
+
+if(!mrHiggieIsMean){
+  NSLog(@"No, actually he's really nice");
+}
+
+That exclamation point ! is called the negation operator, and it turns YES into NO and NO into YES. But there is an easier way, using else:
+
+if(mrHiggieIsMean){
+  NSLog(@"Confirmed: he is super mean");
+} else {
+  NSLog(@"No, actually he's really nice");
+}
+
+Go ahead and update the code on the right to NSLog a different message if mrHiggieIsMean turns out to be NO. To make things more interesting, we'll be asking the mrHiggie object to set the mrHiggieIsMean variable. This way we have to make sure and handle both cases.
+
+Note: It wouldn't make sense if you set the mrHiggieIsMean variable to just YES or NO. At that point why even use a conditional?
+
+
+File
+BOOL mrHiggieIsMean = [mrHiggie areYouMean];
+
+if (mrHiggieIsMean) {
+  NSLog(@"Confirmed: he is super mean");
+}
+
+
+Answer:
+File
+BOOL mrHiggieIsMean = [mrHiggie areYouMean];
+
+if (mrHiggieIsMean) {
+  NSLog(@"Confirmed: he is super mean");
+}
+else {
+  NSLog(@"No, actually he's really nice"); 
+}
+  
+
+Output:
+challenge[4]: Confirmed: he is super mean

@@ -1,0 +1,13 @@
+7.3 Ambiguous Layout
+
+What conditions can lead to ambiguous layout errors?
+
+[Single Answer]
+
+Too many constraints added to a single view.
+Not enough constraints added to a single view.
+Trying to add a constraint between 2 views.
+Adding a constraint but then forgetting to set the constraint's constant value.
+
+
+Answer: Not enough constraints added to a single view.

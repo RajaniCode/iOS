@@ -1,0 +1,89 @@
+1.7 Display the restaurant names in table cells
+
+
+Next, display the value of the @"name" key in the cell's textLabel and the value of the @"phoneNumber" key in the cell's detailTextLabel.
+
+Note: Remember that the indexPath value passed into the cellForRowAtIndexPath method has a row property that contains an NSInteger representing the position of the row in that method. Therefore, indexPath.row returns the row number.
+
+
+LocationsTableViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface LocationsTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *locations;
+
+@end
+    
+
+LocationsTableViewController.m
+#import "LocationsTableViewController.h"
+
+@implementation LocationsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.locations = @[@{@"name": @"Taco Cantina", @"phoneNumber": @"407-555-3019", @"lat": @28.5464, @"lng": @-81.3844},
+                       @{@"name": @"Lou's", @"phoneNumber": @"407-555-1212", @"lat": @28.5336, @"lng": @-81.3735}];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.locations.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"locCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"locCell"];
+    }
+    
+    /*//Display the location's name in the cell's textLabel//*/
+
+    /*//Display the location's phoneNumber in the cell's detailTextLabel//*/            
+                
+    return cell;
+}
+
+@end
+
+
+Answer:
+LocationsTableViewController.m
+#import "LocationsTableViewController.h"
+
+@implementation LocationsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.locations = @[@{@"name": @"Taco Cantina", @"phoneNumber": @"407-555-3019", @"lat": @28.5464, @"lng": @-81.3844},
+                       @{@"name": @"Lou's", @"phoneNumber": @"407-555-1212", @"lat": @28.5336, @"lng": @-81.3735}];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.locations.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"locCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"locCell"];
+    }  
+    
+  	cell.textLabel.text = self.locations[indexPath.row][@"name"];               
+    cell.detailTextLabel.text = self.locations[indexPath.row][@"phoneNumber"];  
+  
+    return cell;
+}
+
+@end

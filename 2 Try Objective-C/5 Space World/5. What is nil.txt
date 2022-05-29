@@ -1,0 +1,143 @@
+5. What is nil?
+
+
+Did you notice that when you sent the reportBatteryLife message to the Apple copy returned from copyWithZone: that it output something strange and unexpected?
+
+Apple.m[21]: (null)'s battery life is 100
+
+Wait, weren’t we supposed to be logging the phoneName property of the object, what the heck is (null)?
+
+You never set the phoneName on the copy. Even I realized that and I'm a fictional character.
+
+Logging a property that hasn’t been set yet results in the property being represented by (null), but does that mean that the phoneName property is set to the string @"(null)" by default?
+
+Nope, a property or variable that hasn’t been set to anything has a value of nil. nil is like the number 0: it represents the absence of a value. You can check if a property or variable is nil using an if statement, like so:
+
+Apple *talkingiPhone = [[Apple alloc] init];
+
+if(talkingiPhone.phoneName){
+  NSLog(@"phoneName is set to %@", talkingiPhone.phoneName);
+}else{
+  NSLog(@"phoneName is nil");
+}
+
+nil has a special and useful feature - you can send messages to it and instead of causing an error, it will respond to the message and simply return nil. So you could do something like this:
+
+Apple *talkingiPhone = [[Apple alloc] init];
+
+if([talkingiPhone.phoneName isEqualToString:@"Mr. Higgie"]){
+  NSLog(@"phoneName is equal to Mr. Higgie");
+}else{
+  NSLog(@"phoneName is not equal to Mr. Higgie");
+}
+
+So even if talkingiPhone.phoneName is nil, the code above will still work.
+
+Note: If you aren't expecting an object to be nil, then having a message just return nil instead of performing the expected method can sometimes lead to subtle errors. Consider this when debugging.
+
+Fix reportBatteryLife by checking if phoneName is nil. If it is nil, then output self in place of self.phoneName
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+Apple *copy = [talkingiPhone copy];
+[copy reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] init];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject <NSCopying> {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] init];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName) {
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+  }
+  else {
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[28]: <Apple: 0x7fd32ac0ae10>'s battery life is 100

@@ -1,0 +1,13 @@
+7.10 Updating Constraints
+
+What method can you call to force the updateViewConstraints method to run?
+
+[Single Answer]
+
+updateViewConstraints
+updateConstraints
+setNeedsDisplay
+setNeedsUpdateConstraints
+
+
+Answer: setNeedsUpdateConstraints

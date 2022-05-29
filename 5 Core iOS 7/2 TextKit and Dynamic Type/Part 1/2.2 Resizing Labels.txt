@@ -1,0 +1,11 @@
+2.2 Resizing Labels
+
+Now that sizeWithFont: is deprecated in iOS 7, which one of these is another method you can use to resize labels based on their content?
+
+sizeWithContent:
+sizeLabel:
+sizeForLabel:content:
+sizeWithAttributes:
+
+
+Answer: sizeWithAttributes:

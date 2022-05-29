@@ -1,0 +1,10 @@
+3.2 Modal Presentation Styles
+
+Complete the code below by setting the correct modalPresentationStyle to display an animated transition.
+
+CourseViewController *courseVC =
+    [[CoursesViewController alloc] init];
+courseVC.modalPresentationStyle = [ ];
+
+
+Answer: UIModalPresentationCustom

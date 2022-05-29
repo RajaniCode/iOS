@@ -1,0 +1,210 @@
+4.4 Request map data as a JSON object
+
+
+Setup an AFJSONRequestOperation request for the endpoint http://operationmapkit.codeschool.com/getAllRestaurants, and log the contents of the JSON response inside of the success block.
+
+NOTE: We've added the AFNetworking library for you and #imported the AFJSONRequestOperation.h file
+
+
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+#import "MapAnnotation.h"
+#import "AFJSONRequestOperation.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.539894, -81.381397);
+    double regionWidth = 2200;
+    double regionHeight = 2500;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    self.userLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,360,280,40)];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+    
+    NSURL *url = [[NSURL alloc] initWithString:@"http://operationmapkit.codeschool.com/getAllRestaurants.json"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+
+    /*//Request the getAllRestaurants.json and for now just log the JSON returned//*/
+}
+
+- (void)centerOnUser:(id)sender
+{
+    [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate animated:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(self.userLocationUpdated == NO) {
+        [self centerOnUser:nil];
+        self.userLocationUpdated = YES;
+    }
+    
+    self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    [self.theMap setCenterCoordinate:[[view annotation] coordinate] animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    MKAnnotationView *view = [self.theMap dequeueReusableAnnotationViewWithIdentifier:@"annoView"];
+    if(!view) {
+        view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annoView"];
+    }
+    
+    MapAnnotation *singleAnnotation = annotation;
+    
+    if([singleAnnotation.cost isEqualToString:@"cheap"]) {
+        view.image = [UIImage imageNamed:@"cheap.png"];
+    } else if([singleAnnotation.cost isEqualToString:@"expensives"]) {
+        view.image = [UIImage imageNamed:@"expensive.png"];
+    }
+    
+    view.canShowCallout = YES;
+    
+    return view;
+}
+
+@end
+
+
+Answer:
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+#import "MapAnnotation.h"
+#import "AFJSONRequestOperation.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.539894, -81.381397);
+    double regionWidth = 2200;
+    double regionHeight = 2500;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    self.userLocationLabel = [[UILabel alloc] initWithFrame:CGRectMake(20,360,280,40)];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+    
+    NSURL *url = [[NSURL alloc] initWithString:@"http://operationmapkit.codeschool.com/getAllRestaurants.json"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+
+    /*//Request the getAllRestaurants.json and for now just log the JSON returned//*/
+  	AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+                                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                         	NSLog(@"%@", JSON);
+                                         }failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) { 
+                                               NSLog(@"%@", error.localizedDescription);
+                                         }];
+  	[operation start];
+}
+
+- (void)centerOnUser:(id)sender
+{
+    [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate animated:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(self.userLocationUpdated == NO) {
+        [self centerOnUser:nil];
+        self.userLocationUpdated = YES;
+    }
+    
+    self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    [self.theMap setCenterCoordinate:[[view annotation] coordinate] animated:YES];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    MKAnnotationView *view = [self.theMap dequeueReusableAnnotationViewWithIdentifier:@"annoView"];
+    if(!view) {
+        view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annoView"];
+    }
+    
+    MapAnnotation *singleAnnotation = annotation;
+    
+    if([singleAnnotation.cost isEqualToString:@"cheap"]) {
+        view.image = [UIImage imageNamed:@"cheap.png"];
+    } else if([singleAnnotation.cost isEqualToString:@"expensives"]) {
+        view.image = [UIImage imageNamed:@"expensive.png"];
+    }
+    
+    view.canShowCallout = YES;
+    
+    return view;
+}
+
+@end

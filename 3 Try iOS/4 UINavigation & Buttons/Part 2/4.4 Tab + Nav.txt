@@ -1,0 +1,62 @@
+4.4 Tab + Nav
+
+In our AppDelegate below, we've started to make it so each tab in the tabController is a UINavigationController as you can see with the ProfileViewController. Do the same thing for the FeedViewController and FavoritesViewController, and make sure to add the navigation controllers to the tabController. (Feed first, then Favorites, and finally the Profile.)
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+#import "FeedViewController.h"
+#import "ProfileViewController.h"
+#import "FavoritesViewController.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  ProfileViewController *profileViewController = [[ProfileViewController alloc] init];
+  UINavigationController *profileNavController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
+
+  FeedViewController *feedViewController = [[FeedViewController alloc] init];
+
+  FavoritesViewController *favoritesViewController = [[FavoritesViewController alloc] init];
+  
+  UITabBarController *tabController = [[UITabBarController alloc] init];
+  tabController.viewControllers = @[profileNavController];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = tabController;
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+#import "FeedViewController.h"
+#import "ProfileViewController.h"
+#import "FavoritesViewController.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  ProfileViewController *profileViewController = [[ProfileViewController alloc] init];
+  UINavigationController *profileNavController = [[UINavigationController alloc] initWithRootViewController:profileViewController];
+
+  FeedViewController *feedViewController = [[FeedViewController alloc] init];
+  UINavigationController *feedNavController = [[UINavigationController alloc] initWithRootViewController:feedViewController];
+    
+  FavoritesViewController *favoritesViewController = [[FavoritesViewController alloc] init];
+  UINavigationController *favoritesNavController = [[UINavigationController alloc] initWithRootViewController:favoritesViewController];
+  
+  UITabBarController *tabController = [[UITabBarController alloc] init];
+  tabController.viewControllers = @[feedNavController, favoritesNavController, profileNavController];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = tabController;
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+@end

@@ -1,0 +1,54 @@
+4. Trying to log an NSUInteger
+
+
+NSString objects accept a message called length that returns the number of 
+characters in the string.
+
+As you can see from the length message documentation
+
+  - (NSUInteger)length
+
+the length message returns an NSUInteger. If we want to store the result of length in a variable, we can write the following code:
+
+  NSUInteger cityLength = [city length];
+
+What happened to the asterisk? Shouldn't it be NSUInteger *?
+
+Well, according to the documentation, it doesn’t seem so. Some variables need an asterisk * and some don’t, and we’ll be discussing why very soon.
+
+An NSUInteger is just the data type that Objective-C uses to store an integer, but you may have already guessed by the lack of asterisk that it’s a little bit different than the objects we’ve been using so far.
+
+This difference can be seen when you try to put a NSUInteger variable in NSLog().
+
+To see what will happen if you try, go ahead and submit the code as-is.
+
+Hey, what's the deal?
+
+The deal is that NSUInteger is different enough from the other objects we’ve been dealing with that it can’t work with the %@ placeholder in NSLog.
+
+You see, %@ is just one of many different Format Specifiers (or placeholders for short) that can be used in NSLog() for different data types.
+
+Note: You can find the list of all format specifiers in Apple's Documentation
+
+If you want to log an NSUInteger, you can use the %lu placeholder instead of %@.
+
+Try replacing the %@ placeholder with %lu to fix the error and see the result of [city length].
+
+
+File
+NSString *city = @"Ice World";
+NSUInteger cityLength = [city length];
+
+NSLog(@"City has %@ characters", cityLength);
+
+
+Answer:
+File
+NSString *city = @"Ice World";
+NSUInteger cityLength = [city length];
+
+NSLog(@"City has %lu characters", cityLength);
+
+
+Output:
+challenge[4]: City has 9 characters

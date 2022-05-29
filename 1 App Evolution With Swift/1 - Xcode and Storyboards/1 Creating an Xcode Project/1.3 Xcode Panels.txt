@@ -1,0 +1,13 @@
+1.3 Xcode Panels
+
+Which panel in Xcode would you use to adjust the attributes of a view?
+
+[Single Answer]
+
+Project navigator
+Storyboard editor
+Inspector panel
+Object panel
+
+
+Answer: Inspector panel

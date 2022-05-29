@@ -1,0 +1,39 @@
+9. Creating an NSString with a message
+
+
+Up until this point, we’ve only created objects using object literal syntax, like this:
+
+NSString *person = @"Derrick Spallam";
+
+The @"" syntax is just a shortcut for creating an object with the type NSString. But NSString is more than just the type of the object, it’s also a factory for creating objects. In Objective-C and other Object-Oriented languages, factories like this are called a class.
+
+A class is itself able to respond to messages, and the results are usually of the type it represents. For example, you can send the message string to the NSString class to create an empty string object:
+
+NSString *emptyString = [NSString string];
+
+Or you could send it the stringWithString: message to create a copy of the string passed in:
+
+NSString *copy = [NSString stringWithString:anotherString];
+
+Go ahead and make a copy of firstName by sending the stringWithString: message to the NSString class.
+
+
+File
+NSString *firstName = @"Apple";
+
+NSString *copy = /*//make a copy of firstName//*/;
+
+NSLog(@"%@ is a copy of %@", copy, firstName);
+
+
+Answer:
+File
+NSString *firstName = @"Apple";
+
+NSString *copy = [NSString stringWithString:firstName];
+
+NSLog(@"%@ is a copy of %@", copy, firstName);
+
+
+Output:
+challenge[5]: Apple is a copy of Apple

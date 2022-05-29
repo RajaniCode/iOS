@@ -1,0 +1,83 @@
+5.2 Repeat This
+
+
+First, return the number of rows that you want to create in tableView:numberOfRowsInSection: (any number will do). Then, set the cell text in tableView:cellForRowAtIndexPath: to an NSString containing your name.
+
+
+FeedTableViewController.h
+#import <UIKit/UIKit.h>
+
+@interface FeedTableViewController : UITableViewController
+
+@end
+
+
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+  }
+  return self;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+  }
+  
+  return cell;
+}
+@end       
+
+
+Answer:
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+  }
+  return self;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return 5;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    cell.textLabel.text = @"Pluralschool";
+  }
+  
+  return cell;
+}
+@end       

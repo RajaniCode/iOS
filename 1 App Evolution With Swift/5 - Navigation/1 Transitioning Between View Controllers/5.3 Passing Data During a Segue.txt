@@ -1,0 +1,127 @@
+5.3 Passing Data During a Segue
+
+Now that our CourseViewController is set up, let's move on to our table view controller.
+
+CourseViewController.swift
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell", forIndexPath: indexPath)
+
+    cell.textLabel.text = "App Evolution With Swift"
+    cell.imageView.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    
+  }
+}
+
+1. Start by writing a conditional that checks if the segue identifier is "ShowCourse" in the prepareForSegue function at the bottom of the file.
+
+Answer:
+CourseViewController.swift
+ import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell", forIndexPath: indexPath)
+
+    cell.textLabel.text = "App Evolution With Swift"
+    cell.imageView.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "ShowCourse" {
+      
+    }
+  }
+}
+
+2. Next, when we're segueing to "ShowCourse", create a variable with let called courseVC and set it to the view controller that's the destination of the segue. Don't forget to cast it to an optional CourseViewController.
+
+Answer:
+CourseViewController.swift
+ import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell", forIndexPath: indexPath)
+
+    cell.textLabel.text = "App Evolution With Swift"
+    cell.imageView.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "ShowCourse" {
+      let courseVC = segue.destinationViewController as? CourseViewController
+    }
+  }
+}
+
+3. Finally, set the courseName property of the optional course view controller object to the text "App Evolution With Swift".
+
+Answer:
+CourseViewController.swift
+ import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell", forIndexPath: indexPath)
+
+    cell.textLabel.text = "App Evolution With Swift"
+    cell.imageView.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "ShowCourse" {
+      let courseVC = segue.destinationViewController as? CourseViewController
+      courseVC?.courseName = "App Evolution With Swift"
+    }
+  }
+}

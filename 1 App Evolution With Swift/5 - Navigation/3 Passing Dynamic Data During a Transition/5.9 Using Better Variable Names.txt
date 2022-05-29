@@ -1,0 +1,74 @@
+5.9 Using Better Variable Names
+
+Right now we're using pretty bad variable names when we're binding new variables to unwrapped optionals. Update the variable names in this code so that it's a lot more readable by repeating the optional variable names for the unwrapped ones.
+
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  var courseNames: [String]?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    courseNames = ["App Evolution With Swift",
+                   "The Magical Marvels of MongoDB",
+                   "ES2015: The Shape of JavaScript to Come",
+                   "Adventures in Web Animations"]
+  }
+
+  override func tableView(
+    tableView: UITableView,
+    numberOfRowsInSection section: Int
+  ) -> Int {
+    if names = courseNames {
+      return names.count
+    }
+    return 0
+  }
+
+  override func tableView(
+    tableView: UITableView, 
+    cellForRowAtIndexPath indexPath: NSIndexPath
+  ) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier(
+      "CourseCell", 
+      forIndexPath: indexPath
+    )
+
+    let courseName = courseNames?[indexPath.row]
+
+    if let name = courseName {
+      cell.textLabel.text = courseName
+    }
+    cell.imageView.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(
+    segue: UIStoryboardSegue,
+    sender: AnyObject?
+  ) {
+    if segue.identifier == "ShowCourse" {
+      let courseVC = segue.destinationViewController as?
+        CourseViewController
+
+      let cell = sender as? UITableViewCell
+      if let [ ] = cell {
+        let indexPath = tableView.indexPathForCell([ ])
+        if let [ ] = indexPath {
+          let courseName = courseNames?[[ ].row]
+          courseVC?.courseName = courseName
+        }
+      }
+    }
+  }
+}
+
+
+Answer:
+cell
+cell
+indexPath
+indexPath

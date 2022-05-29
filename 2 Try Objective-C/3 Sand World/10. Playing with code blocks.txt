@@ -1,0 +1,86 @@
+10. Playing with code blocks
+
+
+So far, we’ve run across multiple features of Objective-C that use curly-braces {} to wrap a section of code, like if, switch, and fast enumeration. Curly-braces in these contexts are part of the syntax of the specific feature you are using, like this if statement:
+
+if(someBOOLVariable){
+  NSLog(@"Hello from inside the if statement");
+}
+
+We know that if someBOOLVariable is YES, then the code inside the curly-braces will be executed. What if instead we wanted to have a block of code inside curly-braces divorced from any specific features like if and switch, like this:
+
+{
+  NSLog(@"Hello from inside the block");
+}
+
+Why would we want such a thing? Well, it would be really cool to be able to assign this block of code to a variable and then execute the block however many times we wanted, like this:
+
+myBlock = {
+  NSLog(@"Hello from inside the block");
+}
+
+myBlock();
+myBlock();
+myBlock();
+
+Each time we did myBlock(), the code inside the {} would execute and so above we just logged the same message three times but we only had to code NSLog once.
+
+You better not be getting my hopes up. I've been hurt before.
+
+This hypothetical feature actually exists and its name is blocks! Blocks are groups of code that can be treated like normal Objective-C objects meaning they can be passed to methods or included in collections like NSArray or NSDictionary. They are very powerful: they can accept arguments and return results, just like a message. A block can be created with ^{}, like so:
+
+^{
+  NSLog(@"Hello from inside the block");
+};
+
+You can assign a block to a variable, just like any other object, but the syntax is slightly different. Instead of prepending the name with a * it uses a ^, like this:
+
+^logMessage =  ^{
+  NSLog(@"Hello from inside the block");
+};
+
+Since blocks can return values, we need to specify which type of object the block will return before the variable name (use void if the block doesn’t return anything):
+
+void ^logMessage = ^{
+  NSLog(@"Hello from inside the block");
+};
+
+Note: The value that a block `returns` and the code that a block `executes` are two different things. Any code inside of the `^{}` will always be executed, but sometimes blocks return a value in addition to the code they execute, and in that situation a return type needs to be defined before the block name.
+
+The above syntax still needs a little bit more code to work. The name of the variable (including the ^) needs to be wrapped in parentheses:
+
+void (^logMessage) = ^{
+  NSLog(@"Hello from inside the block");
+};
+
+And we need to specify the types of the arguments that this block accepts. Since this block doesn’t accept any arguments, we can just use void again:
+
+void (^logMessage)(void) = ^{
+  NSLog(@"Hello from inside the block");
+};
+
+Now when we want to execute this block (often referred to as “invoking a block”), we just reference the variable name and append a group of parentheses:
+
+logMessage();
+logMessage();
+logMessage();
+
+This will log Hello from inside the block three times, but you could invoke it as many times as you wish.
+
+Create a block that logs a message and name it myFirstBlock. It shouldn't return anything or accept any arguments. After it's defined, invoke myFirstBlock at least once.
+
+
+File
+
+
+Answer:
+File
+void (^myFirstBlock)(void) = ^{
+  NSLog(@"Hello World!");
+};
+
+myFirstBlock();
+
+
+Output:
+challenge[2]: Hello World!

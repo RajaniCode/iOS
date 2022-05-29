@@ -1,0 +1,24 @@
+5.5 Does Not Compile
+
+Which of the following options describes why the code below won't compile?
+
+import UIKit
+
+class CoursesTableViewController : UITableViewController {
+
+  var courseNames: [String]?
+
+    override func tableView(tableView: UITableView,  numberOfRowsInSection section: Int) -> Int {
+        return courseNames?.count
+    }
+}
+
+[Single Answer]
+
+count is not a property that can be accessed in arrays.
+courseNames is not an optional array.
+The count is being returned from the wrong function.
+An optional Int? is being returned instead of an Int.
+
+
+Answer: An optional Int? is being returned instead of an Int.

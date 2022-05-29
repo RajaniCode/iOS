@@ -1,0 +1,13 @@
+8.7 Creating a Background Session Configuration
+
+Complete the code below to use a background session configuration called @"background".
+
+NSURLSessionConfiguration *bConfig = [
+  NSURLSessionConfiguration
+  [ ]: [ ]
+];
+
+
+Answer:
+backgroundSessionConfiguration
+@"background"

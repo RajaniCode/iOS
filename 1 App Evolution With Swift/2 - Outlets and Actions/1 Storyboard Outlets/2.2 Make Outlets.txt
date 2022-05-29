@@ -1,0 +1,12 @@
+2.2 Make Outlets
+
+Which of the following is not a step required to connect a view controller in a storyboard to a Swift file?
+
+[Single Answer]
+
+Create a new Swift file that's a subclass of UIViewController.
+Delete the starter code in the view controller Swift file.
+Set the storyboard view controller's class to the class name in the Swift file.
+
+
+Answer: Delete the starter code in the view controller Swift file.

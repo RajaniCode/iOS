@@ -1,0 +1,83 @@
+1.6 Create a Convenience Initializer
+
+
+Create a convenience initializer for the Photo Class named initWithTitle:detail:filename:thumbnail:. Each of the 4 parts of the method should accept an NSString as a parameter.
+
+
+Photo.h
+#import <Foundation/Foundation.h>
+
+@interface Photo : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSString *filename;
+@property (strong, nonatomic) NSString *thumbnail;
+
+/*//define the convenience initializer here//*/
+
+@end
+
+
+Photo.m
+#import "Photo.h"
+
+@implementation Photo
+
+-(id)init
+{
+    self = [super init];
+    return self;
+}
+
+/*//implement the convenience initializer here//*/
+
+@end
+
+
+Answer:
+Photo.h
+#import <Foundation/Foundation.h>
+
+@interface Photo : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSString *filename;
+@property (strong, nonatomic) NSString *thumbnail;
+
+-(id)initWithTitle:(NSString *)aTitle
+                detail:(NSString *)aDetail
+                filename:(NSString *)aFilename
+                thumbnail:(NSString *)aThumbnail;
+@end
+
+
+Photo.m
+#import "Photo.h"
+
+@implementation Photo
+
+-(id)init
+{
+    self = [self initWithTitle:@"defaultTitle"
+            detail:@"defaultDetail"
+            filename:@"defaultFilename"
+            thumbnail:@"defaultThumbnail"];
+    return self;
+}
+
+-(id)initWithTitle:(NSString *)aTitle
+	detail:(NSString *)aDetail
+	filename:(NSString *)aFilename
+	thumbnail:(NSString *)aThumbnail {
+  self = [super init];
+  if (self) {
+    self.title = aTitle;
+    self.detail = aDetail;
+    self.filename = aFilename;
+    self.thumbnail = aThumbnail;    
+  }  
+  return self;
+}
+@end

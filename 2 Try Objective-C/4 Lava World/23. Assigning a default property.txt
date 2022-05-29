@@ -1,0 +1,145 @@
+23. Assigning a default property
+
+
+Now that we’ve made batteryLife read-only from outside code, we can no longer set the initial batteryLife value to @100 after initializing a Apple object like we have been:
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.batteryLife = @100;
+
+Assignment to readonly property
+
+Ideally, we could just set the default value of batteryLife so every new Apple object has its batteryLife set to @100.
+
+Well, we can do that by taking advantage of a feature of inheritance: method overriding. For example, we could log every time a new Person object is created by overriding the init method:
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+- (Person *) init;
+{
+    NSLog(@"Cool, a new Person is being initialized");
+}
+@end
+
+The above implementation of init overrides the method defined in NSObject, which Person inherits from. But as you can see, init should return a Person * object and we aren’t returning anything. How do we create a Person now that we’ve overridden init? Through another special variable called super, we’re able to call back up into the init method defined in NSObject:
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+- (Person *) init;
+{
+    NSLog(@"Cool, a new Person is being initialized");
+
+    return [super init];
+}
+@end
+
+We’re also able to set internal variables on the current object being initialized before we return [super init]:
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+- (Person *) init;
+{
+    NSLog(@"Cool, a new Person is being initialized");
+    _firstName = @"Tim";
+    _lastName = @"Cook";
+    return [super init];
+}
+@end
+
+Now every Person object created will start out with its firstName set to @"Tim" and lastName set to @"Cook".
+
+Go ahead and update the Apple.m file to initially set the _batteryLife to @100.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone decreaseBatteryLife:@5];
+[talkingiPhone reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  /*//set _batteryLife to @100//*/;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([self.batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", self.batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+@property (readonly) NSNumber *batteryLife;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([self.batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", self.batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[18]: Battery life is 95

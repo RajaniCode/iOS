@@ -1,0 +1,17 @@
+https://github.com/codeschool/AppEvolutionWithSwiftDemo
+
+https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIKit_Framework/
+
+https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/index.html#//apple_ref/doc/uid/TP40014097-CH3-ID0
+
+https://swift.org/
+
+https://kapeli.com/dash
+
+http://nsscreencast.com/episodes
+
+https://www.raywenderlich.com/
+
+https://iosbytes.codeschool.com/
+
+https://www.codeschool.com/screencasts/soup-to-bits-app-evolution-with-swift

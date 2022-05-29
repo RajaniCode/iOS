@@ -1,0 +1,43 @@
+1.2 Create a Photo Model
+
+
+In Photo.h, declare 4 (strong, nonatomic) NSString @property variables named:
+title, detail, filename, thumbnail
+Responsive
+
+
+Photo.m
+#import "Photo.h"
+
+@implementation Photo
+
+-(id)init {
+    self = [super init];
+    return self;
+}
+
+@end
+
+
+Photo.h
+#import <Foundation/Foundation.h>
+
+@interface Photo : NSObject
+
+/*//Add the properties here//*/
+
+@end
+
+
+Answer:
+Photo.h
+#import <Foundation/Foundation.h>
+
+@interface Photo : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSString *filename;
+@property (strong, nonatomic) NSString *thumbnail;
+
+@end

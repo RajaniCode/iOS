@@ -1,0 +1,110 @@
+4. Implement copyWithZone
+
+
+Can we just implement copyWithZone: already? How hard can it be?
+
+Copying an object isn’t complicated at all - it starts with just creating a brand new object. The one difference with the copyWithZone: method is to make sure to allocate our new object in the zone of memory provided by the NSZone argument. To see how we can accomplish this, let’s see how we would implement a copyWithZone: method on a Person class:
+
+Person.m
+
+@implementation Person
+- (Person *) copyWithZone:(NSZone *)zone;
+{
+    Person *personCopy = [[Person allocWithZone:zone] init];
+    return personCopy;
+}
+@end
+
+Notice how the allocWithZone: message has replaced the normal alloc message that we usually send when creating new objects. allocWithZone: does that same thing as alloc, but it will allocate memory for the object in a certain zone of memory. This is done for performance reasons, as allocating similar objects in the same zone of memory ensures accessing those objects in memory is as fast as possible.
+
+Go ahead and implement copyWithZone: on the Apple class, creating a new Apple object using allocWithZone: and returning it from the method.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+Apple *copy = [talkingiPhone copy];
+[copy reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject <NSCopying> {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+  - (Apple *) copyWithZone: (NSZone *)zone;
+{
+	Apple *appleCopy = [[Apple allocWithZone:zone] init];  
+  return appleCopy;
+
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[20]: (null)'s battery life is (null)

@@ -1,0 +1,64 @@
+4.5 Custom Button
+
+
+We created a normal button below called profileButton, but now we want to make it a custom button using the higgie_profile_image.png image. Modify the code below to change it into a custom button, but keep the same frame.
+
+
+ProfileViewController.m
+#import "ProfileViewController.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Profile";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [profileButton setTitle:@"Profile Image" forState:UIControlStateNormal];
+    profileButton.frame = CGRectMake(15, 15, 200, 189);
+
+    [self.view addSubview:profileButton];
+}
+@end
+
+
+Answer:
+ProfileViewController.m
+#import "ProfileViewController.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Profile";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    //UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    //[profileButton setTitle:@"Profile Image" forState:UIControlStateNormal];
+    //profileButton.frame = CGRectMake(15, 15, 200, 189);
+    UIButton *customButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [customButton setImage:[UIImage imageNamed:@"higgie_profile_image.png"] forState:UIControlStateNormal];
+    [customButton setImage:[UIImage imageNamed:@"higgie_profile_image.png"] forState:UIControlStateHighlighted];
+    customButton.frame = CGRectMake(15, 15, 200, 189); 
+    [self.view addSubview:customButton];    
+}
+@end

@@ -1,0 +1,13 @@
+Helpful Resources
+
+https://developers.google.com/maps/documentation/ios-sdk/
+
+https://www.youtube.com/user/GoogleDevelopers
+
+https://www.youtube.com/watch/?v=tcJhtk0Xc_M
+
+https://www.youtube.com/watch/?v=humnKZ8nOec
+
+https://developers.google.com/places/
+
+https://www.codeschool.com/learn/ios

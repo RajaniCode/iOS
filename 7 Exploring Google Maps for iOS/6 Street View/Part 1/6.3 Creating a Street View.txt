@@ -1,0 +1,32 @@
+6.3 Creating a Street View
+
+Below is the starter code for setting up everything we need to create our first street view… almost. Complete the callback method to correctly create our street view.
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  GMSPanoramaService *service =
+    [[GMSPanoramaService alloc] init];
+  [service requestPanoramaNearCoordinate:self.coordinate
+    callback:^(GMSPanorama *panorama, NSError *error) {
+      GMSPanoramaCamera *camera = [GMSPanoramaCamera
+        cameraWithHeading:210
+                    pitch:10
+                     zoom:2
+                      FOV:90
+      ];
+      GMSPanoramaView *panoView =
+        [[GMSPanoramaView alloc] init];
+
+      panoView.camera = [];
+      panoView.panorama = [];
+      self.view = [];
+    }
+  ];
+}
+
+
+Answer: 
+camera 
+panorama
+panoView

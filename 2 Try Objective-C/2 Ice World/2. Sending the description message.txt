@@ -1,0 +1,30 @@
+2. Sending the description message
+
+
+Congrats on sending your first message!
+
+The tryobjc object is something we made up, but the objects built-in to Objective-C, like NSString, NSNumber, and NSArray, are real and have a bunch of messages you can send to them.
+
+One of those messages is description, and there’s something extra cool about it - passing the message returns a result. Not all messages return something, but the description message always returns an NSString that represents the contents of the object that you passed the message to.
+
+If you send description to an NSString object, you’ll get the characters in that string, but if you send it to an NSArray you’ll get a string containing all of the values in that array.
+
+Let’s practice sending a message and doing something with the result. Luckily we’ve already got a cool NSArray from Level 1:
+
+NSArray *foods = @[@"tacos", @"burgers"];
+
+Try sending the description message to the foods array inside of NSLog() to see what it returns.
+
+
+Answer: NSLog(@"%@", [foods description]);
+
+
+Output: 
+
+challenge[3]: (
+
+    tacos,
+
+    burgers
+
+)

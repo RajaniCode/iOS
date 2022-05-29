@@ -1,0 +1,30 @@
+1.3 Displaying a Map
+
+
+For the rest of the course we’re going to build an app that shows the locations of some food trucks in San Francisco, CA.
+
+In this challenge, we’re going to configure and display a map. This map will be the basis for the rest of the challenges in this course.
+
+If you’ve never tried an Xcode challenge at Code School, click here for a short walkthrough and then start coding!
+
+
+Tasks for Level1-3-DisplayingAMap
+
+    Start by creating a GMSCameraPosition object with the following properties:
+    - latitude: 37.790706
+    - longitude: -122.434167
+    - zoom: 13
+    - bearing: 0
+    - viewingAngle: 0
+
+
+Using the GMSCameraPosition object you created in the previous step, create a GMSMapView and add it to TruckMapVC.
+
+
+Set the map view’s type to terrain.
+
+
+Turn on the my location icon and compass button, and disable zoom gestures.
+
+
+Adjust the map padding so the compass button isn’t hidden underneath the navigation bar. Use the self.topLayoutGuide.length as the padding value.

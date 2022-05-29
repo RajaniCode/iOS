@@ -1,0 +1,23 @@
+3.5 Creating a Marker on Press
+
+We want to create a marker whenever the user presses on the map. We've started the code out below, but haven't quite finished it yet. Fill in the blanks to correctly pop in the marker on the pressed location with a title of "I'm here!"
+
+- (void)mapView:(GMSMapView *)mapView
+ %text: title%:(CLLocationCoordinate2D)coordinate {
+
+  CSMarker *marker = [[CSMarker alloc] init];
+  marker.position = [ ];
+  marker.appearAnimation = [ ];
+  marker.title = [ ];
+  marker.map = nil;
+
+  // Call our internal method to add this marker to the map
+  [self drawMarkers];
+}
+
+
+Answer: 
+didLongPressAtCoordinate
+coordinate
+kGMSMarkerAnimationPop
+@"I'm here!"

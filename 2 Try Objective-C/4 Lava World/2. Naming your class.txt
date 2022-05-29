@@ -1,0 +1,22 @@
+2. Naming your class
+
+
+The first decision you have to make when creating a class is what to name it.
+
+Object and class names are usually nouns, like Car or NSDictionary or Boat.
+
+It’s also a good idea to use conventions when naming things, especially in Objective-C. There is already a very strong convention to start classes with a capital letter. This makes it easy to tell the difference between a class (starts with uppercase letter) and an object (starts with lowercase letter). Nothing in the language enforces this, but it’s considered a good practice to follow the conventions of a language.
+
+Remember, we are trying to create a class to replace this NSDictionary:
+
+NSDictionary *talkingiPhone = @{
+  @"Name": @"Mr. Higgie",
+  @"ModelNumber": @1
+};
+
+So go ahead and decide on a name and enter it in the editor to the right. We'll be using this name to build out a class for the rest of this level.
+
+Personally I'd go with MrHiggieIsAnAmazingPhoneAndIsLovedByEveryone
+
+
+Answer: Apple

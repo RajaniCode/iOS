@@ -1,0 +1,59 @@
+1.2 Setting up an API Key
+
+
+Welcome to the course challenges! Before you can download and attempt any of the challenges for this course, you need to set up an API Key and bundle identifier to use with the Google Maps SDK for iOS, and then you’ll need to let Code School know what that key and bundle identifer is.
+
+If you already know how to login to the Google Developer Console and create an API Key/bundle identifier for the Google Maps SDK for iOS, then go do that and let us know what that key and id are and skip ahead to the last task in this list.
+
+If not, then follow the steps below to learn how to create them!
+
+
+API Key
+
+Answer: 
+
+https://code.google.com/apis/console/?noredirect&pli=1#project:866968040619:access
+
+API key: AIzaSyCasUya06b2sRXFl0o0yUKXn5P04oRcZTU
+
+iOS Application (Bundle Identifier)
+
+Answer: 
+
+https://code.google.com/apis/console/?noredirect&pli=1#project:866968040619:access
+
+iOS apps: com.pluralschool.codeschoolmaps
+
+
+
+
+Follow the tasks below to generate a Google API Key.Also note that the API Key and iOS Application ID you create will be shared with Google in order for these challenges to work.
+
+Tasks for Level1-2-SettingUpAnApiKey
+
+Visit https://code.google.com/apis/console/?noredirect and login with your Google account.
+
+
+You might see a screen asking you to create a project. If so, then choose Create project… and a new blank project will be created for you.
+
+
+Click on the Services tab in the left sidebar and turn the Google Maps SDK for iOS switch to ON.
+
+
+Next, click on the API Access tab in the left sidebar.
+
+Scroll to the bottom of the page that loads and click Create new iOS key…. In the window that pops up, enter a bundle identifier.
+
+This should be in the format com.yourname.appname (you can also replace yourname with companyname). For example, my bundle identifier could be com.jonfriskics.codeschoolmaps.
+
+The appname could be anything with letters and numbers, but stick to something simple that’s easy to remember!
+
+
+Once you enter your bundle identifier and hit Create, you can find the API key for that bundle identifier in the Simple API Access section of the page.
+
+Enter your API Key and bundle identifier in the form that appears above, and then move on to the final step!
+
+
+Now that you’ve told Code School your API Key and bundle identifier, download all the challenges via the button below and run the tests for the Level1-2-SettingUpAnApiKey project by opening the project up and using the command-U keyboard shortcut.
+
+If everything works right, this task will get a green checkmark and you’ll be ready to move on to the next challenge!

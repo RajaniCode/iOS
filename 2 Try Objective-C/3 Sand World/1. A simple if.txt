@@ -1,0 +1,49 @@
+1. A simple if
+
+
+Have you ever made a decision and then afterwards immediately regretted it?
+
+Well, computers don’t feel regret but that doesn’t mean they can’t make decisions.
+
+I decide to regret nothing
+
+The simplest way to make a decision in Objective-C is to use an if statement:
+
+if (mrHiggieIsMean) {
+  NSLog(@"Confirmed: he is super mean");
+}
+
+The lines of code inside the curly-braces {} are only executed if the code in the parentheses () after the if is true. But how do we know what is true and what is false?
+
+In Objective-C, there is a special data type meant to handle this exact situation. A variable defined with the BOOL type can be set to either YES (true) or NO (false). You can declare a BOOL variable like this:
+
+BOOL mrHiggieIsMean = NO;
+
+if (mrHiggieIsMean) {
+  NSLog(@"Confirmed: he is super mean");
+}
+
+Only when the if encounters a YES will it execute the code inside the curly-braces {}.
+
+Go ahead and set the mrHiggieIsMean variable to YES so the code inside the curly-braces is executed.
+
+
+File
+/*//Set mrHiggieIsMean to YES//*/
+
+if (mrHiggieIsMean) {
+  NSLog(@"Confirmed: he is super mean");
+}
+
+
+Answer:
+File
+BOOL mrHiggieIsMean = YES;
+
+if (mrHiggieIsMean) {
+  NSLog(@"Confirmed: he is super mean");
+}
+
+
+Output:
+challenge[4]: Confirmed: he is super mean

@@ -1,0 +1,53 @@
+3.8 Filling out the Controller
+
+We've added a logo.jpg image to your project. In viewDidLoad, create a UIImageView instance that contains this image and add it as a subview, but this time set the contentMode to UIViewContentModeTop, and give it the same frame as the root view.
+
+
+FavoritesViewController.m
+#import "FavoritesViewController.h"
+
+@implementation FavoritesViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Favorites";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+    
+}
+@end
+
+
+Answer:
+FavoritesViewController.m
+#import "FavoritesViewController.h"
+
+@implementation FavoritesViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Favorites";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  UIImageView *logoView = [[UIImageView alloc] initWithImage: [UIImage imageNamed:@"logo.jpg"]];
+  [logoView setContentMode:UIViewContentModeTop];
+  logoView.frame = self.view.frame;
+  [self.view addSubview: logoView];
+}
+@end

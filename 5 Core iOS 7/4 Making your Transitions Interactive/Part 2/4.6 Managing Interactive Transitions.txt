@@ -1,0 +1,13 @@
+4.6 Managing Interactive Transitions
+
+What method can you call on the transitionContext object so the transition knows to stop even if it's in the middle of running?
+
+[Single Answer]
+
+completeTransition:
+transitionWasCancelled
+endTransition
+cancelTransition:
+
+
+Answer: transitionWasCancelled

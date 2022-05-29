@@ -1,0 +1,90 @@
+5. Switch it up
+
+
+As you may have noticed, a large if/else block of code can quickly become very hard to read.
+
+Only if you are human
+
+A pattern you’ll find quite frequently in Objective-C is using a switch statement to clean up these large if-else blocks of code. Use a switch when you have a variable that can be one of a limited set of values, and you want to execute different code based on the single variable.
+
+For example, let’s say you have a variable NSInteger day that represents the current day - 1 for Monday, 2 for Tuesday, and so on. You could log out the current day like this:
+
+NSInteger day = getDayOfWeek();
+
+switch (day) {
+  case 1: {
+    NSLog(@"Monday");
+    break;
+  }
+  case 2: {
+    NSLog(@"Tuesday");
+    break;
+  }
+  /* snip Wednesday through Saturday */
+  case 7: {
+    NSLog(@"Sunday");
+    break;
+  }
+}
+
+The switch will execute each case and check for a match between day and the value following case. If it finds a match, it will execute the code in the curly-braces {} next to that case. The break in each case block tells the switch to stop searching for matches.
+
+You can also combine case statements to have multiple matching values execute the same code, which you can see in the code in the challenge editor. You’ll see that Mr. Higgie likes to wear his Fedora hat Monday through Thursday and his Sombrero on Friday.
+
+He has requested that we please update the switch to let him wear his AstronautHelmet hat on the weekends.
+
+Note: You can't pass switch an NSString because switch is in the "c layer" and thus doesn't know anything about NSString
+
+
+File
+NSInteger day = getDayOfWeek();
+
+switch (day) {
+  case 1:
+  case 2:
+  case 3:
+  case 4: {
+    [mrHiggie setCurrentHat:@"Fedora"];
+    break;
+  }
+  case 5: {
+    [mrHiggie setCurrentHat:@"Sombrero"];
+    break;
+  }
+  case 6:
+  case 7: {
+    break;
+  }
+}
+
+NSLog(@"Mr. Higgie is wearing: %@", [mrHiggie currentHat]);
+
+
+Answer:
+File
+NSInteger day = getDayOfWeek();
+
+switch (day) {
+  case 1:
+  case 2:
+  case 3:
+  case 4: {
+    [mrHiggie setCurrentHat:@"Fedora"];
+    break;
+  }
+  case 5: {
+    [mrHiggie setCurrentHat:@"Sombrero"];
+    break;
+  }
+  case 6:
+  case 7: {
+    [mrHiggie setCurrentHat:@"AstronaughtHelmet"];
+    break;
+  }
+}
+
+NSLog(@"Mr. Higgie is wearing: %@", [mrHiggie currentHat]);
+
+
+Output:
+challenge[22]: Mr. Higgie is wearing: Fedora

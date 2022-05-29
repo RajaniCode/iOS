@@ -1,0 +1,111 @@
+1.8 Create a coordinate from a cell tap
+
+
+We've added a cell callout accessory button that runs the tableView:accessoryButtonTappedForRowWithIndexPath: delegate method when it is tapped. That delegate method should contain code to open the tapped cell's location in Apple Maps.
+
+To start, create a CLLocationCoordinate2D struct from the lat/lng data in the self.locations array at position indexPath.row.
+
+Then, log the contents of the struct to verify that it was created. Remember that you need to log the individual data in a struct, so log the latitude and longitude and not the entire struct.
+
+
+LocationsTableViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface LocationsTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *locations;
+
+@end
+
+
+LocationsTableViewController.m
+#import "LocationsTableViewController.h"
+
+@implementation LocationsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.locations = @[@{@"name": @"Taco Cantina", @"phoneNumber": @"407-555-3019", @"lat": @28.5464, @"lng": @-81.3844},
+                       @{@"name": @"Lou's", @"phoneNumber": @"407-555-1212", @"lat": @28.5336, @"lng": @-81.3735}];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.locations.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"locCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"locCell"];
+    }
+    
+    cell.textLabel.text = self.locations[indexPath.row][@"name"];
+    cell.detailTextLabel.text = self.locations[indexPath.row][@"phoneNumber"];         
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    double latitude = /*//Get the doubleValue of the lat key at position indexPath.row//*/
+    double longitude = /*//Get the doubleValue of the lng key at position indexPath.row//*/
+
+    /*//Create the CLLocationCoordinate2D struct here//*/
+
+    /*//Log the latitude and longitude values in the struct here//*/
+}
+
+@end
+    
+
+Answer:
+LocationsTableViewController.m
+#import "LocationsTableViewController.h"
+
+@implementation LocationsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.locations = @[@{@"name": @"Taco Cantina", @"phoneNumber": @"407-555-3019", @"lat": @28.5464, @"lng": @-81.3844},
+                       @{@"name": @"Lou's", @"phoneNumber": @"407-555-1212", @"lat": @28.5336, @"lng": @-81.3735}];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.locations.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"locCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"locCell"];
+    }
+    
+    cell.textLabel.text = self.locations[indexPath.row][@"name"];
+    cell.detailTextLabel.text = self.locations[indexPath.row][@"phoneNumber"];         
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
+{
+    double latitude = [self.locations[indexPath.row][@"lat"] doubleValue];
+    double longitude = [self.locations[indexPath.row][@"lng"] doubleValue];
+
+  	CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    NSLog(@"%f, %f", coordinate.latitude, coordinate.longitude); 
+}
+
+@end

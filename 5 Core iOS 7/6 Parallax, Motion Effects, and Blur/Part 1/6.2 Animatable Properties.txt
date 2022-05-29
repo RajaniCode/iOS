@@ -1,0 +1,13 @@
+6.2 Animatable Properties
+
+Which of the following properties is not animatable by motion effects?
+
+[Single Answer]
+
+center
+frame
+alpha
+backgroundColor
+
+
+Answer: backgroundColor

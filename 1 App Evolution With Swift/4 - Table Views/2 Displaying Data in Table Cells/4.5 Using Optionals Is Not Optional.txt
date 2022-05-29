@@ -1,0 +1,27 @@
+4.5 Using Optionals Is Not Optional
+
+Which of the following are acceptable ways to unwrap the course optional variable and print its name property?
+
+[Multiple Answers]
+
+if course != nil {
+    print course.name
+}
+
+if c = course {
+    print(course.name)
+}
+
+print(course?.name)
+
+if course.name != nil {
+    print(course.name)
+}
+
+
+Answer:
+if course != nil {
+    print course.name
+}
+
+print(course?.name)

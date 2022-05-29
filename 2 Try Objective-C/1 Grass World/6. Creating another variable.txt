@@ -1,0 +1,9 @@
+6. Creating another variable
+
+
+Hey Apple, do you have a last name too?
+
+Go ahead and create a new NSString variable called lastName and assign it a string containing your last name.
+
+
+Answer: NSString *lastName = @"Inc";

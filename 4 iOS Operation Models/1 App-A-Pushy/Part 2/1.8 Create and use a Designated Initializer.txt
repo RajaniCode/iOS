@@ -1,0 +1,136 @@
+1.8 Create and use a Designated Initializer
+
+
+Refactor Photo.m's - (id)init method to set self equal to an object returned by the initWithTitle:detail:filename:thumbnail: method, therefore making the convenience initializer a designated initializer.
+
+Then, pass values (listed in the comments) to the convenience initializer in the init method.
+
+
+PhotoViewController.m
+#import "PhotoViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+
+@implementation PhotoViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+
+        self.photo = [[Photo alloc] init];
+        
+    }
+    return self;
+}
+
+-(void)viewDidLoad
+{
+    UIImageView *imageView = [[UIImageView alloc] init];
+
+    [imageView setImage:[UIImage imageNamed:self.photo.filename]];
+    imageView.frame = CGRectMake(10,10,300,300);
+    
+    [self.view addSubview:imageView];
+    
+    UILabel *imageTitleLabel = [[UILabel alloc] init];
+    imageTitleLabel.text = self.photo.title;
+    imageTitleLabel.frame = CGRectMake(11,320,300,40);
+    
+    [self.view addSubview:imageTitleLabel];
+}
+
+@end
+
+
+Photo.h
+#import <Foundation/Foundation.h>
+
+@interface Photo : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSString *filename;
+@property (strong, nonatomic) NSString *thumbnail;
+
+-(id)initWithTitle:(NSString *)aTitle
+            detail:(NSString *)aDetail
+          filename:(NSString *)aFilename
+         thumbnail:(NSString *)aThumbnail;
+@end
+
+
+Photo.m
+#import "Photo.h"
+
+@implementation Photo
+
+-(id)init
+{
+    //title: @"Title"
+    //detail: @"Detail"
+    //filename: @"placeholder.jpg"
+    //thumbnail: @"placeholder.jpg"
+
+    /*//Refactor this statement to call the initWithTitle:detail:filename:thumbnail: convenience initializer//*/
+    self = [super init];
+
+    return self;
+}
+
+-(id)initWithTitle:(NSString *)aTitle
+            detail:(NSString *)aDetail
+          filename:(NSString *)aFilename
+         thumbnail:(NSString *)aThumbnail
+{
+    self = [super init];
+    if (self) {
+        self.title = aTitle;
+        self.detail = aDetail;
+        self.filename = aFilename;
+        self.thumbnail = aThumbnail;
+    }
+    return self;
+}
+@end
+
+
+Answer:
+Photo.m
+#import "Photo.h"
+
+@implementation Photo
+
+-(id)init
+{
+    //title: @"Title"
+    //detail: @"Detail"
+    //filename: @"placeholder.jpg"
+    //thumbnail: @"placeholder.jpg"
+    
+    
+    self = [super init];
+    if (self) {
+        self = [self initWithTitle:@"Title"
+                detail:@"Detail"
+		filename:@"placeholder.jpg"
+		thumbnail:@"placeholder.jpg"];
+    }
+    return self;
+}
+
+-(id)initWithTitle:(NSString *)aTitle
+	detail:(NSString *)aDetail
+	filename:(NSString *)aFilename
+	thumbnail:(NSString *)aThumbnail
+{
+    self = [super init];
+    if (self) {
+        self.title = aTitle;
+        self.detail = aDetail;
+        self.filename = aFilename;
+        self.thumbnail = aThumbnail;
+    }
+    return self;
+}
+@end

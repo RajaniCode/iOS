@@ -1,0 +1,135 @@
+2.8 Set the User Photo Property
+
+
+Refactor User.m's initWithJSON convenience initializer to store a Photo object in self.profilePhoto. Use the Photo convenience initializer initWithTitle:detail:filename:thumbnail: to create the object with data listed in the comments. Don't forget to import the Photo.h file!
+
+
+userProfile.json
+{
+    "firstName": "Mr.",
+    "lastName": "Higgie",
+    "city": "Cupertino",
+    "profilePhoto": "http://operation-models.codeschool.com/higgie_profile_image.png",
+    "profilePhotoThumbnail": "http://operation-models.codeschool.com/higgie_profile_image_thumbnail.png",
+    "biography": "Mr. Higgie was designed in California but loves to travel to exotic places. Earning a PhD in Material Science when he was only 3 years old, Mr. Higgie hasn't yet gone on to do great things. He lives at home with his parents.",
+    "memberSince": "November 2012"
+}
+
+
+User.h
+#import <Foundation/Foundation.h>
+#import "Photo.h"
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) Photo *profilePhoto;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+
+-(id)initWithJSON;
+
+@end
+
+
+User.m
+#import "User.h"
+#import "AFJSONRequestOperation.h"
+
+@implementation User
+
+-(id)init {
+    self = [self initWithJSON];
+    return self;
+}
+
+-(id)initWithJSON
+{
+  self = [super init];
+  if(self) {
+      NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/userProfile.json"];
+      NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+      
+      AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+          self.firstName = JSON[@"firstName"];
+          self.lastName = JSON[@"lastName"];
+          self.city = JSON[@"city"];
+
+          //title: @"Profile"
+          //detail: @"This is a profile image"
+          //filename: the value returned by the `profilePhoto` key in the `JSON` NSDictionary  
+          //thumbnail: the value returned by the `profilePhotoThumbnail` key in the `JSON` NSDictionary 
+          
+          /*//Refactor these into a single Photo Model object called profilePhoto//*/
+          // self.profilePhoto = JSON[@"profilePhoto"];
+          // self.profilePhotoThumbnail = JSON[@"profilePhotoThumbnail"];
+
+          self.biography = JSON[@"biography"];
+          self.memberSince = JSON[@"memberSince"];
+
+          [[NSNotificationCenter defaultCenter] postNotificationName:@"initWithJSONFinishedLoading" object:nil];
+      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+          NSLog(@"NSError: %@",[error localizedDescription]);
+      }];
+      
+      [operation start];
+  }
+  return self;
+}
+@end
+
+
+Answer:
+User.m
+#import "User.h"
+#import "AFJSONRequestOperation.h"
+
+#import "Photo.h"
+
+@implementation User
+
+-(id)init {
+    self = [self initWithJSON];
+    return self;
+}
+
+-(id)initWithJSON
+{
+  self = [super init];
+  if(self) {
+      NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/userProfile.json"];
+      NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+      
+      AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+          self.firstName = JSON[@"firstName"];
+          self.lastName = JSON[@"lastName"];
+          self.city = JSON[@"city"];
+
+          //title: @"Profile"
+          //detail: @"This is a profile image"
+          //filename: the value returned by the `profilePhoto` key in the `JSON` NSDictionary  
+          //thumbnail: the value returned by the `profilePhotoThumbnail` key in the `JSON` NSDictionary 
+                            
+          self.profilePhoto = [[Photo alloc] initWithTitle:@"Profile"
+           				 detail:@"This is a profile image"
+           				 filename:JSON[@"profilePhoto"]
+           				 thumbnail:JSON[@"profilePhotoThumbnail"]];
+        
+          // self.profilePhoto = JSON[@"profilePhoto"];
+          // self.profilePhotoThumbnail = JSON[@"profilePhotoThumbnail"];
+
+          self.biography = JSON[@"biography"];
+          self.memberSince = JSON[@"memberSince"];
+
+          [[NSNotificationCenter defaultCenter] postNotificationName:@"initWithJSONFinishedLoading" object:nil];
+      } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+          NSLog(@"NSError: %@",[error localizedDescription]);
+      }];
+      
+      [operation start];
+  }
+  return self;
+}
+@end

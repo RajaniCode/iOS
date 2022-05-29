@@ -1,0 +1,186 @@
+6. New Initializer
+
+
+The object returned by copy should have all the same data as the original object. In this case, the copy should have both its phoneName and _batteryLife set to match that of the original object.
+
+We’ve gone ahead and set the copy’s phoneName to @"Copy of X" where X is the original object’s phoneName, but we’ve run into a problem - how do we set the copy’s _batteryLife instance variable? We’ve intentionally hidden _batteryLife from outside code, but now we have a situation where outside code needs to be able to set it.
+
+We have two options:
+
+    Change _batteryLife back to a writable property.
+    Add a method to Apple that sets the _batteryLife variable.
+
+The first option is ruled out because it’s our goal to keep _batteryLife as hidden as possible. So we are left with adding a method to Apple, but we don’t want a method that can be called at any time because that would defeat the purpose of hiding the variable. Imagine we add a method called setBatteryLife: and then use it inside the copyWithZone: method:
+
+Apple.m
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] init];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   [copy setBatteryLife:_batteryLife];
+   return copy;
+}
+
+Now there is nothing stopping outside code from mucking around with _batteryLife once the copy has been made:
+
+Apple *copy = [talkingiPhone copy];
+[copy setBatteryLife:@10000];
+
+Instead of adding a method that can be called at any time, we can add a custom initializer method that can only be called when a Apple object is created. A custom initializer method is defined just like the init method, and its name should start with init. For example, we could add a custom initializer to Person that accepts arguments for the first and last name:
+
+Person.h
+
+@interface Person : NSObject
+- (Person *) initWithFirstName:(NSString *)firstName 
+                      lastName:(NSString *)lastName;
+                      
+@property NSString *firstName;
+@property NSString *lastName;
+@end
+
+Person.m
+
+@implementation Person
+- (Person *) initWithFirstName:(NSString *)firstName 
+                      lastName:(NSString *)lastName;
+{
+   _firstName = firstName;
+   _lastName = lastName;
+   return [super init];
+}
+@end
+
+Now you can initialize a Person and set their first and last name at the same time:
+
+Person *person = [[Person alloc] initWithFirstName:@"Tim" 
+                                          lastName:@"Cook"];
+
+We've implemented the initWithBatteryLife: method, but now you need to set the _batteryLife equal the battery life number that's passed into the initializer.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+Apple *copy = [talkingiPhone copy];
+[copy reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  self = [super init];
+  _batteryLife = @100;
+  return self;
+}
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+{
+   return [super init];
+}
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] init];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName){
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);  
+  }else{
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+    
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject <NSCopying> {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.h
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  self = [super init];
+  _batteryLife = @100;
+  return self;
+}
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+{
+   _batteryLife = batteryLife;
+   return [super init];
+}
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] initWithBatteryLife:_batteryLife];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName){
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);  
+  }else{
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+    
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Outpit:
+Apple.m[33]: Copy of Mr. Higgie's battery life is 95
+

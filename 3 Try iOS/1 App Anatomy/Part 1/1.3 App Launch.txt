@@ -1,0 +1,38 @@
+1.3 App Launch
+
+In the application:didFinishLaunchingWithOptions: method in the app delegate, use NSLog to output the string @"Application Did Finish Launching" to the console, so you can see when this method is called.
+Responsive
+
+
+AppDelegate.h
+#import <UIKit/UIKit.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@end
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  return YES;
+}
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  NSLog(@"Application Did Finish Launching");
+  return YES;
+}
+@end 

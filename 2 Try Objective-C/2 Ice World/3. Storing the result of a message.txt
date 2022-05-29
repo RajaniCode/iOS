@@ -1,0 +1,47 @@
+3. Storing the result of a message
+
+
+What if I want to store the result of passing a message in a variable?
+
+Well, Mr. Higgie, we just used the result of the description message in an NSLog(). Instead, what if we wanted to store the result in a variable? First, we need to think about what type of object description returns.
+
+When you send a message to an object that’s built-in to the Objective-C language, the easiest way to find out the return type is to look at the documentation.
+
+If you take a look at the NSArray description documentation, you’ll see something like this:
+
+- (NSString *)description
+
+This means that the return type is an NSString * object.
+
+Note: Most objects in Objective-C have a description method that returns a string that represents the data in the object.
+
+So if you want to save the result of description in a variable, just set the value of an NSString object equal to the value returned by passing the description message, like this:
+
+NSString *result = [myArrayObject description];
+
+Try storing result of sending the description message to the foods array in a variable named result, and then log out the contents of result with an NSLog() function.
+
+
+File
+NSArray *foods = @[@"tacos", @"burgers"];             
+NSString *result = /*//send description to foods//*/;
+
+NSLog(@"%@", /*//pass in result here//*/);
+
+
+Answer:
+File
+NSArray *foods = @[@"tacos", @"burgers"];             
+NSString *result = [foods description];
+
+NSLog(@"%@", result);
+
+
+Output:
+challenge[4]: (
+
+    tacos,
+
+    burgers
+
+)

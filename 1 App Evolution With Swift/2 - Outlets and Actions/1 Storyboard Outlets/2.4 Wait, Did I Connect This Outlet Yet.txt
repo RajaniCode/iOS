@@ -1,0 +1,13 @@
+2.4 Wait, Did I Connect This Outlet Yet?
+
+Which of the following is a UI indicator in Xcode that an outlet is connected?
+
+[Single Answer]
+
+The object name in the storyboard scene editor appears in bold.
+A line appears onscreen between the storyboard object and variable in the Swift file.
+The variable has the text @IBOutlet in front of the line where it is defined.
+The line where the variable appears in displays a darkened dot.
+
+
+Answer: The line where the variable appears in displays a darkened dot.

@@ -1,0 +1,86 @@
+4.2 Pushing View Controllers
+
+In the FavoritesViewController viewDidLoad method below, we've added a button which calls a showProfile: method. Define this method and have it create an instance of ProfileViewController and push that instance onto the top navigation controller's stack. You can get access to the navigation controller through the navigationController property on the FavoritesViewController.
+
+
+FavoritesViewController.m
+#import "FavoritesViewController.h"
+#import "ProfileViewController.h"
+
+@implementation FavoritesViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Favorites";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.jpg"]];
+
+  imageView.contentMode = UIViewContentModeTop;
+  imageView.frame = self.view.frame;
+
+  [self.view addSubview:imageView];
+
+  UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  profileButton.frame = CGRectMake(60, 300, 200, 44);
+  [profileButton setTitle:@"View Profile" forState:UIControlStateNormal];
+  [self.view addSubview:profileButton];
+  [profileButton addTarget:self action:@selector(showProfile:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+// Declare the showProfile method here
+@end
+
+
+Answer:
+FavoritesViewController.m
+#import "FavoritesViewController.h"
+#import "ProfileViewController.h"
+
+@implementation FavoritesViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Favorites";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.jpg"]];
+
+  imageView.contentMode = UIViewContentModeTop;
+  imageView.frame = self.view.frame;
+
+  [self.view addSubview:imageView];
+
+  UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  profileButton.frame = CGRectMake(60, 300, 200, 44);
+  [profileButton setTitle:@"View Profile" forState:UIControlStateNormal];
+  [self.view addSubview:profileButton];
+  [profileButton addTarget:self action:@selector(showProfile:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+// Declare the showProfile method here
+- (void) showProfile: (id)sender
+  {
+    ProfileViewController *profileViewController = [[ProfileViewController alloc] init];
+    [self.navigationController pushViewController:profileViewController animated:YES];
+  }
+  
+@end

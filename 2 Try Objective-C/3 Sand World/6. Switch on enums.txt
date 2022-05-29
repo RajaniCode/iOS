@@ -1,0 +1,89 @@
+6. Switch on enums
+
+
+Okay, that last challenge wasn’t exactly the most readable thing in the world.
+
+I had an easier time reading Moby Dick
+
+Where the switch really shines is when it’s used in conjunction with an enum. An enum allows you to define a variable that can be only 1 of a limited set of values, like the days of the week. So, instead of writing this:
+
+NSInteger day = 1;
+
+You could write this:
+
+DayOfWeek day = 1;
+
+You aren’t actually changing the value of the day variable, or really even its type. DayOfWeek is just an alias for NSInteger, not a whole new type. This is how it’s defined:
+
+typedef NS_ENUM(NSInteger, DayOfWeek) {
+    DayOfWeekMonday = 1,
+    DayOfWeekTuesday = 2,
+    DayOfWeekWednesday = 3,
+    DayOfWeekThursday = 4,
+    DayOfWeekFriday = 5,
+    DayOfWeekSaturday = 6,
+    DayOfWeekSunday = 7
+};
+
+As you can see we’ve assigned a name for each day of the week corresponding to the NSInteger value we used in the last challenge.
+
+Now we can use DayOfWeekWednesday instead of 3. As you can see by the code in the challenge editor, this makes our code much more readable. It also makes it more safe because Objective-C is smart enough to make sure all the possible values for DayOfWeek are handled in the switch.
+
+Note: Go ahead and submit the challenge with one of the cases missing and check out the error for not covering all the possible values in an enum
+
+Finish converting the rest of the cases to use the enum values.
+
+
+File
+DayOfWeek day = getDayOfWeek();
+
+switch (day) {
+    case DayOfWeekMonday:
+    case DayOfWeekTuesday:
+    case DayOfWeekWednesday:
+    case DayOfWeekThursday: {
+        [mrHiggie setCurrentHat:@"Fedora"];
+        break;
+    }
+    case DayOfWeekFriday: {
+        [mrHiggie setCurrentHat:@"Sombrero"];
+        break;
+    }
+    /*//Add DayOfWeekSaturday case//*/
+    case DayOfWeekSunday: {
+        [mrHiggie setCurrentHat:@"AstronautHelmet"];
+        break;
+    }
+}
+
+NSLog(@"Mr. Higgie is wearing: %@", [mrHiggie currentHat]);
+
+
+Answer:
+File
+DayOfWeek day = getDayOfWeek();
+
+switch (day) {
+    case DayOfWeekMonday:
+    case DayOfWeekTuesday:
+    case DayOfWeekWednesday:
+    case DayOfWeekThursday: {
+        [mrHiggie setCurrentHat:@"Fedora"];
+        break;
+    }
+    case DayOfWeekFriday: {
+        [mrHiggie setCurrentHat:@"Sombrero"];
+        break;
+    }
+    case DayOfWeekSaturday:
+    case DayOfWeekSunday: {
+        [mrHiggie setCurrentHat:@"AstronautHelmet"];
+        break;
+    }
+}
+
+NSLog(@"Mr. Higgie is wearing: %@", [mrHiggie currentHat]);
+
+
+Output:
+challenge[22]: Mr. Higgie is wearing: Fedora

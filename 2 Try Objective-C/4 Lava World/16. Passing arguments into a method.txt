@@ -1,0 +1,57 @@
+16. Passing arguments into a method
+
+
+Let's use our latest creation. In the challenge to the right, send the speak message to talkingiPhone 3 or more times with a different greeting argument, and log out the result of each message in a separate NSLog call.
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (NSString *) speak:(NSString *)greeting;
+@end
+
+
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+/*//Send speak message here//*/
+/*//Send speak message here//*/
+/*//Send speak message here//*/
+
+
+Answer:
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+NSLog([talkingiPhone speak:@"Hello"]);
+NSLog([talkingiPhone speak:@"Hola"]);
+NSLog([talkingiPhone speak:@"Hi"]);
+
+
+Output:
+challenge[6]: Mr. Higgie says Hello
+
+challenge[7]: Mr. Higgie says Hola
+
+challenge[8]: Mr. Higgie says Hi

@@ -1,0 +1,65 @@
+1.3 Create a coordinate
+
+
+Convert the values in the dictionary mapLocation for the keys @"lat" and @"lng" into values stored in double variables (they are currently NSNumber objects).
+
+Then, create a CLLocationCoordinate2D struct named coordinate from those latitude and longitude double variables.
+
+We've added code for you that will log out the lat/lng values in that struct when you're done.
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    
+    NSDictionary *mapLocation = @{@"name": @"Walt Disney World", 
+                                  @"lat": @28.41871,
+                                  @"lng": @-81.58121
+                                };
+    
+    /*//Create a CLLocationCoordinate2D struct named coordinate//*/
+
+    NSLog(@"lat: %f, lng: %f", coordinate.latitude, coordinate.longitude);
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    
+    NSDictionary *mapLocation = @{@"name": @"Walt Disney World", 
+                                  @"lat": @28.41871,
+                                  @"lng": @-81.58121
+                                };    
+ 
+    double lat = [mapLocation[@"lat"] doubleValue];
+    double lng = [mapLocation[@"lng"] doubleValue];
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(lat, lng);
+
+    NSLog(@"lat: %f, lng: %f", coordinate.latitude, coordinate.longitude);
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+@end

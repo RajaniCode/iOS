@@ -1,0 +1,9 @@
+1.3 Status Bar Style
+
+In this challenge, we’re going to start looking at one of the most immediately obvious differences between iOS 6 and iOS 7 - the changes to the appearance of the status bar.
+
+Tasks
+
+1. Implement a method in CSTakePhotoVC that will hide the status bar when this view is loaded.
+
+2. Implement a method in CSAboutVC that will change the status bar text color so that it matches the text color in the rest of the view.

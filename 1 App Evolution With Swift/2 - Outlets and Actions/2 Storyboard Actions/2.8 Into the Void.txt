@@ -1,0 +1,14 @@
+2.8 Into the Void
+
+What does the word that appears after the arrow mean in the following Swift function?
+
+@IBAction func viewCourse(sender: AnyObject) -> Void
+
+[Single Answer]
+
+It defines the code that runs after the function is completed.
+It prevents the function from running immediately so it can be called at any point later.
+It defines what type of data the function returns.
+
+
+Answer: It defines what type of data the function returns.

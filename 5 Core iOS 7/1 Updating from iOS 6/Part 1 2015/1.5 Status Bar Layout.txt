@@ -1,0 +1,23 @@
+1.5 Status Bar Layout
+
+
+In this challenge, we’re going to start looking at one of the most immediately obvious differences between iOS 6 and iOS 7 - the changes to the status bar and how it affects layout.
+
+Tasks
+
+1. In CSAboutVC.h, Declare a UIView property named contentSubview that we’ll use to hold all of the subviews in the rest of the challenges in this section.
+
+
+2. In the CSAboutVC loadView method, create a new UIView and assign it to the contentSubview property you just created. Then, add all the other subviews to the contentSubview instead of the controller’s root view.
+
+Once you’ve done that, don’t forget to add contentSubview as a subview of the controller’s root view too.
+
+
+3. Set the frame of self.contentSubview in the viewWillLayoutSubviews method.
+
+The x position should be 0 and the width should be the same as the width of self.view.frame, but the y position and height should take the value of the self.topLayoutGuide.length property into consideration.
+
+You've cleared 1.5 and earned 250 points! 2 challenges and 2 videos remain in Level 1.
+
+
+

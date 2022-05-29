@@ -1,0 +1,13 @@
+1.5 Status Bar Height
+
+What's the name of the property you can use to programmatically determine the status bar height?
+
+[Single Answer]
+
+statusBarHeight
+topLayoutGuide
+barHeight
+layoutGuide
+
+
+Answer: topLayoutGuide

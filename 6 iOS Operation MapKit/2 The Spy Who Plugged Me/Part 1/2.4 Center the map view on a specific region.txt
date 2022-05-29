@@ -1,0 +1,70 @@
+2.4 Center the map view on a specific region
+
+
+Center the map on the coordinate: 28.41871, -81.58121 with a span of 2500 meters wide by 2200 meters high.
+
+
+RestaurantMapViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface RestaurantMapViewController : UIViewController <MKMapViewDelegate>
+
+@property (strong, nonatomic) MKMapView *theMap;
+
+@end
+
+
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    
+    [self.view addSubview:self.theMap];
+
+    /*//Create and set a new region here//*/
+}
+
+@end
+
+
+Answer:
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    
+    [self.view addSubview:self.theMap];
+
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    double regionWidth = 2200;
+    double regionHeight = 2500;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    [self.view addSubview:self.theMap];  
+}
+
+@end

@@ -1,0 +1,14 @@
+3.4 Animating Transitions
+
+Which of the following kind of code should be included in the animateTransition method?
+
+[Single Answer]
+
+Set the timing of the animated transition.
+Set the start and end state of an animation.
+Pass a transition context property between two view controllers.
+Set a view controller's modal presentation style.
+
+
+Answer: Set the start and end state of an animation.
+

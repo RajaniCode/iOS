@@ -1,0 +1,38 @@
+2.4 Button Type
+
+iOS comes built in with all sorts of different button types. Update the button below to make it a UIButtonTypeDetailDisclosure type of button. (A detail disclosure button reveals additional details or functionality related to an item)
+
+
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *firstButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  firstButton.frame = CGRectMake(100, 100, 120, 44);
+  [firstButton setTitle:@"Tap me!" forState:UIControlStateNormal];
+  [self.view addSubview:firstButton];
+}
+@end
+
+
+Answer:
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *firstButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+  firstButton.frame = CGRectMake(100, 100, 120, 44);
+  [firstButton setTitle:@"Tap me!" forState:UIControlStateNormal];
+  [self.view addSubview:firstButton];
+}
+@end

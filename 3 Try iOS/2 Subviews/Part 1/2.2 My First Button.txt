@@ -1,0 +1,39 @@
+2.2 My First Button
+
+Create a UIButton of type UIButtonTypeRoundedRect. Set its frame to CGRectMake(120, 100, 80, 44), and its title @"Tap me!" for the UIControlStateNormal button state.
+
+Finally, show the UIButton instance by adding it as a subview of the ViewController's root view.
+
+
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  // add button here
+}
+@end
+
+
+Answer:
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  // add button here
+  self.view.backgroundColor = [UIColor blueColor];
+  UIButton *firstButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  firstButton.frame = CGRectMake(120, 100, 80, 44);
+  [firstButton setTitle:@"Tap me!" forState:UIControlStateNormal];
+  [self.view addSubview:firstButton];
+}
+@end

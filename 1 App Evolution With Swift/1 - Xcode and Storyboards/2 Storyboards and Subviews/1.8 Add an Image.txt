@@ -1,0 +1,13 @@
+1.8 Add an Image
+
+Which of these steps is not necessary for adding an image to an app?
+
+[Single Answer]
+
+Import an image into the asset catalog.
+Choose the file type of the image.
+Drag an image view onto the Storyboard.
+Select an image from the attributes inspector for an image view.
+
+
+Answer: Choose the file type of the image.

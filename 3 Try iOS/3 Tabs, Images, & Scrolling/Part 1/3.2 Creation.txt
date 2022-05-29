@@ -1,0 +1,64 @@
+3.2 Creation
+
+You'll see below in our AppDelegate class we've created a UITabBarController with two view controllers, one for the Feed view and one for the favorites view. Create another UIViewController with the title @"Profile" and modify the setViewControllers:animated: to add the new controller to the end of the array. Next, set the UITabBarController instance as the window's rootViewController.
+
+
+AppDelegate.h
+#import <UIKit/UIKit.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@end
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  UIViewController *feedViewController = [[UIViewController alloc] init];
+  feedViewController.title = @"Feed";
+  UIViewController *favoritesViewController = [[UIViewController alloc] init];
+  favoritesViewController.title = @"Favorites";
+  
+  UITabBarController *tabBarController = [[UITabBarController alloc] init];
+  [tabBarController setViewControllers:@[feedViewController, favoritesViewController]];
+
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  UIViewController *feedViewController = [[UIViewController alloc] init];
+  feedViewController.title = @"Feed";
+  UIViewController *favoritesViewController = [[UIViewController alloc] init];
+  favoritesViewController.title = @"Favorites";
+  
+  UIViewController *profileViewController = [[UIViewController alloc] init];
+  profileViewController.title = @"Profile";
+  
+  UITabBarController *tabBarController = [[UITabBarController alloc] init];
+  [tabBarController setViewControllers:@[feedViewController, favoritesViewController, profileViewController]]; 
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = tabBarController;
+    
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+@end

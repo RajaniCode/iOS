@@ -1,0 +1,173 @@
+3.3 Create a map annotation
+
+
+In RestaurantMapViewController.m, #import the MapAnnotation class header and create and add an annotation to the map for the coordinate stored in the struct annotationCoordinate.
+
+
+MapAnnotation.h
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+
+@interface MapAnnotation : NSObject
+
+@property CLLocationCoordinate2D coordinate;
+
+@end
+
+
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+/*//Import the MapAnnotation.h file//*/
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    double regionWidth = 2500;
+    double regionHeight = 2200;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    NSDictionary *oneRestaurant = @{@"name" : @"Taco Cantina",
+                                    @"lat": @28.5424,
+                                    @"lng": @-81.3841};
+    
+    CLLocationCoordinate2D annotationCoordinate = CLLocationCoordinate2DMake([oneRestaurant[@"lat"] doubleValue], [oneRestaurant[@"lng"] doubleValue]);
+    
+    /*//Create a new MapAnnotation object//*/
+
+    /*//Set the coordinate property of that annotation to annotationCoordinate//*/
+
+    /*//send the addAnnotation: message to self.theMap//*/
+
+    self.userLocationLabel = [[UILabel alloc] init];
+    self.userLocationLabel.frame = CGRectMake(20,360,280,40);
+    self.userLocationLabel.backgroundColor = [UIColor clearColor];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+}
+
+- (void)centerOnUser:(id)sender
+{
+    [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate animated:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(self.userLocationUpdated == NO) {
+        [self centerOnUser:nil];
+        self.userLocationUpdated = YES;
+    }
+    
+    self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];
+}
+
+- (void)dealloc
+{
+    self.theMap = nil;
+}
+
+@end
+ 
+
+Answer:
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+/*//Import the MapAnnotation.h file//*/
+#import "MapAnnotation.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    double regionWidth = 2500;
+    double regionHeight = 2200;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    NSDictionary *oneRestaurant = @{@"name" : @"Taco Cantina",
+                                    @"lat": @28.5424,
+                                    @"lng": @-81.3841};
+    
+    CLLocationCoordinate2D annotationCoordinate = CLLocationCoordinate2DMake([oneRestaurant[@"lat"] doubleValue], [oneRestaurant[@"lng"] doubleValue]);
+    
+    MapAnnotation *annotation = [[MapAnnotation alloc] init];
+    annotation.coordinate = annotationCoordinate;
+    [self.theMap addAnnotation:annotation];
+
+    self.userLocationLabel = [[UILabel alloc] init];
+    self.userLocationLabel.frame = CGRectMake(20,360,280,40);
+    self.userLocationLabel.backgroundColor = [UIColor clearColor];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+}
+
+- (void)centerOnUser:(id)sender
+{
+    [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate animated:YES];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(self.userLocationUpdated == NO) {
+        [self centerOnUser:nil];
+        self.userLocationUpdated = YES;
+    }
+    
+    self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];
+}
+
+- (void)dealloc
+{
+    self.theMap = nil;
+}
+
+@end

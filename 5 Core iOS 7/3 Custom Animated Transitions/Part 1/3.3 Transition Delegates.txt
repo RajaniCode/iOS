@@ -1,0 +1,13 @@
+3.3 Transition Delegates
+
+What's the name of the transition delegate you need to adopt on a view controller that you want to implement an animated transition on?
+
+[Single Answer]
+
+UIViewControllerTransitionDelegate
+UIViewControllerAnimatedTransition
+UIViewControllerTransitioningDelegate
+UIViewControllerAnimatedTransitionDelegate
+
+
+Answer: UIViewControllerTransitioningDelegate

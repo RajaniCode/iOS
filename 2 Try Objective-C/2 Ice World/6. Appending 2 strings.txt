@@ -1,0 +1,50 @@
+6. Appending 2 strings
+
+
+One of the tricks to learning Objective-C is figuring out when you can use messages and when you have to use c operations and functions.
+
+In the case of adding or multiplying two NSNumber objects together, you need to work with some c functions, but other times you can stay in the comfortable world of Objective-C and message sending.
+
+For example, this is how you might logically try to append two NSString objects together.
+
+NSString *newString = @"Hello" + @"World";
+
+This will not work, but try it anyway so you can see what happens.
+
+Hey, that looks familiar. The same thing happened when we tried to multiply two NSNumber objects together.
+
+To solve that problem, we had to convert our NSNumber objects to a c-type and then we could proceed with the multiplication.
+
+At this point it would seem the only way to perform an operation on two objects is by abandoning messages, because an operation involves two objects and so far we’ve only been able to send a message to a single object. If only we could send a message like this:
+
+  [firstName + lastName]
+
+Well, it turns out that we can. There is a method on NSString called stringByAppendingString: that takes a single NSString argument and appends it to the NSString object that received the stringByAppendingString: message, returning the full string. So we can rewrite the above code like so:
+
+  [firstName stringByAppendingString:lastName];
+
+Notice how we include the colon : in the message name. This is how you can tell a message takes an argument. If you see a colon, it means that the message expects an argument.
+
+Go ahead and log out the full name by appending the firstName and lastName together using the stringByAppendingString: message.
+
+
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = firstName + lastName;
+NSLog(@"%@", fullName);
+
+
+Answer:
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = [firstName stringByAppendingString:lastName];
+
+NSLog(@"%@", fullName);
+
+
+Output:
+challenge[6]: AppleInc
