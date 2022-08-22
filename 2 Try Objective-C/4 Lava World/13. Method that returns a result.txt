@@ -1,0 +1,89 @@
+13. Method that returns a result
+
+
+What if instead of having speak just log the phoneName value we could have it create and return a string as a result? Then, whoever sends the speak message can store that NSString return value in a variable.
+
+We already know that messages can have results, but how do you define a method that returns a result? The first thing we have to do is declare what type of object the method will return in its header file. For example, let’s say we want to define a fullName method on the Person class that returns an NSString:
+
+Person.h
+
+@interface Person : NSObject
+@property NSString *firstName;
+@property NSString *lastName;
+
+- (NSString *)fullName;
+
+Here the fullName method has a return type defined in the parentheses as NSString *. Now all we have to do is update the method implementation and use the keyword return to tell the method to return a string:
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+
+- (NSString *)fullName;
+{
+   return [NSString stringWithFormat:@"%@ %@", self.firstName, self.lastName];
+}
+@end
+
+You can return any type of object you want. For example, maybe you want a person’s first name and last name as an array instead of a string:
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+
+- (NSArray *)names;
+{
+   return @[self.firstName, self.lastName];
+}
+@end
+
+Update the speak method to create and return a string instead of logging it. Remember, you have to set the return type in both the header and implementation files.
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) speak;
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(void)speak;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says Hello There!", self.phoneName];
+    return /*//return the message variable//*/;
+}
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(NSString *)speak;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says Hello There!", self.phoneName];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (NSString *) speak;
+@end

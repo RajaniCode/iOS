@@ -1,0 +1,66 @@
+5. Class implementation
+
+
+Now that we have a class interface for Apple, it’s time we do some implementing. Remember that if the class interface is like a restaurant menu, the class implementation is like the kitchen: it’s where properties and methods get made.
+
+For example, let’s say we’ve defined a class interface for a Person class with two properties:
+
+@interface Person : NSObject
+@property NSString *firstName;
+@property NSString *lastName;
+@end
+
+Now all we have to do to implement the Person class is this:
+
+@implementation Person
+@end
+
+What happened to the firstName and lastName properties?
+
+Properties are special because they are automatically implemented once the class is implemented. This isn’t the case with methods, but we’ll get to that in a bit.
+File Organization
+
+Before we implement the Apple class, there is one more thing we have to cover: file organization and importing. When you’re creating a class, you don’t want to put the header and the implementation in the same file. That would be like keeping the menus in the kitchen - how would customers ever know what to order?
+
+The same goes for classes. The convention in Objective-C is to name the header file ClassName.h and the implementation file ClassName.m. So the Person class above would be defined in two files:
+
+Person.h
+
+@interface Person : NSObject
+@property NSString *firstName;
+@property NSString *lastName;
+@end
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+@end
+
+Because we’ve separated the implementation of Person from the interface, we have to import the interface file in Person.m. That #import command will find the Person.h file and “copy” it into the Person.m file.
+
+Now go ahead and implement the Apple class in the Apple.m file to the right. As you can see we've already imported the header file for you.
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+/*//Add the class implementation//*/
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+@end

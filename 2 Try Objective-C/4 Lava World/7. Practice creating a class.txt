@@ -1,0 +1,54 @@
+7. Practice creating a class
+
+
+That was a lot to cover, so let’s practice a little bit by completing the following steps:
+
+1. Create an instance of Apple class named talkingDroid.
+
+2. Set its phoneName and modelNumber properties.
+
+3. Log out both properties using NSLog.
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+@end
+
+
+Challenge
+#import "Apple.h"                                          
+
+/*//Create a Apple object and call it talkingDroid//*/
+/*//Set its phoneName and modelNumber properties//*/
+
+NSLog(@"phoneName: %@", talkingDroid.phoneName);
+NSLog(@"modelNumber: %@", talkingDroid.modelNumber);
+
+
+Answer:
+Challenge
+#import "Apple.h"                                          
+
+Apple *talkingDroid = [[Apple alloc] init];
+talkingDroid.phoneName = @"iPhone";
+[talkingDroid setModelNumber:@"7"];
+
+NSLog(@"phoneName: %@", talkingDroid.phoneName);
+NSLog(@"modelNumber: %@", talkingDroid.modelNumber);
+
+
+Output:
+challenge[7]: phoneName: iPhone
+
+challenge[8]: modelNumber: 7

@@ -1,0 +1,67 @@
+9. Implementing a custom method
+
+
+I'd like to order one speak message please
+
+Declaring speak in the Apple header will only get us so far, because we still need to write some code that is executed when the speak message is sent.
+
+The metaphorical kitchen for a class is the implementation file. Yes, we finally get to crack open Apple.m and muck around. The way we implement a method is the same as the way we declare it in the header, but we also need to add an a curly-brace block after the declaration:
+
+Coffee.h
+
+@interface Coffee : NSObject
+- (void) pour;
+@end
+
+Coffee.m
+
+#import "Coffee.h"
+
+@implementation Coffee
+- (void) pour;
+{
+  NSLog(@"Pouring coffee");
+}
+@end
+
+As you can see, the - (void) pour; line stays exactly the same in the Coffee.m file, but it’s directly followed by {} which wraps the code that will be executed every time the pour message is sent to a Coffee object.
+
+Note: The semicolon ; at the end of the method definition is optional, but valid Objective-C code.
+
+It's now time to implement the speak method in the Apple.m file. At this point all it should do is call NSLog.
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) speak;
+
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+/*//Implement speak here//*/
+
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+  - (void) speak; {
+  NSLog(@"Hello!"); 
+};
+@end
+
+
+Output:
+Apple.m[5]: Hello!

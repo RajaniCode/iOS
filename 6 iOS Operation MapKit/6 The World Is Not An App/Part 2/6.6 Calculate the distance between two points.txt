@@ -1,0 +1,51 @@
+6.6 Calculate the distance between two points
+
+
+We just noticed that the restaurants aren't really ordered in any logical way in the table view, so let's sort them by their distance to our current location. Before we do that, let's practice calculating the distance between two locations.
+
+We're giving you two CLLocation objects. Calculate the and store the distance between them as a double value, and then log the variable that stores the result.
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    CLLocation *location1 = [[CLLocation alloc] initWithLatitude:28.9503 longitude:-83.3015];
+    CLLocation *location2 = [[CLLocation alloc] initWithLatitude:28.5341 longitude:-83.3937];
+    
+    /*//calculate the distance between location1 and location2 and log the result//*/
+
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+        
+    return YES;
+}
+
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    CLLocation *location1 = [[CLLocation alloc] initWithLatitude:28.9503 longitude:-83.3015];
+    CLLocation *location2 = [[CLLocation alloc] initWithLatitude:28.5341 longitude:-83.3937];
+    
+    NSLog(@"Distance: %f", [location1 distanceFromLocation:location2]);
+  
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+        
+    return YES;
+}
+
+@end

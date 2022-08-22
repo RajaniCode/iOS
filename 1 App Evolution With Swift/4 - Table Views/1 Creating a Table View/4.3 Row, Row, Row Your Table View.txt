@@ -1,0 +1,90 @@
+4.3 Row, Row, Row Your Table View
+
+We need to setup a UITableViewController for our courses. A few functions are core to every UITableViewController that we'll need to implement in order to provide the number of rows and the content of each. Follow the tasks to complete our view controller.
+
+CoursesTableViewController.swift
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier(  )
+
+    
+  }
+}
+
+1. Update the tableView(_:numberOfRowsInSection) function to create 10 rows.
+
+Answer:
+CoursesTableViewController.swift
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier(  )
+
+    
+  }
+}
+
+2. In the tableView(_:cellForRowAtIndexPath) function, we want to return the correct cell for the given indexPath. Update the call to dequeueReusableCellWithIdentifier() to get the correct cell with identifier "CourseCell" for the current indexPath.
+
+Answer:
+CoursesTableViewController.swift
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell", forIndexPath: indexPath)
+   
+  }
+}
+
+3. Return the newly created cell from the cellForRowAtIndexPath function.
+
+Answer:
+CoursesTableViewController.swift
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 10
+  }
+
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("CourseCell", forIndexPath: indexPath)
+    return cell    
+  }
+}

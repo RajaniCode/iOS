@@ -1,0 +1,47 @@
+5.2 Add a UITextField and the UITextFieldDelegate protocol
+
+
+The restaurant API just got a major upgrade and now contains restaurant locations worldwide, but we only want to see restaurants in our current city.
+
+Luckily, our API allows us to pass a /CITY/ parameter in the URL to get a subset of results. Start by declaring a UITextField named citySearchField in RestaurantMapViewController.h and adopting the UITextFieldDelegate.
+
+
+RestaurantMapViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface RestaurantMapViewController : UIViewController <MKMapViewDelegate>
+
+@property (strong, nonatomic) MKMapView *theMap;
+@property (strong, nonatomic) UIButton *userCenterButton;
+@property (strong, nonatomic) UILabel *userLocationLabel;
+@property BOOL userLocationUpdated;
+@property (strong, nonatomic) NSArray *restaurants;
+
+- (void)centerOnUser:(id)sender;
+- (void)showRestaurantsAndCenter:(BOOL)shouldCenter;
+
+@end
+
+
+Answer:
+RestaurantMapViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface RestaurantMapViewController : UIViewController <MKMapViewDelegate, UITextFieldDelegate>
+
+@property (strong, nonatomic) MKMapView *theMap;
+@property (strong, nonatomic) UIButton *userCenterButton;
+@property (strong, nonatomic) UILabel *userLocationLabel;
+@property BOOL userLocationUpdated;
+@property (strong, nonatomic) NSArray *restaurants;
+@property (strong, nonatomic) UITextField *citySearchField;
+
+- (void)centerOnUser:(id)sender;
+- (void)showRestaurantsAndCenter:(BOOL)shouldCenter;
+
+
+
+@end
+

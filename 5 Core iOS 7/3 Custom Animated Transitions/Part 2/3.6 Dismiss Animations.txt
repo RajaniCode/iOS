@@ -1,0 +1,12 @@
+3.6 Dismiss Animations
+
+What must be true of the object returned from the animationControllerForDismissedController: method?
+
+[Single Answer]
+
+An object that conforms to the UIViewControllerAnimatedTransitioning protocol.
+An object that is a copy of the view controller that should load after the current one is dismissed.
+A boolean value ( true or false)
+
+
+Amswer: An object that conforms to the UIViewControllerAnimatedTransitioning protocol.

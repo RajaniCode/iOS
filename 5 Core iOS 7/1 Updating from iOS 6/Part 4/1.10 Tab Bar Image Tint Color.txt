@@ -1,0 +1,13 @@
+1.10 Tab Bar Image Tint Color
+
+If you're adding an image to a tab bar and want the actual image to show up instead of an alpha mask, which rendering mode would you choose?
+
+[Single Answer]
+
+UIImageRenderingModeAlwaysOriginal
+UIImageRenderingModeAlwaysTemplate
+UIImageRenderingModeAlwaysAlpha
+UIImageRenderingModeAlwaysImage
+
+
+Answer: UIImageRenderingModeAlwaysOriginal

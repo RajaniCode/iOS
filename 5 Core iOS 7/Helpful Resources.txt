@@ -1,0 +1,17 @@
+Helpful Resources
+
+http://nshipster.com/
+
+http://nsscreencast.com/episodes
+
+https://www.objc.io/
+
+http://www.codeschool.com/code_tv/storyboard-for-ios-part-1
+
+https://pragprog.com/book/adios/ios-sdk-development
+
+https://www.bignerdranch.com/we-write/ios-programming/
+
+https://www.youtube.com/user/azamsharp?feature=watch
+
+http://www.rubymotion.com/

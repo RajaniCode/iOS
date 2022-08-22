@@ -1,0 +1,41 @@
+4. Defining a class property
+
+
+Now that our Apple interface includes a menu of common methods from NSObject, it’s time to customize Apple. One way to do this is to add properties. For example, a Person object might want to store information about the person’s first and last name:
+
+@interface Person : NSObject
+@property NSString *firstName;
+@property NSString *lastName;
+@end
+
+Properties are defined by writing @property between the @interface and @end declarations. Properties, just like variables, need both a type and a name.
+
+On our Apple class, we can add a property for phoneName like this:
+
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+
+@end
+
+We’ve now made Apple have an NSString * property with the name phoneName.
+
+Add another property to Apple to hold an NSString * for the phone's model number, and give it the name modelNumber.
+
+
+Class Interface
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+
+@end
+
+
+Answer:
+Class Interface
+@interface Apple : NSObject
+
+@property NSString *modelNumber;
+@property NSString *phoneName;
+
+@end

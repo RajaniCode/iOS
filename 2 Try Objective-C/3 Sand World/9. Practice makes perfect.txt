@@ -1,0 +1,73 @@
+9. Practice makes perfect
+
+
+Because being lazy is so much fun, let’s run through one more example of NSDictionary fast enumeration.
+
+Mr. Higgie can no longer decide which hat he likes based on the type of hat alone. He demands to also know which color the hat is before he can make his final decision. So we’ve changed the newHats variable to be an NSDictionary where the hat names are the keys and the hat colors are the values:
+
+NSDictionary *newHats = @{
+  @"Cowboy": @"White",
+  @"Conductor": @"Brown",
+  @"Baseball": @"Red"
+};
+
+The mrHiggie object also has a new message it can respond to: tryOnHat:withColor: which will return either YES or NO.
+
+Update the code to fast enumerate through the newHats dictionary and have Mr. Higgie try on each hat in the collection.
+
+Note: Fast Enumeration earns its name by being faster than a traditional c-style for loop because it limits message sending, which can be slow when enumerating a 1000+ item collection object.
+
+
+File
+NSDictionary *newHats = @{                                                                                                    
+  @"Cowboy": @"White",
+  @"Conductor": @"Brown",
+  @"Baseball": @"Red"
+};
+
+for (/*//Create an NSString variable called hat to loop through each key in the newHats dictionary//*/){
+
+  /*//Create an NSString variable that stores the color of the hat//*/
+
+  NSLog(@"Trying on new %@ %@ hat", color, hat);
+
+  if([mrHiggie tryOnHat:hat withColor:color]) {
+    NSLog(@"Mr. Higgie loves it");
+  } else {
+    NSLog(@"Mr. Higgie hates it");
+  }
+}
+
+
+Answer:
+File
+NSDictionary *newHats = @{                                                                                                    
+  @"Cowboy": @"White",
+  @"Conductor": @"Brown",
+  @"Baseball": @"Red"
+};
+
+for (NSString *hat in newHats) {
+  NSString *color = newHats[hat];
+  NSLog(@"Trying on new %@ %@ hat", color, hat);
+
+  if([mrHiggie tryOnHat:hat withColor:color]) {
+    NSLog(@"Mr. Higgie loves it");
+  } else {
+    NSLog(@"Mr. Higgie hates it");
+  }
+}
+
+
+Output:
+challenge[9]: Trying on new White Cowboy hat
+
+challenge[12]: Mr. Higgie loves it
+
+challenge[9]: Trying on new Brown Conductor hat
+
+challenge[14]: Mr. Higgie hates it
+
+challenge[9]: Trying on new Red Baseball hat
+
+challenge[14]: Mr. Higgie hates it

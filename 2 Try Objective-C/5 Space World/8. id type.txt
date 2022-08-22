@@ -1,0 +1,157 @@
+8. id type
+
+
+Our copyWithZone: method works as-is, but it’s a little confusing because we have defined the return type and type of the copy to be of Apple *, and we know now that isn’t always the case.
+
+To convey the functionality of this method, we can take advantage of a feature of the Objective-C language - an object that belongs to a subclass can be specified as the type of a superclass. That means we can do this:
+
+Apple *talkingPhone = [[ChargableApple alloc] init];
+
+The type can be as generic as you want it to be, so you could even specify an object to be of type NSObject *:
+
+NSObject *person = [[Person alloc] init];
+
+There is a special type id that should be used instead of NSObject * for when you have a generic Objective-C object that you don’t know the type of at compile time:
+
+id person = [[Person alloc] init];
+
+Note: When declaring an object with a type of id, you have to leave off the *.
+
+By declaring an object as an id type, the compiler will allow you to send the object any message, but it won’t allow you to use the property . notation. So instead of this:
+
+Person *person = [[Person alloc] init];
+person.firstName = @"Eric";
+NSLog(@"%@", person.firstName);
+
+You could write this:
+
+id person = [[Person alloc] init];
+[person setFirstName:@"Eric"];
+NSLog(@"%@", [person firstName]);
+
+Update the copyWithZone: method to replace occurrences of Apple * with the id type. Make sure and update setting the phoneName property to use the setPhoneName message
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+Apple *copy = [talkingiPhone copy];
+[copy reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+{
+    _batteryLife = batteryLife;
+    return [super init];
+}
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[[self class] allocWithZone:zone] initWithBatteryLife:_batteryLife];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName){
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);  
+  }else{
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+    
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject <NSCopying> {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+{
+    _batteryLife = batteryLife;
+    return [super init];
+}
+
+- (id) copyWithZone:(NSZone *)zone;
+{
+   id copy = [[[self class] allocWithZone:zone] initWithBatteryLife:_batteryLife];
+   [copy setPhoneName:[NSString stringWithFormat:@"Copy of %@", self.phoneName]];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName){
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);  
+  }else{
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+    
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[32]: Copy of Mr. Higgie's battery life is 95

@@ -1,0 +1,206 @@
+7. Object class
+
+
+We now have a working copyWithZone: method that will create and return a new Apple instance with data copied from the object that is sent the copy message.
+
+That is great, it really is. We’ve taken advantage of the power of Objective-C with features like protocols and inheritance. With a protocol we have the compiler make sure the Apple class implements the correct method to support the copy message. With inheritance, we use the NSObject implementation of copy to save us from writing extra code.
+
+But, with great power comes great responsibility. The classes we define do not exist in a vacuum. They are open for extension, but closed for modification. In Object-Oriented programming, this is known as the open/closed principle.
+
+This means that you need to design a class that can be inherited from and it should just work, without the author of a subclass having access to the source of the superclass.
+
+Note: A subclass is a class that inherits from another class, and a superclass is a class that has 1 or more subclasses. These terms are usually used relative to a class. For example, you could say "Apple is a subclass of NSObject", or "NSObject is Apple's superclass."
+
+It’s easier to understand this principle by identifying a violation and learning how to fix it. Fortunately, we accidentally committed a violation of this principle when we implemented copyWithZone:. Can you spot it?
+
+Apple.m
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] initWithBatteryLife:_batteryLife];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   return copy;
+}
+
+We hardcoded the class of the returned object to always be Apple. That means that if we create a new class that inherits from Apple, calling copyWithZone: on an instance of the subclass will not return an instance of that subclass, but will return an instance of Apple. This can lead to you creating objects of the wrong class, which will cause unexpected bugs in your program.
+
+To see what can happen, we’ve added a new class ChargableApple that inherits from Apple. We’ve added a new method to ChargableApple that will allow it to increase its battery life, but we’ve left the Apple class unchanged. In the “Example Use” tab we’ve tried copying a ChargableApple object and then increasing the copy’s battery life.
+
+Submit the code as-is and then view the output to see the runtime exception
+
+When we tried to send the increaseBatteryLife: message to the object returned by copy, it resulted in a runtime exception because the copied object was a Apple instance, not a ChargableApple instance.
+The fix
+
+So how do we fix this? Looking again at the copyWithZone: code, we can see that we’ve hardcoded Apple three times:
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] initWithBatteryLife:_batteryLife];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   return copy;
+}
+
+The type specifiers (Apple *) are actually fine at this point, and we don’t need to change them to get this to work. The code that is really responsible for the kind of object created is this bit here:
+
+[[Apple allocWithZone:zone] initWithBatteryLife:_batteryLife];
+
+Here we are always only creating Apple objects. Instead, we should create a new object based on the class of the current self object (which makes sense for a copy operation). Luckily, classes aren’t only words you type into your code, they are also objects themselves.
+
+A class is an object? So a class has a class? Well you just blew my flashdrive.
+
+Yup, but for now all we need to know is that we can send the class message to an object to get its class at runtime. So you can create new objects like this:
+
+[[Person alloc] init];
+
+And like this:
+
+[[[someExistingObject class] alloc] init];
+
+Fix the copyWithZone: implementation to work with subclasses by sending allocWithZone: to the result of [self class]
+
+
+Example Use
+#import "ChargableApple.h"
+
+ChargableApple *phone = [[ChargableApple alloc] initWithBatteryLife:@50];
+
+phone.phoneName = @"Stove Jibs";
+
+[phone reportBatteryLife];
+
+ChargableApple *copyPhone = [phone copy];
+[copyPhone increaseBatteryLife:@5];
+[copyPhone reportBatteryLife];
+
+
+ChargableApple.h
+@interface ChargableApple : Apple
+- (void) increaseBatteryLife:(NSNumber *)num;
+@end
+
+
+ChargableApple.m
+#import "ChargableApple.h"
+
+@implementation ChargableApple
+- (void) increaseBatteryLife:(NSNumber *)num;
+{
+    _batteryLife = @([_batteryLife intValue] + [num intValue]);
+}
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+{
+    _batteryLife = batteryLife;
+    return [super init];
+}
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[Apple allocWithZone:zone] initWithBatteryLife:_batteryLife];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName){
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);  
+  }else{
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+    
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject <NSCopying> {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (Apple *)initWithBatteryLife:(NSNumber *)batteryLife;
+{
+    _batteryLife = batteryLife;
+    return [super init];
+}
+
+- (Apple *) copyWithZone:(NSZone *)zone;
+{
+   Apple *copy = [[[self class] alloc] initWithBatteryLife:_batteryLife];
+   copy.phoneName = [NSString stringWithFormat:@"Copy of %@", self.phoneName];
+   return copy;
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+  if(self.phoneName){
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);  
+  }else{
+    NSLog(@"%@'s battery life is %@", self, _batteryLife);
+  }
+    
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[32]: Stove Jibs's battery life is 50
+
+Apple.m[32]: Copy of Stove Jibs's battery life is 55

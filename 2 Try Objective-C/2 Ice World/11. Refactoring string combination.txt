@@ -1,0 +1,43 @@
+11. Refactoring string combination
+
+
+Remember how fun it was when we created a string by nesting stringByAppendingString: messages:
+
+NSString *fullname = [[firstName stringByAppendingString:@" "] stringByAppendingString:lastName];
+
+There is actually a much shorter way to do this by sending the stringWithFormat: message to the NSString class:
+
+NSString *fullname = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+
+You should recognize that format string from working with NSLog. We could log the full name in the same way:
+
+NSLog(@"%@ %@", firstName, lastName);
+
+Just like NSLog, stringWithFormat: expects arguments for each placeholder in the format string. If the number of arguments following the format string doesn’t equal the number of placeholders, then you will get a compiler error like this:
+
+More ‘%’ conversions than data arguments
+
+Update the code to use stringWithFormat: instead of stringByAppendingString:.
+
+
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = [[firstName stringByAppendingString:@" "] stringByAppendingString:lastName];
+
+NSLog(@"%@", fullName);
+
+
+Answer:
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+
+NSLog(@"%@", fullName);
+
+
+Output:
+challenge[6]: Apple Inc

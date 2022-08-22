@@ -1,0 +1,53 @@
+2.6 Button Actions
+
+Buttons are meant to be tapped. Below we've created a button called blueButton. When it is tapped, have it fire off an action that will make the background of the root view [UIColor blueColor]. You'll need to use the control event UIControlEventTouchUpInside.
+
+
+ViewController.h
+#import <UIKit/UIKit.h>
+
+@interface ViewController : UIViewController
+
+@end
+
+
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *blueButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  blueButton.frame = CGRectMake(120, 100, 80, 44);
+  [blueButton setTitle:@"Make blue!" forState:UIControlStateNormal];
+  [self.view addSubview:blueButton];
+}
+@end
+
+
+Answer:
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *blueButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  blueButton.frame = CGRectMake(120, 100, 80, 44);
+  [blueButton setTitle:@"Make blue!" forState:UIControlStateNormal];
+  [self.view addSubview:blueButton];
+  [blueButton addTarget:self action:@selector(changeBackgroundColor:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) changeBackgroundColor:(UIButton *) sender
+{
+  self.view.backgroundColor = [UIColor blueColor];  
+}
+  
+@end

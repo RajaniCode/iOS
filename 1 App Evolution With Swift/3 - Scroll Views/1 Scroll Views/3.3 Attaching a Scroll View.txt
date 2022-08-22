@@ -1,0 +1,66 @@
+3.3 Attaching a Scroll View
+
+When the view loads, we want to add our subview with a specific size. Follow the tasks to add this subview.
+
+AboutViewController.swift
+import UIKit
+
+class AboutViewController : UIViewController
+
+  @IBOutlet weak var scrollView: UIScrollView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+
+
+  }
+}
+
+1. In the viewDidLoad() function, write code that makes the scrollView a subview of the main view.
+
+Answer:
+AboutViewController.swift
+import UIKit
+
+class AboutViewController : UIViewController
+
+  @IBOutlet weak var scrollView: UIScrollView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(scrollView)    
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+
+
+  }
+}
+
+2. In the viewWillLayoutSubviews() function, set the contentSize of the scrollView to be 375x1000.
+
+Answer:
+AboutViewController.swift
+import UIKit
+
+class AboutViewController : UIViewController
+
+  @IBOutlet weak var scrollView: UIScrollView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(scrollView)    
+  }
+
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    scrollView.contentSize = CGSizeMake(375, 1000)
+  }
+}

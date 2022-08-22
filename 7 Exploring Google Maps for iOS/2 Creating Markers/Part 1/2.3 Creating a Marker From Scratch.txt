@@ -1,0 +1,35 @@
+2.3 Creating a Marker From Scratch
+
+Now that our map is set up, we need to add some markers that represent the locations of the food trucks. Four of the trucks are already on the map, but Melt House and Taco Gogo are missing. Let's create and add a marker for the Melt House truck with the following parameters.
+
+Still in our viewDidLoad method, we've already created our self.mapView, but we have yet to add a coordinate to it. Complete the following code to add a marker with the title "Melt House" at 37.798505, -122.430562. Also, make it pop when it appears.
+
+[self.view addSubview:self.mapView];
+  GMSMarker *meltHouseMarker = [[GMSMarker alloc] init];
+  meltHouseMarker.position =
+    CLLocationCoordinate2DMake(
+      %text: lat%,
+      %text: long%
+    );
+  meltHouseMarker.title = [ ];
+  meltHouseMarker.appearAnimation = [ ];
+  meltHouseMarker.icon = [ ];
+    UIImage imageNamed:@"marker-melt-house"
+  ];
+  meltHouseMarker.map = [ ];
+
+
+Answer: 
+37.798505, 
+-122.430562, 
+@"Melt House", 
+kGMSMarkerAnimationPop, 
+self.mapView
+
+  
+    
+    
+
+  
+    
+    

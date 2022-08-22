@@ -1,0 +1,29 @@
+1.2 Walkthrough
+
+Welcome to your first challenge. Have a look around, explore the interface, get familiar with your surroundings.
+
+When you are ready to move on, press the "Submit" button below
+
+
+AppDelegate.h
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return YES;
+}
+@end
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    return YES;
+}
+@end
+
+

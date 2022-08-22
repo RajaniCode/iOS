@@ -1,0 +1,170 @@
+3.6 Custom Controllers
+
+As you see below, we've started using our new ViewController subclasses to move code out of the AppDelegate for the FeedViewController. Finish the job by doing the same with the FavoritesViewController and ProfileViewController. #import the header files, instantiate the objects, and move over the title and image code into the respective implementation file.
+
+
+ProfileViewController.h
+#import <UIKit/UIKit.h>
+
+@interface ProfileViewController : UIViewController
+
+@end
+
+
+ProfileViewController.m
+#import "ProfileViewController.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    // Insert customization code here
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.view.backgroundColor = [UIColor grayColor];
+}
+@end
+
+
+FavoritesViewController.h
+#import <UIKit/UIKit.h>
+
+@interface FavoritesViewController : UIViewController
+
+@end
+
+
+FavoritesViewController.m
+#import "FavoritesViewController.h"
+
+@implementation FavoritesViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    // Insert customization code here
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.view.backgroundColor = [UIColor blueColor];
+}
+
+@end
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+#import "FeedViewController.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  FeedViewController *feedController = [[FeedViewController alloc] init];
+  
+  UIViewController *favoritesController = [[UIViewController alloc] init];
+  favoritesController.title = @"Favorites";
+  favoritesController.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+
+  UIViewController *profileController = [[UIViewController alloc] init];
+  profileController.title = @"Profile";
+  profileController.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+
+  
+  UITabBarController *tabBarController = [[UITabBarController alloc] init];
+  [tabBarController setViewControllers:@[feedController, favoritesController, profileController]];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = tabBarController;
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+#import "FeedViewController.h"
+#import "FavoritesViewController.h"
+#import "ProfileViewController.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  FeedViewController *feedController = [[FeedViewController alloc] init];  
+  FavoritesViewController *favoritesController = [[FavoritesViewController alloc] init];  
+  ProfileViewController *profileController = [[ProfileViewController alloc] init];  
+
+  
+  UITabBarController *tabBarController = [[UITabBarController alloc] init];
+  [tabBarController setViewControllers:@[feedController, favoritesController, profileController]];
+  
+  self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  self.window.rootViewController = tabBarController;
+  [self.window makeKeyAndVisible];
+  return YES;
+}
+@end
+
+
+FavoritesViewController.m
+#import "FavoritesViewController.h"
+
+@implementation FavoritesViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    // Insert customization code here
+    self.title = @"Favorites";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_favorites"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.view.backgroundColor = [UIColor blueColor];
+}
+
+@end
+
+
+ProfileViewController.m
+#import "ProfileViewController.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    // Insert customization code here
+    self.title = @"Profile";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  self.view.backgroundColor = [UIColor grayColor];
+}
+@end

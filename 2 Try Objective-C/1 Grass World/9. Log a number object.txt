@@ -1,0 +1,13 @@
+9. Log a number object
+
+
+You can’t log an NSNumber object by passing it directly to NSLog like we did earlier with the firstName object. But you can use the %@ placeholder object in a formatted string to log a representation of the number.
+
+So if you just wanted to log out the age object, you would have to do this:
+
+NSLog(@"%@", age);
+
+Complete the code to the right to log both the firstName and age objects
+
+
+Answer: NSLog(@"%@ is %@ years old", firstName, age);

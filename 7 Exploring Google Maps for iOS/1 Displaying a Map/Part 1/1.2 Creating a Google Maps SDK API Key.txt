@@ -1,0 +1,33 @@
+1.2 Creating a Google Maps SDK API Key
+
+In order to get started with Google Maps for iOS, you'll need to head over to the Google Developer Console and create an API Key and bundle identifier for the Google Maps SDK for iOS. Once you do that, you'll be able to use it in your application!
+
+Whether you need the API key right now or later, it's important to know how to generate one – as well as what is considered your bundle identifier and what's the API key. Which of the following could be a bundle identifier?
+
+[Single Answer]
+
+AInfAp94AS4kFE430Ak4_44mfAmf44mLFM0Kd
+MyApplication
+http://myapplication.com
+com.myapplication.googlemaps
+
+
+Answer: com.myapplication.googlemaps
+
+Note:
+AInfAp94AS4kFE430Ak4_44mfAmf44mLFM0Kd is the format of an API Key.
+MyApplication is an application name.
+http://myapplication.com is application's website.
+
+https://accounts.google.com/ServiceLogin?service=cloudconsole&osid=1&passive=true&continue=https://console.developers.google.com/dcredirect/?noredirect
+rajani.javascript@gmail.com
+AngularJS
+Create project
+New Project
+Project name 
+Google Maps SDK API Key
+Project ID 
+calm-safeguard-124308
+App Engine location
+us-central
+Create

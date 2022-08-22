@@ -1,0 +1,109 @@
+2.3 Create an initWithJSON method
+
+
+In User.h, declare a method called - (id)initWithJSON.
+
+Then, in User.m, implement that method by making an AFNetworkingRequest for http://operation-models.codeschool.com/userProfile.json and setting the values of each of the @property variables to values from the JSON response NSDictionary.
+
+
+userProfile.json
+{
+    "firstName": "Mr.",
+    "lastName": "Higgie",
+    "city": "Cupertino",
+    "profilePhoto": "http://operation-models.codeschool.com/higgie_profile_image.png",
+    "profilePhotoThumbnail": "http://operations-models.codeschool.com/higgie_profile_image_thumbnail.png",
+    "biography": "Mr. Higgie was designed in California but loves to travel to exotic places. Earning a PhD in Material Science when he was only 3 years old, Mr. Higgie hasn't yet gone on to do great things. He lives at home with his parents.",
+    "memberSince": "November 2012"
+}
+
+
+User.m
+#import "User.h"
+#import "AFJSONRequestOperation.h"
+
+@implementation User
+
+-(id)init
+{
+    self = [super init];
+    return self;
+}
+
+/*//Implement initWithJSON here//*/
+
+@end
+
+
+User.h
+#import <Foundation/Foundation.h>
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *profilePhoto;
+@property (strong, nonatomic) NSString *profilePhotoThumbnail;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+
+/*//Declare initWithJSON here//*/
+
+@end
+
+
+Answer:
+User.h
+#import <Foundation/Foundation.h>
+
+@interface User : NSObject
+
+@property (strong, nonatomic) NSString *firstName;
+@property (strong, nonatomic) NSString *lastName;
+@property (strong, nonatomic) NSString *city;
+@property (strong, nonatomic) NSString *profilePhoto;
+@property (strong, nonatomic) NSString *profilePhotoThumbnail;
+@property (strong, nonatomic) NSString *biography;
+@property (strong, nonatomic) NSString *memberSince;
+
+-(id) initWithJSON;
+
+@end
+
+
+User.m
+#import "User.h"
+#import "AFJSONRequestOperation.h"
+
+@implementation User
+
+-(id)init
+{
+    self = [super init];
+    return self;
+}
+
+-(id) initWithJSON {
+	self = [super init];
+  	if(self) {
+    NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/userProfile.json"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+    self.firstName = JSON[@"firstName"];
+    self.lastName = JSON[@"lastName"];
+    self.city = JSON[@"city"];
+    self.profilePhoto = JSON[@"profilePhoto"];
+    self.profilePhotoThumbnail = JSON[@"profilePhotoThumbnail"];
+    self.biography = JSON[@"biography"];
+    self.memberSince = JSON[@"memberSince"]; 
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"NSError: %@",[error localizedDescription]);
+    }];
+    
+    [operation start];
+  } 
+  return self;
+}
+@end

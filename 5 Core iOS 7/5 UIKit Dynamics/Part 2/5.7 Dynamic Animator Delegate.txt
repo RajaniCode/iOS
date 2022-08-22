@@ -1,0 +1,13 @@
+5.7 Dynamic Animator Delegate
+
+What's the name of the delegate method that gets called whenever an animator stops animating something?
+
+[Single Answer]
+
+dynamicAnimatorStopped:
+dynamicAnimatorPaused:
+dynamicAnimatorDidStop:
+dynamicAnimatorDidPause:
+
+
+Answer: dynamicAnimatorDidPause:

@@ -1,0 +1,60 @@
+5.2 A Course by Any Other Name
+
+To start updating our app to pass the name of the course over to the course view controller, we need to make some modifications to the CourseViewController.swift file.
+
+CourseViewController.swift
+import UIKit
+
+class CourseViewController : UIViewController
+
+  var 
+  @IBOutlet weak var courseNameLabel: UILabel!
+  @IBOutlet weak var courseImageView: UIImageView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    courseNameLabel.text = "App Evolution With Swift"
+    courseImageView.image = UIImage(named: "course-badge")
+  }
+}
+
+1. First, create a property variable named courseName that uses the data type String. Also make the variable optional.
+
+Answer:
+CourseViewController.swift
+import UIKit
+
+class CourseViewController : UIViewController
+
+  var courseName: String?
+  @IBOutlet weak var courseNameLabel: UILabel!
+  @IBOutlet weak var courseImageView: UIImageView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    courseNameLabel.text = "App Evolution With Swift"
+    courseImageView.image = UIImage(named: "course-badge")
+  }
+}
+
+2. Next, update the label setting code to use the courseName variable instead of a hard-coded string.
+
+Answer:
+CourseViewController.swift
+import UIKit
+
+class CourseViewController : UIViewController
+
+var courseName: String?
+  @IBOutlet weak var courseNameLabel: UILabel!
+  @IBOutlet weak var courseImageView: UIImageView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    courseNameLabel.text = courseName
+    courseImageView.image = UIImage(named: "course-badge")
+  }
+}

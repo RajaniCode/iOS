@@ -1,0 +1,7 @@
+1.2 Getting Started - Tutorial
+
+Follow the instructions detailed in the Walkthrough
+
+Tasks
+
+1. Make sure you have Xcode 5.0 installed and can run the tests in the simulator

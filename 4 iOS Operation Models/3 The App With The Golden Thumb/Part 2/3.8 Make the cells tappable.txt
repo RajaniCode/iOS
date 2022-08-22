@@ -1,0 +1,234 @@
+3.8 Make the cells tappable
+
+
+Update the tableView:didSelectRowAtIndexPath: method to set the photo property of the PhotoVC object equal to the Photo object in the indexPath.row position of the self.photos @property
+
+
+feedImages.json
+[
+  {
+    "title": "Image 1",
+    "detail": "Nice starfield.",
+    "filename": "http://operation-models.codeschool.com/image1.png",
+    "thumbnail": "http://operation-models.codeschool.com/1thumb.png"
+  },
+  {
+    "title": "Image 2",
+    "detail": "Some bright stars here.",
+    "filename": "http://operation-models.codeschool.com/image2.png",
+    "thumbnail": "http://operation-models.codeschool.com/2thumb.png"
+  },
+  {
+    "title": "Image 3",
+    "detail": "This is pretty dark.",
+    "filename": "http://operation-models.codeschool.com/image3.png",
+    "thumbnail": "http://operation-models.codeschool.com/3thumb.png"
+  },
+  {
+    "title": "Image 4",
+    "detail": "I can almost see a cloud.",
+    "filename": "http://operation-models.codeschool.com/image4.png",
+    "thumbnail": "http://operation-models.codeschool.com/4thumb.png"
+  },
+  {
+    "title": "Image 5",
+    "detail": "There's that cloudy galaxy!",
+    "filename": "http://operation-models.codeschool.com/image5.png",
+    "thumbnail": "http://operation-models.codeschool.com/5thumb.png"
+  },
+]
+
+
+PhotoViewController.m
+#import "PhotoViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+
+@implementation PhotoViewController
+
+-(void)viewDidLoad {
+    UIImageView *imageView = [[UIImageView alloc] init];
+    
+    [imageView setImageWithURL:[NSURL URLWithString:self.photo.filename]];
+    imageView.frame = CGRectMake(10,10,300,300);
+    
+    [self.view addSubview:imageView];
+    
+    UILabel *imageTitleLabel = [[UILabel alloc] init];
+    imageTitleLabel.text = self.photo.title;
+    imageTitleLabel.frame = CGRectMake(11,320,300,40);
+    
+    [self.view addSubview:imageTitleLabel];
+}
+@end
+
+
+PhotoViewController.h
+#import <UIKit/UIKit.h>
+
+@class Photo;
+
+@interface PhotoViewController : UIViewController
+
+@property (strong, nonatomic) Photo *photo;
+
+@end
+
+
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+#import "PhotoViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Feed";
+        self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/feedImages.json"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+
+        NSMutableArray *temp = [[NSMutableArray alloc] init];
+
+        for (NSDictionary *image in JSON) {
+              Photo *photo = [[Photo alloc] initWithTitle:image[@"title"]
+                                                   detail:image[@"detail"]
+                                                 filename:image[@"filename"]
+                                                thumbnail:image[@"thumbnail"]];
+            [temp addObject:photo];
+        }
+
+        self.photos = [[NSArray alloc] initWithArray:temp];
+        
+        [self.tableView reloadData];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"NSError: %@",[error localizedDescription]);
+    }];
+    
+    [operation start];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return self.photos.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = [self.photos[indexPath.row] title];
+  cell.detailTextLabel.text = [self.photos[indexPath.row] detail];
+    
+  return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+  PhotoViewController *photoVC = [[PhotoViewController alloc] init];
+  /*//Set the photo property of the photoVC object to self.photo//*/
+    
+  [self.navigationController pushViewController:photoVC animated:YES];
+}
+@end
+
+
+Answer:
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+#import "PhotoViewController.h"
+#import "AFJSONRequestOperation.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = @"Feed";
+        self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    NSURL *url = [[NSURL alloc] initWithString:@"http://operation-models.codeschool.com/feedImages.json"];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+
+        NSMutableArray *temp = [[NSMutableArray alloc] init];
+
+        for (NSDictionary *image in JSON) {
+              Photo *photo = [[Photo alloc] initWithTitle:image[@"title"]
+                                                   detail:image[@"detail"]
+                                                 filename:image[@"filename"]
+                                                thumbnail:image[@"thumbnail"]];
+            [temp addObject:photo];
+        }
+
+        self.photos = [[NSArray alloc] initWithArray:temp];
+        
+        [self.tableView reloadData];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+        NSLog(@"NSError: %@",[error localizedDescription]);
+    }];
+    
+    [operation start];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return self.photos.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = [self.photos[indexPath.row] title];
+  cell.detailTextLabel.text = [self.photos[indexPath.row] detail];
+    
+  return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+  PhotoViewController *photoVC = [[PhotoViewController alloc] init];  
+  photoVC.photo = self.photos[indexPath.row];
+    
+  [self.navigationController pushViewController:photoVC animated:YES];
+}
+@end

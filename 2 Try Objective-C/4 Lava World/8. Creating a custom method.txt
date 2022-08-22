@@ -1,0 +1,25 @@
+8. Creating a custom method
+
+
+Properties are great, but they don’t give us much more functionality than we could get by just using an NSDictionary. Things get interesting when we can have objects that respond to specialized messages. For example, let’s say we wanted objects of the Apple class to respond to the speak message which would log something out. We would send the speak message like so:
+
+Apple *talkingiPhone = [[Apple alloc] init]; 
+
+[talkingiPhone speak];
+
+To be able to send the speak message to talkingiPhone, we need to define a method on our Apple class named speak. First, in our header file we would declare the speak method like this:
+
+Apple.h
+
+@interface Apple : NSObject
+
+// list of properties
+
+-(void)speak;
+
+@end
+
+Method declarations start with a dash (-) followed by the type (in parentheses) of the value returned by the method. (void) means that the speak message will not return anything.
+
+
+Continue NEXT

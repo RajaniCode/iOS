@@ -1,0 +1,86 @@
+1.6 Set the correct number of table rows
+
+
+We've created a UITableViewController named LocationsTableViewController with an NSArray property named locations, and initialized it with several different location dictionaries.
+
+Return the correct number of rows in the table view, which should be equal to the count of dictionaries in the self.locations array.
+
+
+LocationsTableViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface LocationsTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *locations;
+
+@end
+
+
+LocationsTableViewController.m
+#import "LocationsTableViewController.h"
+
+@implementation LocationsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.locations = @[@{@"name": @"Taco Cantina", @"phoneNumber": @"407-555-3019", @"lat": @28.5464, @"lng": @-81.3844},
+                       @{@"name": @"Lou's", @"phoneNumber": @"407-555-1212", @"lat": @28.5336, @"lng": @-81.3735}];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    /*//Return the correct number of rows here//*/
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"locCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"locCell"];
+    }
+    
+    cell.textLabel.text = @"Location will go here next";
+    
+    return cell;
+}
+
+@end
+
+    
+Answer:
+LocationsTableViewController.m
+#import "LocationsTableViewController.h"
+
+@implementation LocationsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.locations = @[@{@"name": @"Taco Cantina", @"phoneNumber": @"407-555-3019", @"lat": @28.5464, @"lng": @-81.3844},
+                       @{@"name": @"Lou's", @"phoneNumber": @"407-555-1212", @"lat": @28.5336, @"lng": @-81.3735}];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.locations.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"locCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"locCell"];
+    }
+    
+    cell.textLabel.text = @"Location will go here next";
+    
+    return cell;
+}
+
+@end

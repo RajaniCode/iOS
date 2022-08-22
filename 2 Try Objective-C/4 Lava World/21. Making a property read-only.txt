@@ -1,0 +1,63 @@
+21. Making a property read-only
+
+
+Hey, I don't want people to be able to set my batteryLife to anything they want!
+
+Mr. Higgie is right, it doesn’t make sense for the Apple class to allow outside code to set the batteryLife property to anything it wants. Right now there is nothing stopping outside code doing this:
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.batteryLife = @500;
+
+One way to solve this problem is to make the batteryLife property read-only. For example, let’s set the readonly attribute for the lastName property on Person:
+
+Person.h
+
+@interface Person : NSObject
+@property NSString *firstName;
+@property (readonly) NSString *lastName;
+@end
+
+We’ve tagged the lastName property with the readonly attribute by including (readonly) right after the @property declaration. This means that code outside the class can no longer set the property. If they try, we’ll receive an error like this:
+
+person.lastName = @"Jobs";
+
+Assignment to readonly property
+
+Okay, so outside code can’t set the property value, but surely code inside a class can set the property, or else how would it get set.
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+
+- (void) changeLastName:(NSString *)newLastName;
+{
+  self.lastName = newLastName;
+}
+@end
+
+Assignment to readonly property
+
+Nope, that doesn’t work because as it turns out, self.lastName = is exactly the same as person.lastName =. They are both treated as “outside code” and so won’t work. To fix this, instead of assigning to self.lastName, code inside a method can assign to the special variable _lastName.
+
+Person.m
+
+#import "Person.h"
+
+@implementation Person
+
+- (void) changeLastName:(NSString *)newLastName;
+{
+  _lastName = newLastName;
+}
+@end
+
+You just totally made that up, didn't you?
+
+No! I know it seems strange but every property has a special internal variable that is prefixed with an underscore _. This way a property can be read-only to the outside world, but methods on the class still are able to update the property’s value.
+
+Note: Some people will only use the internal variable syntax inside of methods and never access the property through self, but others don't. The decision comes down to stylistic preferences as either way works just fine.
+
+
+Continue NEXT

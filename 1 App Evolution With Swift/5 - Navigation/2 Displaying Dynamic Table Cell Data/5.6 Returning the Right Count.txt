@@ -1,0 +1,58 @@
+5.6 Returning the Right Count
+
+Update the code below so that the tableView(_:numberOfRowsInSection) function correctly returns the count of the courseNames array.
+
+import UIKit
+
+class CoursesTableViewController : UITableViewController {
+
+  var courseNames: [String]?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    courseNames = ["App Evolution With Swift", 
+                   "The Magical Marvels of MongoDB", 
+                   "ES2015: The Shape of JavaScript to Come", 
+                   "Adventures in Web Animations"]
+  }
+
+  override func tableView(
+    tableView: UITableView, 
+    numberOfRowsInSection section: Int
+  ) -> Int {
+    if let names = courseNames {
+      return [ ]
+    }
+    return [ ]
+  }
+
+  override func tableView(
+    tableView: UITableView, 
+    cellForRowAtIndexPath indexPath: NSIndexPath
+  ) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier(
+      "CourseCell", forIndexPath: indexPath
+    )
+
+    cell.textLabel?.text = "App Evolution with Swift"
+    cell.imageView?.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(
+    segue: UIStoryboardSegue, sender: AnyObject?
+  ) {
+    if segue.identifier == "ShowCourse" {
+      let courseVC = segue.destinationViewController as? 
+        CourseViewController
+      courseVC?.courseName = "App Evolution with Swift"
+    }
+  }
+}
+
+
+Answer:
+names.count
+0

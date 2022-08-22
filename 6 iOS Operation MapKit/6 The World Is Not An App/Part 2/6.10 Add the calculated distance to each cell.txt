@@ -1,0 +1,164 @@
+6.10 Add the calculated distance to each cell
+
+
+Update the contents of each cell's detailTextLabel to include the distance in kilometers.
+
+Note: (1 kilometer = 1000 meters (or, 1 meter = .001 kilometers if you prefer that)
+
+
+RestaurantsTableViewController.m
+#import "RestaurantsTableViewController.h"
+#import "TestingAppDelegate.h"
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+  
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.frame = CGRectMake(20,360,280,40);
+    [backButton setTitle:@"back" forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+    
+    NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *restaurant in self.restaurants) {
+        NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
+        [tempDictionary addEntriesFromDictionary:restaurant];
+        
+        CLLocation *restaurantLocation = [[CLLocation alloc] initWithLatitude:[restaurant[@"lat"] doubleValue] longitude:[restaurant[@"lng"] doubleValue]];
+        CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:self.location.coordinate.latitude longitude:self.location.coordinate.longitude];
+        
+        double distance = [restaurantLocation distanceFromLocation:userLocation];
+        
+        [tempDictionary setObject:[NSNumber numberWithDouble:distance]
+                           forKey:@"distance"];
+        [tempArray addObject:tempDictionary];
+    }
+    self.restaurants = [[NSArray alloc] initWithArray:tempArray];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.restaurants.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"restaurantCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"restaurantCell"];
+    }
+    
+    cell.textLabel.text = self.restaurants[indexPath.row][@"name"];
+    /*//Add the distance to the cell's detailTextLabel here//*/
+    
+    return cell;
+}
+
+- (void)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    double latitude = [self.restaurants[indexPath.row][@"lat"] doubleValue];
+    double longitude = [self.restaurants[indexPath.row][@"lng"] doubleValue];
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+    
+    mapItem.name = self.restaurants[indexPath.row][@"name"];
+    [mapItem openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
+}
+
+@end
+
+
+Answer:
+RestaurantsTableViewController.m
+#import "RestaurantsTableViewController.h"
+#import "TestingAppDelegate.h"
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+  
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.frame = CGRectMake(20,360,280,40);
+    [backButton setTitle:@"back" forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+    
+    NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+    
+    for (NSDictionary *restaurant in self.restaurants) {
+        NSMutableDictionary *tempDictionary = [[NSMutableDictionary alloc] init];
+        [tempDictionary addEntriesFromDictionary:restaurant];
+        
+        CLLocation *restaurantLocation = [[CLLocation alloc] initWithLatitude:[restaurant[@"lat"] doubleValue] longitude:[restaurant[@"lng"] doubleValue]];
+        CLLocation *userLocation = [[CLLocation alloc] initWithLatitude:self.location.coordinate.latitude longitude:self.location.coordinate.longitude];
+        
+        double distance = [restaurantLocation distanceFromLocation:userLocation];
+        
+        [tempDictionary setObject:[NSNumber numberWithDouble:distance]
+                           forKey:@"distance"];
+        [tempArray addObject:tempDictionary];
+    }
+    self.restaurants = [[NSArray alloc] initWithArray:tempArray];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.restaurants.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"restaurantCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"restaurantCell"];
+    }
+    
+    cell.textLabel.text = self.restaurants[indexPath.row][@"name"];
+    /*//Add the distance to the cell's detailTextLabel here//*/
+  	double distance = [self.restaurants[indexPath.row][@"distance"] doubleValue] * .001;
+  	cell.detailTextLabel.text = [NSString stringWithFormat:@"%f kilometers away",distance];
+    return cell;
+}
+
+- (void)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    double latitude = [self.restaurants[indexPath.row][@"lat"] doubleValue];
+    double longitude = [self.restaurants[indexPath.row][@"lng"] doubleValue];
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+    
+    mapItem.name = self.restaurants[indexPath.row][@"name"];
+    [mapItem openInMapsWithLaunchOptions:@{MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving}];
+}
+
+@end

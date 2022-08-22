@@ -1,0 +1,27 @@
+initWithJSON
+
+1. Controller (CityViewController) asks for copy of Model object (City object), using initWithJSOM method
+
+2. At the same time Controller (CityViewController) continues executing
+
+3a. At sometime, Model object returns instantiated copy of City object to the Controller (CityViewController)
+
+3b. View in Controller (CityViewController) displays the data 
+
+- No guarantee that 3a (initWithJSON method returns a filled model) happens before 3b (Views in  CityViewController try to be displayed)
+
+- aka Non Blocking Code because CityViewController doesn't wait for model
+
+
+Solution NSNotificationCenter: 
+
+Using Notifications To Delay Execution
+
+Controller (CityViewController) still, asks for copy of Model object (City object)
+
+Model still, calls initWithJSON method, however when finished and data is fully loaded (when ready), posts a notification to Linstener (NSNotificationCenter)
+
+CityViewController has code listening (NSNotificationCenter) for notification to occur
+
+When notification occurs Views are filled with data
+

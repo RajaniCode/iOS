@@ -1,0 +1,10 @@
+1.3 Status Bar Color
+
+Complete the following method to force the status bar text color to be black.
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+  return [ ];
+}
+
+
+Answer: UIStatusBarStyleDefault

@@ -1,0 +1,13 @@
+1.6 More Xcode Panels
+
+Which panel in Xcode would you use to drag a label onto a storyboard scene?
+
+[Single Answer]
+
+Project navigator
+Storyboard editor
+Inspector panel
+Object panel
+
+
+Answer: Object panel

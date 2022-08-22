@@ -1,0 +1,17 @@
+5.6 Snap Behaviors
+
+Complete the code below to snap the circle view to the point 30, 150.
+
+UIView *circle = [[UIView alloc] init];
+UISnapBehavior *snapBehavior =
+  [
+    [UISnapBehavior alloc]
+    initWithItem:circle
+    [ ]:CGPointMake([ ], [ ])
+  ];
+
+
+Answer:
+snapToPoint
+30
+150

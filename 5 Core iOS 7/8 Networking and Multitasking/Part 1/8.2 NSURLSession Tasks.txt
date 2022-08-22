@@ -1,0 +1,13 @@
+8.2 NSURLSession Tasks
+
+Which of the following classes is not associated with NSURLSession and tasks?
+
+[Single Answer]
+
+NSURLSessionDataTask
+NSURLSessionDownloadTask
+NSURLSessionLoginTask
+NSURLSessionUploadTask
+
+
+Answer: NSURLSessionLoginTask

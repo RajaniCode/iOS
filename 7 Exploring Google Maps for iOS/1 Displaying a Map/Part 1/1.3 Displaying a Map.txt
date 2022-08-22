@@ -1,0 +1,31 @@
+1.3 Displaying a Map
+
+We'll start by creating a Camera, which will be used to set our initial map.
+
+For this camera, we want it to show up at latitude 37.790706, longitude -122.434167 and at zoom 13. We don't want the map to be rotated or skewed in any way.
+
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  GMSCameraPosition *camera = [GMSCameraPosition
+    cameraWithLatitude: [ ]
+             longitude: [ ]
+                  zoom: [ ]
+               bearing: [ ]
+          viewingAngle: [ ]
+  ];
+
+  self.mapView = [
+    GMSMapView mapWithFrame:self.view.frame camera:camera
+  ];
+  [self.view addSubview:self.mapView];
+}
+
+
+Answer: 
+37.790706
+-122.434167
+13
+0
+0

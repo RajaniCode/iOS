@@ -1,0 +1,126 @@
+6.8 Check if the button already exists
+
+
+We've moved self.user = [User getUser] out of makeThisPhotoAFavorite: and into viewWillAppear: so that we have a fresh copy of the User Model each time that PhotoViewController loads.
+
+Refactor PhotoViewController to only show favoriteButton if the Photo in self.photo is not already in the favoritePhotos array.
+
+
+PhotoViewController.m
+#import "PhotoViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+#import "User.h"
+
+@implementation PhotoViewController
+
+-(void)viewDidLoad {
+    UIImageView *imageView = [[UIImageView alloc] init];
+    
+    [imageView setImageWithURL:[NSURL URLWithString:self.photo.filename]];
+    imageView.frame = CGRectMake(10,10,300,300);
+    
+    [self.view addSubview:imageView];
+    
+    UILabel *imageTitleLabel = [[UILabel alloc] init];
+    imageTitleLabel.text = self.photo.title;
+    imageTitleLabel.frame = CGRectMake(11,320,300,40);
+    
+    [self.view addSubview:imageTitleLabel];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    self.user = [User getUser];
+    BOOL photoAlreadyInteresting = NO;
+
+    /*//Write an enumerator that checks if the the Photo Model object in self.photo is already in the self.user.favoritePhotos array//*/
+
+    if(!photoAlreadyInteresting) {
+        UIButton *favoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        favoriteButton.frame = CGRectMake(90, 321, 200, 39);
+        [favoriteButton setTitle:@"Make Favorite" forState:UIControlStateNormal];
+        [self.view addSubview:favoriteButton];
+        [favoriteButton addTarget:self action:@selector(makeThisPhotoAFavorite:) forControlEvents:UIControlEventTouchUpInside];        
+    } else {
+        // do nothing, the Photo is already interesting
+    }
+}
+
+-(void)makeThisPhotoAFavorite:(id)sender {
+    NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:self.user.favoritePhotos];
+    [tempArray addObject:self.photo];
+    self.user.favoritePhotos = [[NSArray alloc] initWithArray:tempArray];
+    [User saveUser:self.user];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Photo Favorited"
+                                                    message:@"This Photo is now one of your favorite photos!"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Hooray!"
+                                          otherButtonTitles:nil];
+    [alert show];
+
+    [sender removeFromSuperview];
+}
+
+@end
+
+
+Answer:
+PhotoViewController.m
+#import "PhotoViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "Photo.h"
+#import "User.h"
+
+@implementation PhotoViewController
+
+-(void)viewDidLoad {
+    UIImageView *imageView = [[UIImageView alloc] init];
+    
+    [imageView setImageWithURL:[NSURL URLWithString:self.photo.filename]];
+    imageView.frame = CGRectMake(10,10,300,300);
+    
+    [self.view addSubview:imageView];
+    
+    UILabel *imageTitleLabel = [[UILabel alloc] init];
+    imageTitleLabel.text = self.photo.title;
+    imageTitleLabel.frame = CGRectMake(11,320,300,40);
+    
+    [self.view addSubview:imageTitleLabel];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    self.user = [User getUser];
+    BOOL photoAlreadyInteresting = NO;
+
+    if (![self.user.favoritePhotos containsObject:self.photo]) {  
+      photoAlreadyInteresting = YES;
+    } 
+  	
+    if(!photoAlreadyInteresting) {
+        UIButton *favoriteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        favoriteButton.frame = CGRectMake(90, 321, 200, 39);
+        [favoriteButton setTitle:@"Make Favorite" forState:UIControlStateNormal];
+        [self.view addSubview:favoriteButton];
+        [favoriteButton addTarget:self action:@selector(makeThisPhotoAFavorite:) forControlEvents:UIControlEventTouchUpInside];        
+    } else {
+        // do nothing, the Photo is already interesting
+    }
+}
+
+-(void)makeThisPhotoAFavorite:(id)sender {
+    NSMutableArray *tempArray = [[NSMutableArray alloc] initWithArray:self.user.favoritePhotos];
+    [tempArray addObject:self.photo];
+    self.user.favoritePhotos = [[NSArray alloc] initWithArray:tempArray];
+    [User saveUser:self.user];
+
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Photo Favorited"
+                                                    message:@"This Photo is now one of your favorite photos!"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"Hooray!"
+                                          otherButtonTitles:nil];  
+    
+    [sender removeFromSuperview];
+}
+
+@end

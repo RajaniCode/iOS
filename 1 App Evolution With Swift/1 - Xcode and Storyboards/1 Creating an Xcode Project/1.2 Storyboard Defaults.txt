@@ -1,0 +1,15 @@
+1.2 Storyboard Defaults
+
+The default scene in a storyboard contains which of the following objects?
+
+[Multiple Answers]
+
+Loading screen
+A view controller
+A main view
+A navigation bar
+
+
+Answer:
+A view controller
+A main view

@@ -1,0 +1,23 @@
+8. Creating a number object
+
+
+Strings are fantastic, but we are just scratching the surface of the types of objects we can create.
+
+Scratching the surface? Sounds like my worst nightmare
+
+We’re going to spend the rest of this level talking about some other types of objects available in Objective-C, starting with numbers.
+
+Note: Wondering where the word "objects" is coming from? Remember that "variable" just refers to the box. The "object" is the thing stored inside the box. So firstName is a variable, while @"Apple" is an object. Sometimes we'll just use "object" as a shorthand when referring to a variable holding an object.
+
+Creating a number is very similar to creating strings:
+
+NSNumber *ipodBirthdayYear = @2001;
+NSNumber *iphoneBirthdayYear = @2007;
+NSNumber *ipadBirthdayYear = @2010;
+
+As you can see, instead of NSString we are using NSNumber. We also leave off the quotes and just have a @ followed by a number.
+
+Go ahead and create a NSNumber to hold your age (don't worry, all ages are welcome to learn Objective-C)
+
+
+NSNumber *age = @39;

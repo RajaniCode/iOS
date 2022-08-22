@@ -1,0 +1,13 @@
+1.9 Bar Style
+
+Complete the code below to display a navigation bar with lighter text and a blueColor background.
+
+UINavigationController *nav =
+    [[UINavigationController alloc] init];
+nav.navigationBar.barStyle = [ ];
+nav.navigationBar.barTintColor = [UIColor [ ]];
+
+
+Answer:
+UIBarStyleDefault
+blueColor

@@ -1,0 +1,13 @@
+1.7 Scroll View Inset
+
+If you don't want to use the automaticallyAdjustsScrollViewInsets property, what scroll view property can you manually change instead?
+
+[Single Answer]
+
+contentSize
+contentInset
+topLayoutGuide
+frame
+
+
+Answer: contentInset

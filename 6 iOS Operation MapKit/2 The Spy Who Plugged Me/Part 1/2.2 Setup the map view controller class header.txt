@@ -1,0 +1,41 @@
+2.2 Setup the map view controller class header
+
+
+#import the MapKit framework in RestaurantMapViewController.h, and adopt the MKMapViewDelegate protocol.
+
+Then, declare an MKMapView @property named theMap.
+Responsive
+
+
+RestaurantMapViewController.h
+#import <UIKit/UIKit.h>
+
+@interface RestaurantMapViewController : UIViewController
+
+@end
+
+
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+}
+
+@end
+
+
+Answer:
+RestaurantMapViewController.m
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface RestaurantMapViewController : UIViewController <MKMapViewDelegate>
+
+@property (strong, nonatomic) MKMapView *theMap;
+
+@end

@@ -1,0 +1,52 @@
+15. Declaring a method with arguments
+
+
+We’ve now learned how to define a method that returns a result. It’s also possible to define a method that accepts extra information when it is called. We can do this by defining a method that takes arguments.
+
+For example, what if every time we sent a Apple object the speak message, we could pass in a greeting string. That way we could alter the resulting string based on the argument passed in.
+
+To do this, we must first update the Apple header and change the method declaration to take a single argument that is an NSString *:
+
+Apple.h
+
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+-(NSString *)speak:(NSString *)greeting;
+@end
+
+All we had to do was add :(NSString *)greeting to the end of the declaration. We can break it down into three parts:
+
+    The : means “what follows is an argument declaration”.
+    The type of the argument in parentheses (NSString *)
+    The argument name greeting
+
+To update the method implementation, just copy the method declaration in the header and voila, speak now takes an argument:
+
+Apple.m
+
+#import "Apple.h"
+
+@implementation Apple
+-(NSString *)speak:(NSString *)greeting;
+{
+  NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+  
+  return message;
+}
+@end
+
+We use the argument greeting in the method definition just like any other variable. With this method definition, we now have to send the speak: message with an argument:
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone speak:@"Hello There!"];
+
+When the method implementation is executed, the greeting variable is set to the string passed in. In the code above greeting would be set to @"Hello There".
+
+Note: Message names that take arguments should include the : in the name. So a message named speak takes no arguments, while one named speak: takes a single argument. A message takes the same number of arguments as :'s in its name. So with something like dictionaryWithObjects:forKeys:count: you know it takes 3 arguments.
+
+
+Continue NEXT

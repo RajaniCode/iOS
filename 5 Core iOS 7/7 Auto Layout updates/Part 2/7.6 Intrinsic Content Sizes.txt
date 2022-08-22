@@ -1,0 +1,12 @@
+7.6 Intrinsic Content Sizes
+
+What's the purpose of views that have an intrinsic content size?
+
+[Single Answer]
+
+Views with an intrinsic size don't need any Auto Layout constraints.
+Views with an intrinsic size don't need any width or height constraints.
+Views with intrinsic sizes need to be the parent view of other subviews.
+
+
+Answer: Views with an intrinsic size don't need any width or height constraints.

@@ -1,0 +1,39 @@
+2.3 Button Highlighted
+
+Look at that beautiful button. Let's change it's title when it is tapped. To do that, add another call to setTitle:forState: and pass in a different NSString (e.g. @"Ouch!"), and the UIControlStateHighlighted state. Everything else should stay the same.
+
+
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *firstButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  firstButton.frame = CGRectMake(120, 100, 80, 44);
+  [firstButton setTitle:@"Tap me!" forState:UIControlStateNormal];
+  [self.view addSubview:firstButton];
+}
+@end
+
+
+Answer:
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *firstButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  firstButton.frame = CGRectMake(120, 100, 80, 44);
+  [firstButton setTitle:@"Tap me!" forState:UIControlStateNormal];
+  [firstButton setTitle:@"Ouch!" forState:UIControlStateHighlighted];
+  [self.view addSubview:firstButton];
+}
+@end

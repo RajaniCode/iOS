@@ -1,0 +1,24 @@
+2.11 Button Properties
+
+Create two new @property declarations in the ViewController header file. One called greenButton and one called blueButton. These properties will store our UIButton instances we're creating in viewDidLoad. Make sure they are both set to nonatomic and that they are both stored as weak references.
+
+
+ViewController.h
+#import <UIKit/UIKit.h>
+
+@interface ViewController : UIViewController
+- (void) changeBackgroundColor:(id) sender;
+@end
+
+
+Answer:
+ViewController.h
+#import <UIKit/UIKit.h>
+
+@interface ViewController : UIViewController
+
+@property (weak, nonatomic) UIButton *greenButton;
+@property (weak, nonatomic) UIButton *blueButton;
+
+- (void) changeBackgroundColor:(id) sender;
+@end

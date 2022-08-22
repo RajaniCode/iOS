@@ -1,0 +1,57 @@
+12. Logging a property instead of self
+
+
+In case you missed it, this is the result of logging the self variable in speak:
+
+  Apple.m[6]: <Apple: 0x7fbbfb40ad70> says Hello There!
+
+A confusing memory address isn’t exactly the most helpful log message.
+
+Change the speak implementation to log the phoneName property instead of just self. Be sure to access the phoneName property on self.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone speak];
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) speak;
+
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(void)speak;
+{
+    NSLog(@"%@ says Hello There!", self);
+}
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(void)speak;
+{
+    NSLog(@"%@ says Hello There!", self.phoneName);
+}
+@end
+
+
+Output:
+Apple.m[6]: Mr. Higgie says Hello There!

@@ -1,0 +1,78 @@
+12. Enumerate with blocks
+
+
+The vast majority of the time, you won’t be assigning a block to a variable and invoking it yourself. Instead, you’ll be passing a block as an argument to a message, like the enumerateObjectsUsingBlock: message on NSArray.
+
+enumerateObjectsUsingBlock: can be used as a replacement for fast enumeration since it does basically the same thing: executes a block of code for each object in an array. But instead of using special syntax, it uses normal message sending and blocks.
+
+So you could replace this fast enumeration code:
+
+for (NSString *word in funnyWords) {
+  NSLog(@"%@ is a funny word", word);
+}
+
+With this:
+
+[funnyWords enumerateObjectsUsingBlock:
+  ^(NSString *word, NSUInteger index, BOOL *stop){
+    NSLog(@"%@ is a funny word", word);  
+  }
+];
+
+This block will be invoked once for each object in the funnyWords array. Each time it is invoked, it will be passed three arguments: an NSString * which represents an object in the funnyWords array, an NSUInteger which is the index at which the current object is located, and a BOOL * argument which allows you to stop enumerating the array if you want.
+
+Notice how we aren’t assigning this block to a variable, instead we are passing the block directly with the message send as an argument. We could just as easily rewrite the above code to first assign the block to a variable and then pass it in to the message:
+
+void (^enumeratingBlock)(NSString *, NSUInteger, BOOL *) = 
+  ^(NSString *word, NSUInteger index, BOOL *stop){
+    NSLog(@"%@ is a funny word", word);
+  };
+                         
+[funnyWords enumerateObjectsUsingBlock:enumeratingBlock];
+
+But as you can see it takes a lot less code to just pass it in directly, and is generally considered a best practice.
+
+We're over here talking about practice? Practice?!?.
+
+Don't listen to Mr. Higgie. Practice using blocks by rewriting the fast enumeration code to use enumerateObjectsUsingBlock:
+
+
+File
+NSArray *newHats = @[@"Cowboy", @"Conductor", @"Baseball", @"Beanie", @"Beret", @"Fez"];
+
+for (NSString *hat in newHats) {
+   NSLog(@"Trying on hat %@", hat);
+}
+
+
+Answer:
+File
+NSArray *newHats = @[@"Cowboy", @"Conductor", @"Baseball", 
+  @"Beanie", @"Beret", @"Fez"];
+
+/*
+for (NSString *hat in newHats) {
+   NSLog(@"Trying on hat %@", hat);
+}
+*/
+
+void (^enumeratingBlock)(NSString *, NSUInteger, BOOL *) = 
+  ^(NSString *hat, NSUInteger index, BOOL *stop){
+  NSLog(@"Trying on hat %@", hat);  
+};
+
+[newHats enumerateObjectsUsingBlock:enumeratingBlock];
+
+
+Output:
+challenge[12]: Trying on hat Cowboy
+
+challenge[12]: Trying on hat Conductor
+
+challenge[12]: Trying on hat Baseball
+
+challenge[12]: Trying on hat Beanie
+
+challenge[12]: Trying on hat Beret
+
+challenge[12]: Trying on hat Fez

@@ -1,0 +1,61 @@
+2.5 Every Course Has a Name
+
+Update the following code so that we'll see the course name and a cool course image.
+
+CourseViewController.swift
+import UIKit
+
+class CourseViewController : UIViewController {
+
+  @IBOutlet weak var courseNameLabel: UILabel!
+  @IBOutlet weak var courseImageView: UIImageView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    var courseName = "App Evolution With Swift"
+
+    courseNameLabel.
+  }
+}
+
+1. Set the text for the courseNameLabel to our course name using the existing variable.
+
+Answer:
+CourseViewController.swift
+import UIKit
+
+class CourseViewController : UIViewController {
+
+  @IBOutlet weak var courseNameLabel: UILabel!
+  @IBOutlet weak var courseImageView: UIImageView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    var courseName = "App Evolution With Swift"
+
+    courseNameLabel.text = courseName
+  }
+}
+
+2. Now we'll see the course name, but we also want to see an image named course-badge. Use a UIImage to set this image to the courseImageView object.
+
+Answer:
+CourseViewController.swift
+import UIKit
+
+class CourseViewController : UIViewController {
+
+  @IBOutlet weak var courseNameLabel: UILabel!
+  @IBOutlet weak var courseImageView: UIImageView!
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    var courseName = "App Evolution With Swift"
+
+    courseNameLabel.text = courseName
+    courseImageView.image = UIImage(named: "course-badge")
+  }
+}

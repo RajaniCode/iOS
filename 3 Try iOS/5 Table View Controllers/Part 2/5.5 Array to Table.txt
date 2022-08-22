@@ -1,0 +1,89 @@
+5.5 Array to Table
+
+
+Notice below that we have assigned an array of 5 items to self.imageTitleArray. Use this array to populate the UITableView by returning the number of cells in the tableView:numberOfRowsInSection: method and setting the proper cell text in the tableView:cellForRowAtIndexPath: method.
+
+
+FeedTableViewController.h
+#import <UIKit/UIKit.h>
+
+@interface FeedTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *imageTitleArray;
+
+@end
+
+
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    self.imageTitleArray = @[@"Image 1",@"Image 2",@"Image 3",@"Image 4", @"Image 5"];
+  }
+  return self;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+  }
+  
+  return cell;
+}
+
+@end
+
+
+Answer:
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    self.imageTitleArray = @[@"Image 1",@"Image 2",@"Image 3",@"Image 4", @"Image 5"];
+  }
+  return self;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return _imageTitleArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+    cell.textLabel.text = _imageTitleArray[indexPath.row];
+  }
+  
+  return cell;
+}
+
+@end

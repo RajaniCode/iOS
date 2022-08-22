@@ -1,0 +1,23 @@
+13. Creating a dictionary
+
+
+Let’s say that you wanted to keep track of your 5-star rating of each app in the apps array. One way you could do it is to create another array with corresponding ratings:
+
+NSArray *ratings = @[@3, @5];
+
+Unfortunately, it’s not immediately obvious which rating belongs to which app.
+
+***** unfocused and heartbreaking
+
+Objective-C has an object that’s perfect for this type of data: NSDictionary. With an NSDictionary, we can associate a key (the app name), with a value (the app rating). For example, we can create a NSDictionary with a single key and value like this:
+
+NSDictionary *person = @{@"First Name": @"Eric"};        
+
+Here we’ve defined a dictionary with 1 key (@"First Name") associated with the value @"Eric".
+
+Dictionaries can contain multiple key/value pairs, separated by a comma. Define an appRatings dictionary by submitting the code below:
+
+NSDictionary *appRatings = @{@"AngryFowl": @3, @"Lettertouch": @5};
+
+
+Answer: NSDictionary *appRatings = @{@"AngryFowl": @3, @"Lettertouch": @5};

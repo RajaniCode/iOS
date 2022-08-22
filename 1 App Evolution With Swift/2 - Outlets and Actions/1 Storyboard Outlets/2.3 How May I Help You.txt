@@ -1,0 +1,16 @@
+2.3 How May I Help You?
+
+Which of the following things does the assistant editor mode allow?
+
+[Multiple Answers]
+
+Creating outlets between the storyboard and Swift files.
+Provide a way to view two files at the same time.
+Display multiple panels either horizontally or vertically.
+Display a list of code snippets that can be used for common tasks.
+
+
+Answer:
+Creating outlets between the storyboard and Swift files.
+Provide a way to view two files at the same time.
+Display multiple panels either horizontally or vertically.

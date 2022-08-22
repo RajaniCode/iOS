@@ -1,0 +1,13 @@
+8.3 Starting a Task
+
+What message do you need to send to an NSURLSessionDataTask to start the task?
+
+[Single Answer]
+
+start
+begin
+resume
+run
+
+
+Answer: resume

@@ -1,0 +1,13 @@
+8.5 Background Transfer Advantages
+
+Which of the following is not an advantage of background transfers?
+
+[Single Answer]
+
+Background transfers continue after the app is closed.
+Background transfers can be resumed if there is a network failure.
+UI can be updated in the background when a task is completed.
+The device can still sleep even while a background transfer is running.
+
+
+Answer: The device can still sleep even while a background transfer is running

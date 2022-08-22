@@ -1,0 +1,12 @@
+7.2 Default Layout Constraints
+
+What happens if you add a view in a Storyboard that has Auto Layout turned on, but you don't add any constraints?
+
+[Single Answer]
+
+Your app crashes when you try to load the view controller that contains that view.
+The debugging console will display a warning that you forgot to set constraints.
+Fixed constraints are automatically added to satisfy the position of that view relative to its superview.
+
+
+Answer: Fixed constraints are automatically added to satisfy the position of that view relative to its superview.

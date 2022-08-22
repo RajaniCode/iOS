@@ -1,0 +1,13 @@
+5.4 Adding Behaviors
+
+Complete the code below to add a gravity behavior to the circle view with the dynamic animator.
+
+UIView *circle = [[UIView alloc] init];
+UIGravityBehavior *gravity =
+  [[UIGravityBehavior alloc] initWithItems:[ [ ] ]];
+[self.animator [ ]:gravity];
+
+
+Answer:
+circle
+addBehavior

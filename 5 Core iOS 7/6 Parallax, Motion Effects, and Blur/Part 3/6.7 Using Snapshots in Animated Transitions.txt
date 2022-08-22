@@ -1,0 +1,13 @@
+6.7 Using Snapshots in Animated Transitions
+
+At which point in the animateTransition: method should you take a snapshot of a view?
+
+[Single Answer]
+
+At the very start of the method implementation.
+After you capture and set up the to-view-controller.
+In the animations block of your animation code.
+In the animation's completion method.
+
+
+Answer: After you capture and set up the to-view-controller.

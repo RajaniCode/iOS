@@ -1,0 +1,55 @@
+14. Logging a method result
+
+
+It's now time to update the code to assign the result of sending the speak message to the talkingiPhone object to a new NSString * variable named phoneMessage.
+
+Then, NSLog the phoneMessage string so we can make sure that it works.
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(NSString *)speak;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says Hello There!", self.phoneName];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (NSString *) speak;
+@end
+
+
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+NSString *phoneMessage = /*//send the speak message//*/;
+
+NSLog(@"%@", phoneMessage);
+
+
+Answer:
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+NSString *phoneMessage = [talkingiPhone speak];
+
+NSLog(@"%@", phoneMessage);
+
+
+Output:
+challenge[8]: Mr. Higgie says Hello There!

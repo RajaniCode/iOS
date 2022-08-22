@@ -1,0 +1,106 @@
+2. Responds to message
+
+
+There are two distinct times when there is the opportunity for errors to happen in your program:
+Compile time
+
+Before a program can run, it must first be compiled, and it’s the job of the compiler to combine all your code into an executable program. If the compiler finds any errors, it will not compile your code into an executable, and instead report the errors so you can fix them. So far in this course, you’ve only had to fix these kinds of errors.
+Run time
+
+Just because your code successfully compiles and runs, it doesn’t mean you are in the clear because the compiler can’t catch everything (nor would we want it to, it would end up taking forever to compile anything). When an error happens at “runtime” it is called an exception. This is exactly what happened in the last challenge: your code compiled but when we ran the compiled program, we got this runtime exception:
+
+Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[Apple copyWithZone:]: unrecognized selector sent to instance 0x7fdf014010d0'
+
+The NSInvalidArgumentException means that we sent a message to an object and the object did not recognize the message because its class does not implement it. In this case, the copy message caused the copyWithZone: message to be sent to talkingiPhone, which it doesn’t respond to. Since the compiler didn’t check if talkingiPhone could respond to copyWithZone:, when the program ran, the copyWithZone: message was sent to the object and the object didn’t know what to do and so the program crashed.
+
+All hope is lost. Anyone here down for some putt-putt?
+
+All hope is not lost! We can always ask an object if it can respond to a message before we send it. For example, we can ask the talkingiPhone object if it responds to the decreaseBatteryLife: message like this:
+
+if([talkingiPhone respondsToSelector:@selector(decreaseBatteryLife:)]){
+  NSLog(@"Yup, talkingiPhone responds to the decreaseBatteryLife: message");
+}
+
+A selector is the object used to identify a message, and here we are passing the decreaseBatteryLife: selector to the respondsToSelector: message. respondsToSelector: figures out if the object it was sent to responds to the message corresponding to the name of the selector. In the case above, respondsToSelector: would return YES because the talkingiPhone object does respond to the decreaseBatteryLife: message.
+
+If we wanted to check if the talkingiPhone object responds to a message with the name thisMessageDoesNotExist, we could do that like so:
+
+if([talkingiPhone respondsToSelector:@selector(thisMessageDoesNotExist)]){
+  NSLog(@"Yup, talkingiPhone responds to the thisMessageDoesNotExist message");
+}else{
+  NSLog(@"Nope, talkingiPhone DOES NOT respond to the thisMessageDoesNotExist message");
+}
+
+We’ve essentially added error-checking to the runtime of our application, because we could not rely on errors from compile time to catch the problem.
+
+Fix the runtime exception by finishing the if statement so that copy is only called if talkingiPhone responds to the copyWithZone: message.
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"%@'s battery life is %@", self.phoneName, _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+if(/*//responds to copyWithZone://*/){
+  Apple *copy = [talkingiPhone copy];
+  [copy reportBatteryLife];
+}
+
+
+Answer:
+Challenge
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+[talkingiPhone decreaseBatteryLife:@5];
+
+if([talkingiPhone respondsToSelector:@selector(copyWithZone)]){
+  Apple *copy = [talkingiPhone copy];
+  [copy reportBatteryLife];
+}

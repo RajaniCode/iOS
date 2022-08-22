@@ -1,0 +1,11 @@
+2.6 Text View Insets
+
+Complete the code below to set the default padding at the top of a text view to 2.
+
+UITextView *textView = [[UITextView alloc] init];
+textView.[ ].top = [ ];
+
+
+Answer:
+textContainerInset
+2

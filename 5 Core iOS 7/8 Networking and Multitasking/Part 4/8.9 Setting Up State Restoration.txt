@@ -1,0 +1,13 @@
+8.9 Setting Up State Restoration
+
+Which of the following is not a required step to set up state restoration for view controllers?
+
+[Single Answer]
+
+Override the application:shouldSaveApplicationState: and application:shouldRestoreApplicationState methods.
+Initialize the app in application:willFinishLaunchingWithOptions:
+Override the storeViewControllerState: method in each view controller.
+Set the restorationIdentifier property for each view controller that you want to be saved/restored.
+
+
+Answer: Override the storeViewControllerState: method in each view controller.

@@ -1,0 +1,9 @@
+3. Logging a variable
+
+
+Now we have a variable that is storing a string with your first name. But how do we get the string back out of the box? This is so common that it’s as simple as possible: just refer to the name of the variable. So in place of using @"Apple" you can use the variable name firstName.
+
+Log your first name again but this time use the firstName variable
+
+
+Answer: NSLog(firstName);

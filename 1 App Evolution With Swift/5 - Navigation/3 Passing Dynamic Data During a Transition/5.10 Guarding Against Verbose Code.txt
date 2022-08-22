@@ -1,0 +1,77 @@
+5.10 Guarding Against Verbose Code
+
+We've removed a lot of the nested binding code, and we want to replace it with the much more succinct guard statement. Update the missing code below to use guard, and exit the function early if those two let statements are not able to be completed.
+
+import UIKit
+
+class CoursesTableViewController: UITableViewController {
+
+  var courseNames: [String]?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    courseNames = [
+      "App Evolution With Swift",
+      "The Magical Marvels of MongoDB",
+      "ES2015: The Shape of JavaScript to Come",
+      "Adventures in Web Animations"
+    ]
+  }
+
+  override func tableView(
+    tableView: UITableView,
+    numberOfRowsInSection section: Int
+  ) -> Int {
+
+    if names = courseNames {
+      return names.count
+    }
+    return 0
+  }
+
+  override func tableView(
+    tableView: UITableView,
+    cellForRowAtIndexPath indexPath: NSIndexPath
+  ) -> UITableViewCell {
+
+    let cell = tableView.dequeueReusableCellWithIdentifier(
+      "CourseCell", forIndexPath: indexPath
+    )
+
+    let courseName = courseNames?[indexPath.row]
+
+    if let name = courseName {
+      cell.textLabel.text = courseName
+    }
+    cell.imageView.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(
+    segue: UIStoryboardSegue, 
+    sender: AnyObject?
+  ) {
+    if segue.identifier == "ShowCourse" {
+      let courseVC = segue.destinationViewController as?
+        CourseViewController
+
+      [ ] let cell = sender as? UITableViewCell {
+        let indexPath = tableView.indexPathForCell(
+          cell
+        ) else {
+          [ ]
+        }
+      }
+
+      let courseName = courseNames?[indexPath.row]
+      courseVC?.courseName = courseName
+    }
+  }
+}
+
+
+Answer:
+guard
+return

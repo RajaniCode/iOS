@@ -1,0 +1,112 @@
+5.7 Logging Filename
+
+
+Notice we now have a second array with filenames inside our FeedTableViewController which correspond with our image titles. Now in tableView:didSelectRowAtIndexPath: Log out the proper filename we’d want to display when a cell is tapped.
+
+
+FeedTableViewController.h
+#import <UIKit/UIKit.h>
+
+@interface FeedTableViewController : UITableViewController
+
+@property (strong, nonatomic) NSArray *imageTitleArray;
+@property (strong, nonatomic) NSArray *imageFileNameArray;
+
+@end
+
+
+FeedTableViewController.m
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    
+    self.imageTitleArray = @[@"Image 1",@"Image 2",@"Image 3",@"Image 4", @"Image 5"];
+    self.imageFileNameArray = @[@"image1.png", @"image2.png", @"image3.png", @"image4.png", @"image5.png"];
+  }
+  return self;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  // Log out the filename here 
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return self.imageTitleArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = self.imageTitleArray[indexPath.row];
+  
+  return cell;
+}
+
+@end
+
+
+Answer:
+FeedTableViewController.m
+
+#import "FeedTableViewController.h"
+
+@implementation FeedTableViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Feed";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_feed.png"];
+    
+    self.imageTitleArray = @[@"Image 1",@"Image 2",@"Image 3",@"Image 4", @"Image 5"];
+    self.imageFileNameArray = @[@"image1.png", @"image2.png", @"image3.png", @"image4.png", @"image5.png"];
+  }
+  return self;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  // Log out the filename here 
+  //NSLog(self.imageFileNameArray[indexPath.row]);
+  NSLog(_imageFileNameArray[indexPath.row]);
+ 
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+ numberOfRowsInSection:(NSInteger)section
+{
+  return self.imageTitleArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView
+     cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+  
+  if(cell == nil) {
+    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"Cell"];
+  }
+  
+  cell.textLabel.text = self.imageTitleArray[indexPath.row];
+  
+  return cell;
+}
+
+@end

@@ -1,0 +1,13 @@
+5.8 Behavior Action Property
+
+What's the purpose of the action property of a dynamic behavior?
+
+[Single Answer]
+
+It contains a block that executes every cycle that the animation is active.
+You can assign it a method that will run whenever the view animates.
+It's a boolean you can set to true or false to determine whether or not the animation should run.
+It's only for debugging and contains the current state of the animation.
+
+
+Answer: It contains a block that executes every cycle that the animation is active.

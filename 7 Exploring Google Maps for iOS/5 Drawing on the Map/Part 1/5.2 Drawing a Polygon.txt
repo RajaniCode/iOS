@@ -1,0 +1,35 @@
+5.2 Drawing a Polygon
+
+Complete the code below to create our Polygon object containing our meltHouse path, using our preset colors and mapView object.
+
+GMSMutablePath *meltHousePath = [[GMSMutablePath alloc] init];
+[meltHouse addLatitude:28.5382 longitude:-81.3687];
+[meltHouse addLatitude:28.5421 longitude:-81.3690];
+[meltHouse addLatitude:28.5480 longitude:-81.3650];
+
+UIColor *meltHouseStrokeColor = [UIColor
+    colorWithRed:250.0/255.0
+           green:175.0/255.0
+            blue:64.0/255.0
+           alpha:1.0
+];
+
+UIColor *meltHouseFillColor = [UIColor
+    colorWithRed:250.0/255.0
+           green:175.0/255.0
+            blue:64.0/255.0
+           alpha:0.5];
+
+GMSPolygon *meltHousePolygon = [
+  GMSPolygon [ ]
+];
+meltHousePolygon.strokeColor = [ ];
+meltHousePolygon.strokeWidth = 2;
+meltHousePolygon.fillColor = [ ];
+meltHousePolygon.map =  self.mapView;
+
+
+Answer:
+meltHousePath
+meltHouseStrokeColor
+meltHouseFillColor

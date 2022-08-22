@@ -1,0 +1,51 @@
+4. Equal strings
+
+
+We should probably stop picking on Mr. Higgie so much. He’s not all bad. In fact, there is a lighter side to Mr. Higgie: he loves wearing hats.
+
+It's true. I tan too easily.
+
+In fact, if you want to find out which hat Mr. Higgie is wearing, send the mrHiggie object the currentHat message and it will return the type of hat in the form of a NSString.
+
+We can also pass an NSString the isEqualToString: message, which will compare two NSString objects. If they have exactly the same characters then the message will return YES, and otherwise it will return NO. We can use isEqualToString: inside if statements to conditionally execute code based on the characters in a string, like so:
+
+if([myString isEqualToString:otherString]) {
+  NSLog(@"Hello from inside the if!");
+}
+
+As you can see in the editor to the right, we’re already logging out different messages depending on the result of [mrHiggie currentHat]. We recently learned that Mr. Higgie has purchased a new hat with the name @"AstronautHelmet".
+
+Add another else if to log a different message whenever this @"AstronautHelmet" hat is encountered.
+
+Note: else if's have to be between the if and else
+
+
+File
+NSString *hat = [mrHiggie currentHat];
+
+if([hat isEqualToString:@"Sombrero"]) {
+  NSLog(@"Ese es un muy buen sombrero");
+} else if ([hat isEqualToString:@"Fedora"]) {
+  NSLog(@"Mr. Higgie was an iPhone before there was iPhone");
+} else {
+  NSLog(@"Mr. Higgie is currently hatless");
+}
+
+
+Answer:
+File
+NSString *hat = [mrHiggie currentHat];
+
+if([hat isEqualToString:@"Sombrero"]) {
+  NSLog(@"Ese es un muy buen sombrero");
+} else if ([hat isEqualToString:@"Fedora"]) {
+  NSLog(@"Mr. Higgie was an iPhone before there was iPhone");
+} else if([hat isEqualToString:@"AstronautHelmet"]) {
+  NSLog(@"Mr. Higgies was an Astronaught"); 
+} else {
+  NSLog(@"Mr. Higgie is currently hatless");
+}
+
+
+Output:
+challenge[8]: Mr. Higgies was an Astronaught

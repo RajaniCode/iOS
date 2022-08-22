@@ -1,0 +1,83 @@
+2.12 Button Properties II
+
+Now that we have our greenButton and blueButton properties declared in ViewController.h, let's use these properties in ViewController.m.
+
+First, modify the code in viewDidLoad to assign the UIButton instances to their respective properties. Then update the if statement in the changeBackgroundColor: method to check the sender against one of the button properties to make a decision about which color to set the backgroundColor to.
+
+
+ViewController.h
+#import <UIKit/UIKit.h>
+
+@interface ViewController : UIViewController
+- (void) changeBackgroundColor:(id) sender;
+
+@property (weak, nonatomic) UIButton *greenButton;
+@property (weak, nonatomic) UIButton *blueButton;
+@end
+
+
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  
+  UIButton *greenButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  greenButton.frame = CGRectMake(120, 200, 100, 44);
+  [greenButton setTitle:@"Make green!" forState:UIControlStateNormal];
+  [greenButton addTarget:self action:@selector(changeBackgroundColor:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:greenButton];
+  
+  UIButton *blueButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  blueButton.frame = CGRectMake(120, 100, 100, 44);
+  [blueButton setTitle:@"Make blue!" forState:UIControlStateNormal];
+  [blueButton addTarget:self action:@selector(changeBackgroundColor:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:blueButton];
+}
+
+- (void) changeBackgroundColor:(UIButton *) sender
+{
+  if ([sender.titleLabel.text isEqualToString:@"Make green!"]) {
+      self.view.backgroundColor = [UIColor greenColor];
+  }else {
+      self.view.backgroundColor = [UIColor blueColor];
+  }
+}
+@end
+
+
+Answer:
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+  
+  self.greenButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  self.greenButton.frame = CGRectMake(120, 200, 100, 44);
+  [self.greenButton setTitle:@"Make green!" forState:UIControlStateNormal];
+  [self.greenButton addTarget:self action:@selector(changeBackgroundColor:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.greenButton];
+  
+  self.blueButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  self.blueButton.frame = CGRectMake(120, 100, 100, 44);
+  [self.blueButton setTitle:@"Make blue!" forState:UIControlStateNormal];
+  [self.blueButton addTarget:self action:@selector(changeBackgroundColor:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:self.blueButton];
+}
+
+- (void) changeBackgroundColor:(UIButton *) sender
+{
+  if ([sender isEqual:self.greenButton]) {
+      self.view.backgroundColor = [UIColor greenColor];
+  }else {
+      self.view.backgroundColor = [UIColor blueColor];
+  }
+}
+@end

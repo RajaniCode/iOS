@@ -1,0 +1,381 @@
+5.6 Make the JSON request in the geocoder response block
+
+
+In the geocoder completionHandler: block, access the key in the placemark object that corresponds to the city, and pass that value into the API with an AFJSONRequestOperation.
+
+Then, in the success block of that operation, add all of the returned annotations and re-center the map.
+
+
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+#import "MapAnnotation.h"
+
+#import "AFJSONRequestOperation.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    double regionWidth = 2500;
+    double regionHeight = 2200;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    self.userLocationLabel = [[UILabel alloc] init];
+    self.userLocationLabel.frame = CGRectMake(20,360,280,40);
+    self.userLocationLabel.backgroundColor = [UIColor clearColor];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+    
+    self.citySearchField = [[UITextField alloc] init];
+    self.citySearchField.frame = CGRectMake(20,20,280,40);
+    self.citySearchField.delegate = self;
+    self.citySearchField.backgroundColor = [UIColor whiteColor];
+    self.citySearchField.keyboardType = UIKeyboardTypeNamePhonePad;
+    self.citySearchField.borderStyle = UITextBorderStyleLine;
+    self.citySearchField.font = [UIFont fontWithName:@"Helvetica" size:15.0f];
+    self.citySearchField.placeholder = @"Enter Orlando, Tampa, or Jacksonville";
+    [self.view addSubview:self.citySearchField];
+
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    NSString *urlString = [NSString stringWithFormat:@"http://operationmapkit.codeschool.com/%@/",textField.text];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            self.restaurants = JSON;
+            [self showRestaurantsAndCenter:YES];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response,
+                    NSError *error, id JSON) {
+            NSLog(@"NSError: %@",error.localizedDescription);
+        }];
+    [operation start];
+    return YES;
+}
+
+- (void)centerOnUser:(id)sender
+{
+    [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate];
+
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:self.theMap.userLocation.location completionHandler:^(NSArray *placemarks, NSError *error) {
+
+        /*//create a CLPlacemark object named placemark that stores the first item in the placemarks array//*/
+        
+        NSString *urlString = [NSString stringWithFormat:@"http://operationmapkit.codeschool.com/%@/",/*//pass in the placemark property that corresponds to the city//*/];
+        
+        NSURL *url = [[NSURL alloc] initWithString:urlString];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+            success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                self.restaurants = JSON;
+                [self showRestaurantsAndCenter:YES];
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response,
+                        NSError *error, id JSON) {
+                NSLog(@"NSError: %@",error.localizedDescription);
+            }];
+        [operation start];
+    }];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(self.userLocationUpdated == NO) {
+        [self centerOnUser:nil];
+        self.userLocationUpdated = YES;
+    }
+    
+    self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    [self.theMap setCenterCoordinate:[[view annotation] coordinate]];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    MKAnnotationView *view = [self.theMap dequeueReusableAnnotationViewWithIdentifier:@"annoView"];
+    if(!view) {
+        view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annoView"];
+    }
+    
+    MapAnnotation *singleAnnotation = annotation;
+    
+    if([singleAnnotation.cost isEqualToString:@"cheap"]) {
+        view.image = [UIImage imageNamed:@"cheap.png"];
+    } else if([singleAnnotation.cost isEqualToString:@"expensive"]) {
+        view.image = [UIImage imageNamed:@"expensive.png"];
+    }
+    
+    view.canShowCallout = YES;
+    
+    return view;
+}
+
+- (void)showRestaurantsAndCenter:(BOOL)shouldCenter
+{
+    for(NSDictionary *restaurant in self.restaurants) {
+        CLLocationCoordinate2D annotationCoordinate = CLLocationCoordinate2DMake([restaurant[@"lat"] doubleValue], [restaurant[@"lng"] doubleValue]);
+        
+        MapAnnotation *annotation = [[MapAnnotation alloc] init];
+        annotation.coordinate = annotationCoordinate;
+        annotation.title = restaurant[@"name"];
+        annotation.subtitle = restaurant[@"contact"];
+        annotation.cost = restaurant[@"cost"];
+        
+        [self.theMap addAnnotation:annotation];
+    }
+    
+    if(shouldCenter) {
+        NSMutableArray *lats = [[NSMutableArray alloc] init];
+        NSMutableArray *lngs = [[NSMutableArray alloc] init];
+        
+        for(NSDictionary *restaurant in self.restaurants) {
+            [lats addObject:[NSNumber numberWithDouble:[restaurant[@"lat"] doubleValue]]];
+            [lngs addObject:[NSNumber numberWithDouble:[restaurant[@"lng"] doubleValue]]];
+        }
+        
+        [lats sortUsingSelector:@selector(compare:)];
+        [lngs sortUsingSelector:@selector(compare:)];
+        
+        double smallestLat = [lats[0] doubleValue];
+        double smallestLng = [lngs[0] doubleValue];
+        double biggestLat  = [[lats lastObject] doubleValue];
+        double biggestLng  = [[lngs lastObject] doubleValue];
+        
+        CLLocationCoordinate2D annotationsCenter = CLLocationCoordinate2DMake((biggestLat + smallestLat) / 2, (biggestLng + smallestLng) / 2);
+        
+        MKCoordinateSpan annotationsSpan = MKCoordinateSpanMake((biggestLat - smallestLat), (biggestLng - smallestLng));
+        
+        MKCoordinateRegion region = MKCoordinateRegionMake(annotationsCenter, annotationsSpan);
+        
+        [self.theMap setRegion:region];
+    }
+}
+
+- (void)dealloc
+{
+    self.theMap = nil;
+}
+
+@end
+
+
+Answer:
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+#import "MapAnnotation.h"
+
+#import "AFJSONRequestOperation.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.theMap = [[MKMapView alloc] init];
+    self.theMap.frame = CGRectMake(0, 0, 320, 300);
+    self.theMap.delegate = self;
+    self.theMap.scrollEnabled = YES;
+    self.theMap.zoomEnabled = NO;
+    [self.view addSubview:self.theMap];
+    
+    CLLocationCoordinate2D centerCoordinate = CLLocationCoordinate2DMake(28.41871, -81.58121);
+    double regionWidth = 2500;
+    double regionHeight = 2200;
+    MKCoordinateRegion startRegion = MKCoordinateRegionMakeWithDistance(centerCoordinate, regionWidth, regionHeight);
+    [self.theMap setRegion:startRegion
+                  animated:YES];
+    
+    self.theMap.showsUserLocation = YES;
+    
+    self.userLocationLabel = [[UILabel alloc] init];
+    self.userLocationLabel.frame = CGRectMake(20,360,280,40);
+    self.userLocationLabel.backgroundColor = [UIColor clearColor];
+    self.userLocationLabel.textAlignment = NSTextAlignmentCenter;
+    self.userLocationLabel.font = [UIFont fontWithName:@"Helvetica" size:16.0f];
+    self.userLocationLabel.text = @"lat: lng: ";
+    [self.view addSubview:self.userLocationLabel];
+    
+    self.userCenterButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    self.userCenterButton.frame = CGRectMake(20,320,280,40);
+    [self.userCenterButton setTitle:@"center on user"
+                           forState:UIControlStateNormal];
+    [self.userCenterButton addTarget:self
+                              action:@selector(centerOnUser:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.userCenterButton];
+    
+    self.citySearchField = [[UITextField alloc] init];
+    self.citySearchField.frame = CGRectMake(20,20,280,40);
+    self.citySearchField.delegate = self;
+    self.citySearchField.backgroundColor = [UIColor whiteColor];
+    self.citySearchField.keyboardType = UIKeyboardTypeNamePhonePad;
+    self.citySearchField.borderStyle = UITextBorderStyleLine;
+    self.citySearchField.font = [UIFont fontWithName:@"Helvetica" size:15.0f];
+    self.citySearchField.placeholder = @"Enter Orlando, Tampa, or Jacksonville";
+    [self.view addSubview:self.citySearchField];
+
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    NSString *urlString = [NSString stringWithFormat:@"http://operationmapkit.codeschool.com/%@/",textField.text];
+    NSURL *url = [[NSURL alloc] initWithString:urlString];
+    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+    AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+        success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+            self.restaurants = JSON;
+            [self showRestaurantsAndCenter:YES];
+        } failure:^(NSURLRequest *request, NSHTTPURLResponse *response,
+                    NSError *error, id JSON) {
+            NSLog(@"NSError: %@",error.localizedDescription);
+        }];
+    [operation start];
+    return YES;
+}
+
+- (void)centerOnUser:(id)sender
+{
+    [self.theMap setCenterCoordinate:self.theMap.userLocation.location.coordinate];
+
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:self.theMap.userLocation.location completionHandler:^(NSArray *placemarks, NSError *error) {
+        CLPlacemark *placemark = [placemarks objectAtIndex:0];      
+        NSString *urlString = [NSString stringWithFormat:@"http://operationmapkit.codeschool.com/%@/", placemark.locality];
+        
+        NSURL *url = [[NSURL alloc] initWithString:urlString];
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
+        AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request
+            success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                self.restaurants = JSON;
+                [self showRestaurantsAndCenter:YES];
+            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response,
+                        NSError *error, id JSON) {
+                NSLog(@"NSError: %@",error.localizedDescription);
+            }];
+        [operation start];
+    }];
+}
+
+- (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
+{
+    if(self.userLocationUpdated == NO) {
+        [self centerOnUser:nil];
+        self.userLocationUpdated = YES;
+    }
+    
+    self.userLocationLabel.text = [NSString stringWithFormat:@"user location: %f, %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude];
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    [self.theMap setCenterCoordinate:[[view annotation] coordinate]];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id<MKAnnotation>)annotation
+{
+    if([annotation isKindOfClass:[MKUserLocation class]]) {
+        return nil;
+    }
+    
+    MKAnnotationView *view = [self.theMap dequeueReusableAnnotationViewWithIdentifier:@"annoView"];
+    if(!view) {
+        view = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"annoView"];
+    }
+    
+    MapAnnotation *singleAnnotation = annotation;
+    
+    if([singleAnnotation.cost isEqualToString:@"cheap"]) {
+        view.image = [UIImage imageNamed:@"cheap.png"];
+    } else if([singleAnnotation.cost isEqualToString:@"expensive"]) {
+        view.image = [UIImage imageNamed:@"expensive.png"];
+    }
+    
+    view.canShowCallout = YES;
+    
+    return view;
+}
+
+- (void)showRestaurantsAndCenter:(BOOL)shouldCenter
+{
+    for(NSDictionary *restaurant in self.restaurants) {
+        CLLocationCoordinate2D annotationCoordinate = CLLocationCoordinate2DMake([restaurant[@"lat"] doubleValue], [restaurant[@"lng"] doubleValue]);
+        
+        MapAnnotation *annotation = [[MapAnnotation alloc] init];
+        annotation.coordinate = annotationCoordinate;
+        annotation.title = restaurant[@"name"];
+        annotation.subtitle = restaurant[@"contact"];
+        annotation.cost = restaurant[@"cost"];
+        
+        [self.theMap addAnnotation:annotation];
+    }
+    
+    if(shouldCenter) {
+        NSMutableArray *lats = [[NSMutableArray alloc] init];
+        NSMutableArray *lngs = [[NSMutableArray alloc] init];
+        
+        for(NSDictionary *restaurant in self.restaurants) {
+            [lats addObject:[NSNumber numberWithDouble:[restaurant[@"lat"] doubleValue]]];
+            [lngs addObject:[NSNumber numberWithDouble:[restaurant[@"lng"] doubleValue]]];
+        }
+        
+        [lats sortUsingSelector:@selector(compare:)];
+        [lngs sortUsingSelector:@selector(compare:)];
+        
+        double smallestLat = [lats[0] doubleValue];
+        double smallestLng = [lngs[0] doubleValue];
+        double biggestLat  = [[lats lastObject] doubleValue];
+        double biggestLng  = [[lngs lastObject] doubleValue];
+        
+        CLLocationCoordinate2D annotationsCenter = CLLocationCoordinate2DMake((biggestLat + smallestLat) / 2, (biggestLng + smallestLng) / 2);
+        
+        MKCoordinateSpan annotationsSpan = MKCoordinateSpanMake((biggestLat - smallestLat), (biggestLng - smallestLng));
+        
+        MKCoordinateRegion region = MKCoordinateRegionMake(annotationsCenter, annotationsSpan);
+        
+        [self.theMap setRegion:region];
+    }
+}
+
+- (void)dealloc
+{
+    self.theMap = nil;
+}
+
+@end

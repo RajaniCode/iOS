@@ -1,0 +1,9 @@
+4. Logging placeholders
+
+
+NSLog is a powerful function. Sure, you can just pass it a single string and it will output it for you. But you can also pass it a string that contains placeholders, and NSLog will dutifully replace each placeholder with the extra values you give it.
+
+Try submitting NSLog(@"Hello there, %@.", firstName); to see what the output looks like.
+
+
+Answer: NSLog(@"Hello there, %@.", firstName);

@@ -1,0 +1,25 @@
+1. Introducing classes
+
+
+You should now feel pretty comfortable creating and sending messages to NSString, NSArray, NSNumber, and other NS-objects. Those handy object types are provided for us by Apple and cover common functionality that most programs will need, but what if you wanted to make your own custom type of object and make up methods for objects of that type?
+
+In Objective-C the way to define a custom type of object is to define a class.
+
+SNOOOOOZE
+
+Don’t listen to him, classes are exciting! They allow you to make your code more readable and organized, but more than that they will change the way you think about programming.
+
+Programming languages like Objective-C are based around the idea of creating objects and then sending those objects messages to get back responses. It’s not like the real world where only people talk to each other, in Objective-C an object of any type can talk to all other objects equally (it’d be like if an iPhone suddenly started talking: not possible in the real world).
+
+I heard that.
+
+You see, in Objective-C we CAN make a talking phone, and the only way to do that is with a class. Let’s say we try to make a talking phone with just an NSDictionary, which at first you might think would be enough:
+
+NSDictionary *talkingiPhone = @{
+  @"Name": @"Mr. Higgie", 
+  @"ModelNumber": @1
+};
+
+This is a good start: our talkingiPhone object has a Name and a ModelNumber. But this is just data, just “properties” describing the phone. We could send a message to this object, but the only messages we have to choose from are defined by NSDictionary and have to do with dictionary-like operations. Our TalkingPhone should have a method like speak or beQuietNow. So, to do that we have to create a class. A class has a name, properties (like Name and ModelNumber above) and methods.
+
+Let’s start this journey and make our first class together.

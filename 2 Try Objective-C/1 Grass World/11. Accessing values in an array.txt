@@ -1,0 +1,13 @@
+11. Accessing values in an array
+
+
+You can access values in a NSArray by referencing a number inside of brackets after the array variable name.
+
+apps[0] results in the first object in the array, apps[1] results in the second object, and so on.
+
+Try printing the second NSString in the array like this:
+
+NSLog(@"%@", apps[1]);
+
+
+Answer: NSLog(@"%@", apps[1]);

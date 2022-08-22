@@ -1,0 +1,16 @@
+2.3 Font Descriptors
+
+UIFontDescriptor *fontDescriptor = [UIFontDescriptor
+  fontDescriptorWithFontAttributes:
+    @{UIFontDescriptorFamilyAttribute:@"Future"
+];
+UIFont *font = [UIFont
+  [ ]:fontDescriptor
+  size:14
+];
+label.font = [ ];
+
+
+Answer:
+fontDescriptor
+font

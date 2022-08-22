@@ -1,0 +1,66 @@
+1.3 Use a Photo Model
+
+
+In AppDelegate.m, instantiate a Photo object and set values for the title, detail, filename, thumbnail properties.
+
+
+Photo.m
+#import "Photo.h"
+
+@interface Photo : NSObject
+
+-(id)init
+{
+    self = [super init];
+    return self;
+}
+
+@end
+
+
+Photo.h
+#import <Foundation/Foundation.h>
+
+@interface Photo : NSObject
+
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *detail;
+@property (strong, nonatomic) NSString *filename;
+@property (strong, nonatomic) NSString *thumbnail;
+
+@end
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+#import "Photo.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    _
+    return YES;
+}
+
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+#import "Photo.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    Photo *photo = [[Photo alloc] init];
+    photo.title = @"Title";
+    photo.detail = @"Detail";
+    photo.filename = @"Filename";
+    photo.thumbnail = @"Thumbnail";
+    return YES;
+}
+
+@end

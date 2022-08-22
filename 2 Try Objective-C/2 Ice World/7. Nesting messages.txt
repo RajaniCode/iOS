@@ -1,0 +1,52 @@
+7. Nesting messages
+
+
+As you may have seen in the output from the last challenge, there wasn’t a space between your first and last name.
+
+To solve that, we have to append firstName with a single space, like so:
+
+NSString *firstNamePlusSpace = [firstName stringByAppendingString:@" "];
+
+Then we can just append the lastName to that:
+
+NSString *fullname = [firstNamePlusSpace stringByAppendingString:lastName];
+
+It does seem a little silly to create that firstNamePlusSpace variable, since it’s only used temporarily.
+
+We can refactor the above code to do it all in one line, like so:
+
+NSString *firstName = @"Eric";
+NSString *lastName = @"Allam";
+
+//NSString *firstNamePlusSpace = [firstName stringByAppendingString:@" "];
+NSString *fullName = [[firstName stringByAppendingString:@" "] stringByAppendingString:lastName];
+
+
+It’s possible to nest message sends within one another, and it’s a common technique in Objective-C to save the programmer a couple of keystrokes. So now we are left with this code:
+
+NSString *fullName = [[firstName stringByAppendingString:@" "] stringByAppendingString:lastName];
+
+Fix the code to log the full name with a space between the firstName and lastName.
+
+
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = /*//Append firstName and lastName with a space between//*/;
+
+NSLog(@"%@", fullName);
+
+
+Answer:
+File
+NSString *firstName = @"Apple";
+NSString *lastName = @"Inc";
+
+NSString *fullName = [[firstName stringByAppendingString:@" "] stringByAppendingString:lastName];
+
+NSLog(@"%@", fullName);
+
+
+Output:
+challenge[6]: Apple Inc

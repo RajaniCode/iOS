@@ -1,0 +1,23 @@
+12. Changing an array
+
+
+I just got a great new app called Instacanvas. Can you add it to the array please?
+
+Oh, I’m afraid it’s not that simple Mr. Higgie. Most objects in Objective-C can’t be changed. You’d think it could be as simple as just assigning a value to the 4th slot of the array, like this:
+
+apps[3] = @"Instacanvas";
+
+Try submitting the above code to see what happens
+
+Whoops! You can’t just change a NSArray after it has been created, because it is an immutable object.
+
+Note: Most types of objects have "mutable" counterparts like NSMutableArray, NSMutableString, etc., that allow you to change them after they've been created. We'll talk about these objects more later in the course.
+
+Instead of changing the existing apps object, we can assign an entirely new array to apps, just like how we could replace the contents of a box with new contents.
+
+Change the apps variable to include the @"Instacanvas" string by submitting this code (notice how we no longer need the NSArray * type specifier because we’ve already defined this variable earlier):
+
+apps = @[@"AngryFowl", @"Lettertouch", @"Tweetrobot", @"Instacanvas"];
+
+
+Answer: apps = @[@"AngryFowl", @"Lettertouch", @"Tweetrobot", @"Instacanvas"];

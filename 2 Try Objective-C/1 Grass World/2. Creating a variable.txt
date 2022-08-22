@@ -1,0 +1,19 @@
+2. Creating a variable
+
+
+Congratulations Apple, you’ve created your first string and logged it to the Output window.
+
+It would get very old having to type out @"Apple" every time you wanted a string with your name in it, but there’s a way to store our name so we can easily access it later.
+
+We can store strings (and other values) in something called a variable. Variables are like boxes with a label. We put something in a box (a string) and give it a name so we can find it later. The name of a variable is usually descriptive of what is inside, and it usually starts with a lowercase letter and contains no spaces.
+
+Just like you have to choose an appropriate type of box to store something in, you have to choose the appropriate type of variable to store a value in. For string values, the type of variable you have to choose is NSString *. Here is how you’d create a string variable:
+
+NSString *firstName = @"Apple";
+
+NSString * is the type of variable (we’ll cover why we need that * later in the course), and the = operator stores the string @"Apple" in a variable with the name firstName.
+
+Go ahead and fill out the code to the right to create your first string variable
+
+
+Answer: NSString *firstName = @"Apple";

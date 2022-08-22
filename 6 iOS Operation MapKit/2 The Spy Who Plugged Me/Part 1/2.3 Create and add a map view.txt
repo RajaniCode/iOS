@@ -1,0 +1,56 @@
+2.3 Create and add a map view
+
+
+In viewDidLoad in RestaurantMapViewontroller.m, alloc/init the MKMapView object, set the following properties, and add it as a subview of self.view.
+- delegate: self
+- frame: 0, 0, 320, 300
+- scrolling: YES
+- zooming: NO
+
+
+RestaurantMapViewController.h
+#import <UIKit/UIKit.h>
+#import <MapKit/MapKit.h>
+
+@interface RestaurantMapViewController : UIViewController <MKMapViewDelegate>
+
+@property (strong, nonatomic) MKMapView *theMap;
+
+@end
+
+
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    /*//Create the map view and set property values here//*/
+}
+
+@end
+
+
+Answer:
+RestaurantMapViewController.m
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantMapViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+  	self.theMap = [[MKMapView alloc] init];
+  	self.theMap.frame = CGRectMake(0, 0, 320, 300);
+	self.theMap.delegate = self;
+  	self.theMap.scrollEnabled = YES;
+  	self.theMap.zoomEnabled = NO;
+  
+	[self.view addSubview:self.theMap];
+}
+
+@end

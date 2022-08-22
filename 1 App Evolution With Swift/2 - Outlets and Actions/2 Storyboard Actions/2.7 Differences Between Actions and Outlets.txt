@@ -1,0 +1,12 @@
+2.7 Differences Between Actions and Outlets
+
+How are actions different from outlets?
+
+[Single Answer]
+
+Outlets are used to get data out of a controller, and actions are used to get data into it.
+Actions can't be used to directly change the attributes of objects in the storyboard.
+Actions can only be attached to buttons while outlets can be created between any views.
+
+
+Answer: Actions can't be used to directly change the attributes of objects in the storyboard.

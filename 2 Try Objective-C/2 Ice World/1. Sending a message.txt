@@ -1,0 +1,19 @@
+1. Sending a message
+
+
+Playing with simple values is nice, but the fun really begins when you start “sending messages”. Sending a message will be the basic building block of your Objective-C apps because it is how you tell an object to perform some action or to give you some piece of information.
+
+To send a message, you need at least two things - an object and a message name:
+
+[objectName messageName];
+
+The object name goes on the left, followed by a space and then the message name, and then the whole thing is wrapped inside square-brackets.
+
+Note: "Sending a message" is sometimes referred to as "calling a method". You'll find Objective-C programmers using both of these phrases to mean basically the same thing.
+
+This is just the tip of the iceberg when it comes to message sending.
+
+Let's start exploring by sending a simple message called completeThisChallenge to the tryobjc object, like this: [tryobjc completeThisChallenge];
+
+
+Answer: [tryobjc completeThisChallenge];

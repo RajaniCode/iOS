@@ -1,0 +1,62 @@
+1.6 All the Colors
+
+So far, it seems like iOS only has a couple of different colors. But don't worry, you can paint any color you wish. UIColor has a method called colorWithRed:green:blue:alpha: that allows you to create an instance of UIColor based on RGBa [https://en.wikipedia.org/wiki/RGBA_color_space] values. For example: [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0];
+
+Change the backgroundColor on the view to a UIColor with these values: red: 0.462, green: 0.749, blue: 0.937, and an alpha of 1.0, which should be this color:           
+
+
+AppDelegate.h
+#import <UIKit/UIKit.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@end
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  CGRect viewRect = [[UIScreen mainScreen] bounds];
+  self.window = [[UIWindow alloc] initWithFrame:viewRect];
+  UIViewController *viewController = [[UIViewController alloc] init];
+  UIView *colorView = [[UIView alloc] initWithFrame:viewRect];
+
+  colorView.backgroundColor = [UIColor darkGrayColor];
+
+  viewController.view = colorView;
+
+  self.window.rootViewController = viewController;
+  [self.window makeKeyAndVisible];
+
+  return YES;
+}
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+  CGRect viewRect = [[UIScreen mainScreen] bounds];
+  self.window = [[UIWindow alloc] initWithFrame:viewRect];
+  UIViewController *viewController = [[UIViewController alloc] init];
+  UIView *colorView = [[UIView alloc] initWithFrame:viewRect];
+
+  colorView.backgroundColor = [UIColor colorWithRed:0.462 green:0.749 blue:0.937 alpha: 1.0];
+
+  viewController.view = colorView;
+
+  self.window.rootViewController = viewController;
+  [self.window makeKeyAndVisible];
+
+  return YES;
+}
+@end      

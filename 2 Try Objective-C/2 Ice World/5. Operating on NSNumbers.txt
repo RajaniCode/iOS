@@ -1,0 +1,62 @@
+5. Operating on NSNumbers
+
+
+Some objects in Objective-C have surprising behavior compared to most other programming languages. For example, let’s say I handed you two NSNumber objects and asked you to multiply them together and log the result:
+
+NSNumber *higgiesAge = @6;
+NSNumber *phoneLives = @3;
+
+In many programming languages you could just do something like this:
+
+NSNumber *product = higgiesAge * phoneLives;
+NSLog(@"Higgie is actually %@ years old.", product);
+
+This won't work, but go ahead and try running this code anyway to see what happens. We'll wait here while you break it.
+
+This is where that C in Objective-C starts to rear its ugly head. Objective-C is built on the shoulders of the C giant, and so we must also stand alongside it, especially when dealing with NS-objects.
+
+Note: A good rule of thumb for how to tell if an object is an Objective-C object or a C one: Objective-C objects are defined with the * in front of variable names, like this: NSString *name
+
+Multiplying with * is something done in c, and thus c types are expected on either side of the multiplication sign.
+
+Luckily there are messages we can send to NSNumber objects to return NSUInteger values that will work with multiplication. For example, you can get an NSUInteger value representing the NSNumber object by sending it the unsignedIntegerValue message, like so:
+
+NSUInteger higgiesAgeInteger = [higgiesAge unsignedIntegerValue];
+
+So we can get NSUInteger values out of NSNumber objects, and that means we can finally figure out how old Mr. Higgie really is by multiplying those two NSUInteger variables, like this:
+
+NSNumber *higgiesAge = @6;
+NSNumber *phoneLives = @3;
+
+NSUInteger higgiesAgeInt = [higgiesAge unsignedIntegerValue];
+NSUInteger phoneLivesInt = [phoneLives unsignedIntegerValue];
+
+NSUInteger higgiesRealAge = higgiesAgeInt * phoneLivesInt;
+
+I'd just like to jump in here and let you all know I'm not happy about this
+
+Go ahead and log out the NSUInteger variable representing Mr. Higgie's real age.
+
+
+File
+NSNumber *higgiesAge = @6;
+NSNumber *phoneLives = @3;
+
+NSNumber *product = higgiesAge * phoneLives;
+NSLog(@"Higgie is actually %@ years old.", product);
+
+
+Answer:
+File
+NSNumber *higgiesAge = @6;
+NSNumber *phoneLives = @3;
+
+NSUInteger higgiesAgeInt = [higgiesAge unsignedIntegerValue];
+NSUInteger phoneLivesInt = [phoneLives unsignedIntegerValue];
+
+NSUInteger product = higgiesAgeInt * phoneLivesInt;
+NSLog(@"Higgie is actually %lu years old.", product);
+
+
+Output:
+challenge[8]: Higgie is actually 18 years old.

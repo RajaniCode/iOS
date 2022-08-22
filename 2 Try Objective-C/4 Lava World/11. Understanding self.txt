@@ -1,0 +1,78 @@
+11. Understanding self
+
+
+Our implementation of speak leaves a lot to be desired. As you can see from the log, we can’t actually tell which object is doing the speaking.
+
+Ugh these methods are so self-centered
+
+It’s true! Inside of a method definition there is a variable called self that represents the object the message was sent to.
+
+Note: Consider this self a "magic variable" that is provided to your method definitions by the internals of Objective-C.
+
+As an example, let’s log out the coffee object that is poured:
+
+Coffee.m
+
+#import "Coffee.h"
+
+@implementation Coffee
+- (void) pour;
+{
+  NSLog(@"Pouring %@", self);
+}
+@end
+
+And then when pour is sent to a Coffee object, something like this would get logged:
+
+Pouring <Coffee: 0x100108240>
+
+That <Coffee: 0x100108240> is the string description of a Coffee object located at the memory address 0x100108240.
+
+To test this out, update the speak method definition to NSLog the self variable to see which Apple object is receiving the speak message.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone speak];
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+
+- (void) speak;
+
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(void)speak;
+{
+    NSLog(@"%@ says Hello There!", /*//add the self variable here//*/);
+}
+@end
+
+
+Answer:
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+-(void)speak;
+{
+    NSLog(@"%@ says Hello There!", self);
+}
+@end
+
+
+Output:
+Apple.m[6]: <Apple: 0x7fbbfb40ad70> says Hello There!

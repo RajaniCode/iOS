@@ -1,0 +1,56 @@
+8. Enumerating an NSDictionary
+
+
+Fast Enumeration is not limited to NSArray objects and can be used on NSDictionary objects as well:
+
+NSDictionary *funnyWords = @{
+  @"Schadenfreude": @"pleasure derived by someone from another person's misfortune.",
+  @"Portmanteau": @"consisting of or combining two or more separable aspects or qualities",
+  @"Penultimate": @"second to the last"
+};
+
+for (NSString *word in funnyWords){
+  NSString *definition = funnyWords[word];
+  NSLog(@"%@ is defined as %@", word, definition);
+}
+
+When you fast enumerate through an NSDictionary object, the value of the word variable would cycle through the keys in the funnyWords dictionary. Then, inside the fast enumeration block {} you can use the key to look up the associated value, demonstrated above by getting the definition for the current word:
+
+NSString *definition = funnyWords[word];
+
+Go ahead and submit the challenge code to the right to see how fast enumerating through an NSDictionary object works.
+
+
+File
+NSDictionary *funnyWords = @{
+  @"Schadenfreude": @"pleasure derived by someone from another person's misfortune.",
+  @"Portmanteau": @"consisting of or combining two or more separable aspects or qualities",
+  @"Penultimate": @"second to the last"
+};
+
+for (NSString *word in funnyWords) {
+  NSString *definition = funnyWords[word];
+  NSLog(@"%@ is defined as %@", word, definition);
+}
+
+
+Answer:
+File
+NSDictionary *funnyWords = @{
+  @"Schadenfreude": @"pleasure derived by someone from another person's misfortune.",
+  @"Portmanteau": @"consisting of or combining two or more separable aspects or qualities",
+  @"Penultimate": @"second to the last"
+};
+
+for (NSString *word in funnyWords) {
+  NSString *definition = funnyWords[word];
+  NSLog(@"%@ is defined as %@", word, definition);
+}
+
+
+Output:
+challenge[9]: Penultimate is defined as second to the last
+
+challenge[9]: Schadenfreude is defined as pleasure derived by someone from another person's misfortune.
+
+challenge[9]: Portmanteau is defined as consisting of or combining two or more separable aspects or qualities

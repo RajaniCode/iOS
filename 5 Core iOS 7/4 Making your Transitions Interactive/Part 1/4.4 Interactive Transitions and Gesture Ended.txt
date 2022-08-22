@@ -1,0 +1,12 @@
+4.4 Interactive Transitions and Gesture Ended
+
+What type of action should you include in the UIGestureRecognizerStateEnded state of a gesture recognizer attached to an interactive transition?
+
+[Single Answer]
+
+Update the percent state of a transition that's in progress.
+Call the finishInteractiveTransition or cancelInteractiveTransition method.
+Call the dismissViewControllerAnimated: or presentViewController:animated: method.
+
+
+Answer: Call the finishInteractiveTransition or cancelInteractiveTransition method.

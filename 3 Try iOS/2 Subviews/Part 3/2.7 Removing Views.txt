@@ -1,0 +1,60 @@
+2.7 Removing Views
+
+Now make it so that when the button is tapped and calls the changeBackgroundColor: method, the button gets removed from the view.
+
+
+ViewController.h
+#import <UIKit/UIKit.h>
+
+@interface ViewController : UIViewController
+- (void) changeBackgroundColor:(id) sender;
+@end
+
+
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *blueButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  blueButton.frame = CGRectMake(120, 100, 80, 44);
+  [blueButton setTitle:@"Make blue!" forState:UIControlStateNormal];
+  [blueButton addTarget:self action:@selector(changeBackgroundColor:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:blueButton];
+}
+
+- (void) changeBackgroundColor:(id) sender
+{
+  self.view.backgroundColor = [UIColor blueColor];
+}
+@end
+
+
+Answer:
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+
+  UIButton *blueButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+  blueButton.frame = CGRectMake(120, 100, 80, 44);
+  [blueButton setTitle:@"Make blue!" forState:UIControlStateNormal];
+  [blueButton addTarget:self action:@selector(changeBackgroundColor:) forControlEvents:UIControlEventTouchUpInside];
+  [self.view addSubview:blueButton];
+}
+
+- (void) changeBackgroundColor:(id) sender
+{
+  self.view.backgroundColor = [UIColor blueColor];
+  [sender removeFromSuperview];
+}
+@end
+

@@ -1,0 +1,95 @@
+6.3 Setup the tableview rows and cells
+
+
+Nothing shows up in RestaurantsTableViewController yet because we need to configure the tableView, so set the number of tableView rows to the count of restaurants in self.restaurants, and set the cell.textLabel.text to the name of the restaurant in self.restaurants at indexPath.row.
+
+
+RestaurantsTableViewController.m
+#import "RestaurantsTableViewController.h"
+#import "TestingAppDelegate.h"
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.frame = CGRectMake(20,360,280,40);
+    [backButton setTitle:@"back" forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return /*//return the count of `self.restaurants`//*/;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"restaurantCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"restaurantCell"];
+    }
+    
+    /*//Set the cell text label to the name of the restaurant at indexPath.row//*/
+    
+    return cell;
+}
+
+- (void)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end
+
+
+Answer:
+RestaurantsTableViewController.m
+#import "RestaurantsTableViewController.h"
+#import "TestingAppDelegate.h"
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.frame = CGRectMake(20,360,280,40);
+    [backButton setTitle:@"back" forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.restaurants.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"restaurantCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"restaurantCell"];
+    }
+    
+    cell.textLabel.text = self.restaurants[indexPath.row][@"name"];
+  
+    return cell;
+}
+
+- (void)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+@end

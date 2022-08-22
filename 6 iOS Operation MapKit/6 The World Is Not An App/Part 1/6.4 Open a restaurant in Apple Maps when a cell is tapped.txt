@@ -1,0 +1,131 @@
+6.4 Open a restaurant in Apple Maps when a cell is tapped
+
+
+The tableView:didSelectRowAtIndexPath: method is called whenever a table cell is tapped.
+
+Implement this method in RestaurantsTableViewController.m to use the lat/lng values of self.restaurants at indexPath.row to create a CLLocationCoordinate2D struct, and then turn that struct into an MKPlacemark so that you can create an MKMapItem with the name of the restaurant.
+
+Then, open up that MKMapItem in Apple Maps, and pass in the key that automatically loads driving directions from our current location.
+
+Note: the slide tab has some level 01 slides for reference!
+
+
+RestaurantsTableViewController.m
+#import "RestaurantsTableViewController.h"
+#import "TestingAppDelegate.h"
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.frame = CGRectMake(20,360,280,40);
+    [backButton setTitle:@"back" forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.restaurants.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"restaurantCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"restaurantCell"];
+    }
+    
+    cell.textLabel.text = self.restaurants[indexPath.row][@"name"];
+    
+    return cell;
+}
+
+- (void)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    double latitude = [/*//get this value from the restaurants array at position indexPath.row//*/][@"lat"] doubleValue];
+    double longitude = [/*//get this value from the restaurants array at position indexPath.row//*/][@"lng"] doubleValue];
+
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+
+    mapItem.name = /*//get this value from the restaurants array at position indexPath.row//*/[@"name"];
+
+    [mapItem openInMapsWithLaunchOptions:/*//pass a dictionary that opens the map in driving directions mode//*/];
+}
+
+@end
+
+
+Answer:
+RestaurantsTableViewController.m
+#import "RestaurantsTableViewController.h"
+#import "TestingAppDelegate.h"
+#import "RestaurantMapViewController.h"
+
+@implementation RestaurantsTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    backButton.frame = CGRectMake(20,360,280,40);
+    [backButton setTitle:@"back" forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.restaurants.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"restaurantCell"];
+    if(!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"restaurantCell"];
+    }
+    
+    cell.textLabel.text = self.restaurants[indexPath.row][@"name"];
+    
+    return cell;
+}
+
+- (void)goBack:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    double latitude = [self.restaurants[indexPath.row][@"lat"] doubleValue];
+    double longitude = [self.restaurants[indexPath.row][@"lng"] doubleValue];
+
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+
+    mapItem.name = self.restaurants[indexPath.row][@"name"];
+	  
+    NSDictionary *launchOptions = @{MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving};
+  
+    [mapItem openInMapsWithLaunchOptions:launchOptions];
+}
+
+@end

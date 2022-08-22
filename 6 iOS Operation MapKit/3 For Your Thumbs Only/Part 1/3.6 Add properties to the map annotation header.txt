@@ -1,0 +1,35 @@
+3.6 Add properties to the map annotation header
+
+
+Declare NSString properties named title and subtitle in MapAnnotation.h.
+
+
+MapAnnotation.h
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+
+@interface MapAnnotation : NSObject <MKAnnotation>
+
+@property CLLocationCoordinate2D coordinate;
+
+/*//Create the title property//*/
+
+/*//Create the subtitle propety//*/
+
+@end
+
+
+Answer:
+MapAnnotation.h
+#import <Foundation/Foundation.h>
+#import <MapKit/MapKit.h>
+
+@interface MapAnnotation : NSObject <MKAnnotation>
+
+@property CLLocationCoordinate2D coordinate;
+
+@property (strong, nonatomic) NSString *title;
+
+@property (strong, nonatomic) NSString *subtitle;
+
+@end

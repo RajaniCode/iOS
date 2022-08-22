@@ -1,0 +1,13 @@
+5.10 Dynamic Animated Transitions
+
+What class in the animated transition process should you add a UIDynamicAnimator property to in order to be able to have transitions driven by UIKit Dynamics?
+
+[Single Answer]
+
+The class that adopts the UIViewTransitioningDelegate protocol.
+The class that adopts the UIViewControllerAnimatedTransitioning protocol.
+The class that adopts the UIViewControllerContextTransitioning protocol.
+The class that adopts the UIViewControllerPresenting protocol.
+
+
+Answer: The class that adopts the UIViewControllerAnimatedTransitioning protocol.

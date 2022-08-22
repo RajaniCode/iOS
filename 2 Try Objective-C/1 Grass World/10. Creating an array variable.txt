@@ -1,0 +1,17 @@
+10. Creating an array variable
+
+
+Creating one object at a time is great, but we don’t really have to store every single object in its own variable, like this:
+
+NSString *angryFowl = @"AngryFowl";
+NSString *lettertouch = @"Lettertouch";
+NSString *tweetrobot = @"Tweetrobot";
+
+It looks like you're trying to make a list, would you like me to create an array for you?
+
+Arrays are very useful for when we don’t want to have a bunch of variables that each hold a single value, but when we want a single variable to hold multiple values. Create an array to hold our list of apps by submitting this code:
+
+NSArray *apps = @[@"AngryFowl", @"Lettertouch", @"Tweetrobot"];
+
+
+Answer: NSArray *apps = @[@"AngryFowl", @"Lettertouch", @"Tweetrobot"];

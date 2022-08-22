@@ -1,0 +1,45 @@
+1.9 Touch the Alpha
+
+Just logging a message to the console isn't really exciting, is it?
+
+This time, let's change something about the view every time touchesEnded:withEvent: is called. Use the following code to randomize the alpha transparency:
+
+self.view.alpha = ((double)arc4random() / 0x100000000);
+
+
+ViewController.m
+
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+  // put code here
+}
+@end
+
+
+Answer:
+ViewController.m
+
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+
+- (void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+  // put code here
+  self.view.alpha = ((double)arc4random() / 0x100000000);
+}
+@end

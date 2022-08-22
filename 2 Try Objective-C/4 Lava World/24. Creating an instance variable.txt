@@ -1,0 +1,141 @@
+24. Creating an instance variable
+
+
+What if we wanted to hide the batteryLife property even further and not even let outside code read the property. Then the only way to know the battery life would be to send the reportBatteryLife message. To accomplish this, we’d have to get rid of the batteryLife property and replace it with a completely internal variable.
+
+To learn how, let’s first look at this Coffee class that has a temperature property:
+
+Coffee.h
+
+@interface Coffee : NSObject
+@property NSNumber *temperature;
+@end
+
+To replace the temperature property with a variable only available to methods of the Coffee class, we have to remove the property and replace it with an instance variable:
+
+Coffee.h
+
+@interface Coffee : NSObject {
+  NSNumber *_temperature;
+}        
+@end
+
+Instance variables go in an optional curly-brace block after the @interface declaration, and are defined like any other variable. We kept the naming convention for internal variables by using _temperature. Now methods on the Coffee class can access this new variable:
+
+Coffee.m
+
+#import "Coffee.h"
+
+@implementation Coffee
+- (void)pour;
+{
+  if([_temperature intValue] < 155){
+    NSLog(@"Oh no! The coffee is cold!");
+  } else {
+    NSLog(@"Mmmm, delicious warm coffee");
+  }
+}
+@end
+
+Convert batteryLife to an instance variable, and update the methods on the class to use it. Make sure to prefix the instance variable name with a underscore.
+
+
+Example Use
+#import "Apple.h"
+
+Apple *talkingiPhone = [[Apple alloc] init];
+talkingiPhone.phoneName = @"Mr. Higgie";
+
+[talkingiPhone decreaseBatteryLife:@5];
+[talkingiPhone reportBatteryLife];
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([self.batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", self.batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Apple.h
+@interface Apple : NSObject
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+@property (readonly) NSNumber *batteryLife;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Answer:
+Apple.h
+@interface Apple : NSObject {
+  NSNumber *_batteryLife;
+}
+
+@property NSString *phoneName;
+@property NSString *modelNumber;
+//@property (readonly) NSNumber *batteryLife;
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+- (NSString *) speak:(NSString *)greeting;
+- (void) reportBatteryLife;
+@end
+
+
+Apple.m
+#import "Apple.h"
+
+@implementation Apple
+
+- (Apple *)init;
+{
+  _batteryLife = @100;
+  return [super init];
+}
+
+- (void) decreaseBatteryLife:(NSNumber *)arg;
+{
+  _batteryLife = @([_batteryLife intValue] - [arg intValue]);
+}
+
+- (void) reportBatteryLife;
+{
+    NSLog(@"Battery life is %@", _batteryLife);
+}
+
+- (NSString *)speak:(NSString *)greeting;
+{
+    NSString *message = [NSString stringWithFormat:@"%@ says %@", self.phoneName, greeting];
+    return message;
+}
+@end
+
+
+Output:
+Apple.m[18]: Battery life is 95

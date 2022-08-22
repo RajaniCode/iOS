@@ -1,0 +1,13 @@
+5.2 Dynamic Behaviors 1
+
+Which of the following dynamic behavior classes can be used to create boundaries that an animating view can't pass through?
+
+[Single Answer]
+
+UIGravityBehavior
+UICollisionBehavior
+UIPushBehavior
+UISnapBehavior
+
+
+Answer: UICollisionBehavior

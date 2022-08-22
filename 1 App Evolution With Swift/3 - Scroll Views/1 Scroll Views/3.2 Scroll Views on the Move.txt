@@ -1,0 +1,12 @@
+3.2 Scroll Views on the Move
+
+What's one reason to move the scroll view in the storyboard outside of the view controller hierarchy?
+
+[Single Answer]
+
+You can independently adjust the height of the scroll view to be able to visually lay out all of your content.
+You can reuse the scroll view in any other view controller.
+You can only add subviews on the scroll view after you move it outside of the view controller hierarchy.
+
+
+Answer: You can independently adjust the height of the scroll view to be able to visually lay out all of your content.

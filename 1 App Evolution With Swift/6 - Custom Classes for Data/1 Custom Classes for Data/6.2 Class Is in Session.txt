@@ -1,0 +1,37 @@
+6.2 Class Is in Session
+
+It's time to refactor our courseNames array into a single Course class.
+
+CourseViewController.swift
+import Foundation
+
+1. Start by defining a class named Course and adding the opening and closing curly brackets.
+
+Answer:
+CourseViewController.swift
+import Foundation
+
+class Course {
+  
+}
+
+2. Now define a variable in that class named name that's an optional String.
+
+Answer:
+CourseViewController.swift
+import Foundation
+
+class Course {
+  var name: String?
+}
+
+3. Next define another variable underneath that named numberOfSeats that's an optional Int.
+
+Answer:
+CourseViewController.swift
+import Foundation
+
+class Course {
+  var name: String?
+  var numberOfSeats: Int?
+}

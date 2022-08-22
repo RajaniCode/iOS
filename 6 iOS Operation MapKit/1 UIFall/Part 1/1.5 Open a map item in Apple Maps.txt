@@ -1,0 +1,83 @@
+1.5 Open a map item in Apple Maps
+
+
+Open the MKMapItem object in Apple Maps with the openInMapsWithLaunchOptions: method. Pass in the launch options dictionary named mapLaunchOptions that's already been defined below which will open the maps in Satellite mode with driving directions.
+
+
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    NSDictionary *mapLocation = @{@"name": @"Walt Disney World", 
+                                  @"lat": @28.41871,
+                                  @"lng": @-81.58121
+                                };
+    
+    double latitude = [mapLocation[@"lat"] doubleValue];
+    double longitude = [mapLocation[@"lng"] doubleValue];
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+    mapItem.name = mapLocation[@"name"];
+    mapItem.phoneNumber = @"407-555-1212";
+
+    NSDictionary *mapLaunchOptions = @{
+        MKLaunchOptionsMapTypeKey: @(MKMapTypeSatellite),
+        MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+    };
+    
+    /*//Open the MKMapItem object in Apple Maps here//*/
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+@end
+
+
+Answer:
+AppDelegate.m
+#import "AppDelegate.h"
+
+@implementation AppDelegate
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    NSDictionary *mapLocation = @{@"name": @"Walt Disney World", 
+                                  @"lat": @28.41871,
+                                  @"lng": @-81.58121
+                                };
+    
+    double latitude = [mapLocation[@"lat"] doubleValue];
+    double longitude = [mapLocation[@"lng"] doubleValue];
+    
+    CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+
+    MKPlacemark *placemark = [[MKPlacemark alloc] initWithCoordinate:coordinate addressDictionary:nil];
+    MKMapItem *mapItem = [[MKMapItem alloc] initWithPlacemark:placemark];
+    mapItem.name = mapLocation[@"name"];
+    mapItem.phoneNumber = @"407-555-1212";
+
+    NSDictionary *mapLaunchOptions = @{
+        MKLaunchOptionsMapTypeKey: @(MKMapTypeSatellite),
+        MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
+    };
+    
+ 	[mapItem openInMapsWithLaunchOptions:mapLaunchOptions];
+  
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+@end

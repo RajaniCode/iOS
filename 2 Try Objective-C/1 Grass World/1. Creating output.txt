@@ -1,0 +1,19 @@
+1. Creating output
+
+
+Today you’re going to learn a little bit about Objective-C. To help us out along the way, we’ve invited Mr. Higgie. He’s an Objective-C expert and a friend of ours since 2007. Say hello, Mr. Higgie.
+
+NSLog(@"Hello, Mr. Higgie.");
+
+Please don’t laugh, it will only make him think he’s funny. But thank you Mr. Higgie for introducing us to NSLog, a function that adds stuff to the Output window.
+
+The bit between the parentheses is the way we represent a string of characters in Objective-C. You can put whatever you want in a string, like the opening line from Mr. Higgie’s favorite book:
+
+@"Call me Ishmael."
+
+To invoke the NSLog function, just follow Mr. Higgie’s helpful example above.
+
+Use NSLog to output a string containing your first name
+
+
+Answer: NSLog("@Apple");

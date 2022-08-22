@@ -1,0 +1,32 @@
+1.8 Touches Ended
+
+Apps are meant to be touched. Make it so the ViewController below responds to touch events. Implement the method touchesEnded:withEvent: and inside that method use NSLog to print a message to the console that a touch event occurred.
+
+
+ViewController.m
+#import "ViewController.h"
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+@end
+
+
+Answer:
+ViewController.m
+
+@implementation ViewController
+
+- (void)viewDidLoad
+{
+  [super viewDidLoad];
+}
+
+- (void)touchesEnded:(NSSet *) touches withEvent:(UIEvent *) event
+{
+  NSLog(@"Touched");
+}
+@end

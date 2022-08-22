@@ -1,0 +1,88 @@
+4.6 Nav on the Fly
+
+
+Now when the button is tapped, create a new UIViewController instance on the fly and add a UIImageView to it's subviews. The UIImageView instance should be created with the UIImage named @"higgie_profile_image" and have a contentMode of UIViewContentModeScaleAspectFill.
+
+Finally, push the new UIViewController instance onto the navigation controller.
+
+
+ProfileViewController.m
+#import "ProfileViewController.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Profile";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [profileButton setImage:[UIImage imageNamed:@"higgie_profile_image"] forState:UIControlStateNormal];
+    [profileButton setImage:[UIImage imageNamed:@"higgie_profile_image"] forState:UIControlStateHighlighted];
+    profileButton.frame = CGRectMake(15, 15, 200, 189);
+
+    [self.view addSubview:profileButton];
+    [profileButton addTarget:self action:@selector(showZoomedProfile:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) showZoomedProfile: (UIButton *) sender
+{
+}
+
+      
+@end
+
+
+Answer:
+ProfileViewController.m
+#import "ProfileViewController.h"
+
+@implementation ProfileViewController
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+  self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+  if (self) {
+    self.title = @"Profile";
+    self.tabBarItem.image = [UIImage imageNamed:@"tab_icon_profile"];
+  }
+  return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [profileButton setImage:[UIImage imageNamed:@"higgie_profile_image"] forState:UIControlStateNormal];
+    [profileButton setImage:[UIImage imageNamed:@"higgie_profile_image"] forState:UIControlStateHighlighted];
+    profileButton.frame = CGRectMake(15, 15, 200, 189);
+
+    [self.view addSubview:profileButton];
+    [profileButton addTarget:self action:@selector(showZoomedProfile:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) showZoomedProfile: (UIButton *) sender
+{
+  UIViewController *flyViewController = [[UIViewController alloc] init];
+  flyViewController.view.frame = self.view.frame;
+  flyViewController.title = @"Fly";
+  
+  UIImageView *flyImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"higgie_profile_image"]];
+  [flyImageView setContentMode:UIViewContentModeScaleAspectFill];
+  flyImageView.frame = flyViewController.view.frame;
+  [flyViewController.view addSubview:flyImageView];
+  
+  [self.navigationController pushViewController:flyViewController animated:YES];
+}
+      
+@end

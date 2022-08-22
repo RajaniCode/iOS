@@ -1,0 +1,62 @@
+5.7 Index, Path, and Row Walk Into a Table Cell
+
+We need to make sure that the correct courseName is being retrieved from the courseNames array for each cell. Update this code in the tableView(_:cellForRowAtIndexPath) function to dynamically pull the correct course name.
+
+import UIKit
+
+class CoursesTableViewController : UITableViewController
+
+  var courseNames: [String]?
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+
+    courseNames = ["App Evolution With Swift",
+                   "The Magical Marvels of MongoDB",
+                   "ES2015: The Shape of JavaScript to Come",
+                   "Adventures in Web Animations"]
+  }
+
+  override func tableView(
+    tableView: UITableView,
+    numberOfRowsInSection section: Int
+  ) -> Int {
+    if names = courseNames {
+      return names.count
+    }
+    return 0
+  }
+
+  override func tableView(
+    tableView: UITableView,
+    cellForRowAtIndexPath indexPath: NSIndexPath
+  ) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier(
+      "CourseCell",
+      forIndexPath: indexPath
+    )
+
+    let courseName = [ ]
+
+    if let name = courseName {
+      cell.textLabel.text = courseName
+    }
+    cell.imageView.image = UIImage(named: "course-badge")
+
+    return cell
+  }
+
+  override func prepareForSegue(
+    segue: UIStoryboardSegue,
+    sender: AnyObject?
+  ) {
+    if segue.identifier == "ShowCourse" {
+      let courseVC = segue.destinationViewController as? 
+        CourseViewController
+      courseVC?.courseName = "App Evolution with Swift"
+    }
+  }
+}
+
+
+Answer: courseNames?[indexPath.row]
